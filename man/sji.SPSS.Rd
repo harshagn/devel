@@ -1,0 +1,48 @@
+\name{sji.SPSS}
+\alias{sji.SPSS}
+\title{Import SPSS dataset as data frame into R}
+\usage{
+sji.SPSS(path, enc = NA)
+}
+\arguments{
+  \item{path}{The file path to the SPSS dataset.}
+
+  \item{enc}{The file encoding of the SPSS dataset.}
+}
+\value{
+A data frame containing the SPSS data. retrieve value
+labels with \code{\link{sji.getValueLabels}} and variable
+labels with \code{\link{sji.getVariableLabels}}.
+}
+\description{
+Import data from SPSS, including NA's, value and variable
+labels.
+}
+\note{
+This is a wrapper function for \code{\link{read.spss}} of
+the \code{foreign} package, using convenient parameter
+default settings.
+}
+\examples{
+# import SPSS data set
+# mydat <- sji.SPSS("my_spss_data.sav", enc="UTF-8")
+
+# retrieve variable labels
+# mydat.var <- sji.getVariableLabels(mydat)
+
+# retrieve value labels
+# mydat.val <- sji.getValueLabels(mydat)
+}
+\references{
+\url{http://strengejacke.wordpress.com/sjplot-r-package/}
+\cr \cr
+\url{http://strengejacke.wordpress.com/2013/02/24/simplify-your-r-workflow-with-functions-rstats/}
+}
+\seealso{
+\code{\link{sji.getValueLabels}} \cr
+\code{\link{sji.getVariableLabels}} \cr
+\code{\link{sji.convertToLabel}} \cr
+\code{\link{sji.convertToValue}} \cr
+\code{\link{sji.viewSPSS}}
+}
+
