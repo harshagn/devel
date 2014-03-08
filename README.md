@@ -1,4 +1,4 @@
 devel
 =====
 
-Development snapshot o my sjPlot-package
+Development snapshot of my sjPlot-package.
