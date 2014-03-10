@@ -3,9 +3,10 @@
 \title{Compute quick cluster analysis}
 \usage{
 sjc.qclus(data, groupcount = NULL, method = "k", distance = "euclidean",
-  agglomeration = "ward", showAccuracy = FALSE, title = NULL,
-  titleSize = 1.3, titleColor = "black", axisLabels.x = NULL,
-  axisLabelAngle.x = 0, axisLabelSize = 1.1, axisLabelColor = "gray30",
+  agglomeration = "ward", iter.max = 20, algorithm = "Hartigan-Wong",
+  showAccuracy = FALSE, title = NULL, titleSize = 1.3,
+  titleColor = "black", axisLabels.x = NULL, axisLabelAngle.x = 0,
+  axisLabelSize = 1.1, axisLabelColor = "gray30",
   axisTitle.x = "Cluster group characteristics",
   axisTitle.y = "Mean of z-scores", axisTitleColor = "black",
   axisTitleSize = 1.3, breakTitleAt = 40, breakLabelsAt = 12,
@@ -26,7 +27,10 @@ sjc.qclus(data, groupcount = NULL, method = "k", distance = "euclidean",
   should be used for the cluster analysis.}
 
   \item{groupcount}{The amount of groups (clusters) that
-  should be retrieved. By default (\code{NULL}), the
+  should be retrieved. May also be a set of initial
+  (distinct) cluster centres, in case \code{method} is
+  \code{"k"} (see \code{\link{kmeans}} for details on
+  \code{centers} parameter). By default (\code{NULL}), the
   optimal amount of clusters is calculated using the gap
   statistics (see \code{\link{sjc.kgap}}. However, this
   works only with kmeans as \code{method}. If \code{method}
@@ -57,6 +61,17 @@ sjc.qclus(data, groupcount = NULL, method = "k", distance = "euclidean",
   Default is \code{"ward"}. See \code{\link{hclust}}.  By
   default, method is \code{"k"} and this parameter will be
   ignored.}
+
+  \item{iter.max}{the maximum number of iterations allowed.
+  Only applies, if \code{method} is \code{"kmeans"}. See
+  \code{\link{kmeans}} for details on this parameter.}
+
+  \item{algorithm}{algorithm used for calculating kmeans
+  cluster. Only applies, if \code{method} is
+  \code{"kmeans"}. May be one of \code{"Hartigan-Wong"}
+  (default), \code{"Lloyd"} (used by SPSS), or
+  \code{"MacQueen"}. See \code{\link{kmeans}} for details
+  on this parameter.}
 
   \item{showAccuracy}{If \code{TRUE}, the
   \code{\link{sjc.grpdisc}} function will be called, which
@@ -273,6 +288,21 @@ within each cluster group is calculated to see how certain
 characteristics (variables) in a cluster group differ in
 relation to other cluster groups.  \item These results are
 shown in a graph.  }
+}
+\note{
+To get similar results as in SPSS Quick Cluster function,
+following points have to be considered: \enumerate{ \item
+Use the \code{/PRINT INITIAL} option for SPSS Quick Cluster
+to get a table with initial cluster centers.  \item Create
+a \code{\link{matrix}} of this table, by consecutively
+copying the values, one row after another, from the SPSS
+output into a matrix and specifying \code{nrow} and
+\code{ncol} parameters.  \item Use
+\code{algorithm="Lloyd"}.  \item Use the same amount of
+\code{iter.max} both in SPSS and this \code{sjc.qclus}.  }
+This ensures a fixed initial set of cluster centers (as in
+SPSS), while \code{\link{kmeans}} in R always selects
+initial cluster sets randomly.
 }
 \examples{
 # K-means clustering of mtcars-dataset

@@ -20,7 +20,9 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'
 #' @param data The data frame containing all variables that should be used for the
 #'          cluster analysis.
-#' @param groupcount The amount of groups (clusters) that should be retrieved. By default
+#' @param groupcount The amount of groups (clusters) that should be retrieved. May also be
+#'          a set of initial (distinct) cluster centres, in case \code{method} is \code{"k"}
+#'          (see \code{\link{kmeans}} for details on \code{centers} parameter). By default
 #'          (\code{NULL}), the optimal amount of clusters is calculated using the gap statistics
 #'          (see \code{\link{sjc.kgap}}. However, this works only with kmeans as \code{method}. If
 #'          \code{method} is \code{"h"}, you have to specify a groupcount. Use the \code{\link{sjc.elbow}}-function 
@@ -37,6 +39,11 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'          clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"}, 
 #'          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"}. See \code{\link{hclust}}.
 #'          By default, method is \code{"k"} and this parameter will be ignored.
+#' @param iter.max the maximum number of iterations allowed. Only applies, if \code{method}
+#'          is \code{"kmeans"}. See \code{\link{kmeans}} for details on this parameter.
+#' @param algorithm algorithm used for calculating kmeans cluster. Only applies, if \code{method}
+#'          is \code{"kmeans"}. May be one of \code{"Hartigan-Wong"} (default), \code{"Lloyd"} (used by SPSS),
+#'          or \code{"MacQueen"}. See \code{\link{kmeans}} for details on this parameter.
 #' @param showAccuracy If \code{TRUE}, the \code{\link{sjc.grpdisc}} function will be called,
 #'          which computes a linear discriminant analysis on the classified cluster groups and plots a 
 #'          bar graph indicating the goodness of classification for each group.
@@ -134,6 +141,17 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'            \item \code{accuracy}: the accuracy of group classification (as calculated by \code{\link{sjc.grpdisc}}).
 #'           }
 #' 
+#' @note To get similar results as in SPSS Quick Cluster function, following points
+#'        have to be considered:
+#'        \enumerate{
+#'          \item Use the \code{/PRINT INITIAL} option for SPSS Quick Cluster to get a table with initial cluster centers.
+#'          \item Create a \code{\link{matrix}} of this table, by consecutively copying the values, one row after another, from the SPSS output into a matrix and specifying \code{nrow} and \code{ncol} parameters.
+#'          \item Use \code{algorithm="Lloyd"}.
+#'          \item Use the same amount of \code{iter.max} both in SPSS and this \code{sjc.qclus}.
+#'        }
+#'        This ensures a fixed initial set of cluster centers (as in SPSS), while \code{\link{kmeans}} in R
+#'        always selects initial cluster sets randomly.
+#' 
 #' @examples
 #' # K-means clustering of mtcars-dataset
 #' sjc.qclus(mtcars)
@@ -149,6 +167,8 @@ sjc.qclus <- function(data,
                       method="k",
                       distance="euclidean", 
                       agglomeration="ward",
+                      iter.max=20,
+                      algorithm="Hartigan-Wong",
                       showAccuracy=FALSE,
                       title=NULL,
                       titleSize=1.3,
@@ -259,7 +279,7 @@ sjc.qclus <- function(data,
   # ---------------------------------------------
   # run cluster analysis with claculated group count
   # ---------------------------------------------
-  grp <- sjc.cluster(data, groupcount, method, distance, agglomeration)
+  grp <- sjc.cluster(data, groupcount, method, distance, agglomeration, iter.max, algorithm)
   # --------------------------------------------------------
   # show goodness of classification
   # --------------------------------------------------------
@@ -506,12 +526,17 @@ sjc.qclus <- function(data,
 #'                association for each observation as vector.
 #' @seealso \code{\link{sjc.dend}} \cr
 #'          \code{\link{sjc.grpdisc}} \cr
-#'          \code{\link{sjc.elbow}}
+#'          \code{\link{sjc.elbow}} \cr
+#'          \code{\link{kmeans}} \cr
+#'          \code{\link{hclust}}
 #'
 #' @param data The data frame containing all variables that should be used for the
 #'          cluster analysis.
-#' @param groupcount The amount of groups (clusters) that should be retrieved. Following functions
-#'          may be helpful for estimating the amount of clusters:
+#' @param groupcount The amount of groups (clusters) that should be retrieved. May also be
+#'          a set of initial (distinct) cluster centres, in case \code{method} is \code{"kmeans"}
+#'          (see \code{\link{kmeans}} for details on \code{centers} parameter). If \code{groupcount}
+#'          indicates a number of clusters, following functions may be helpful for estimating the 
+#'          amount of clusters:
 #'          \itemize{
 #'            \item Use \code{\link{sjc.elbow}}-function to determine the group-count depending on the elbow-criterion.
 #'            \item If using kmeans as \code{method}, use \code{\link{sjc.kgap}}-function to determine the group-count according to the gap-statistic.
@@ -527,9 +552,25 @@ sjc.qclus <- function(data,
 #' @param agglomeration The agglomeration method to be used when \code{"method"} is \code{"h"} (for hierarchical
 #'          clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"}, 
 #'          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"}. See \code{\link{hclust}}.
+#' @param iter.max the maximum number of iterations allowed. Only applies, if \code{method}
+#'          is \code{"kmeans"}. See \code{\link{kmeans}} for details on this parameter.
+#' @param algorithm algorithm used for calculating kmeans cluster. Only applies, if \code{method}
+#'          is \code{"kmeans"}. May be one of \code{"Hartigan-Wong"} (default), \code{"Lloyd"} (used by SPSS),
+#'          or \code{"MacQueen"}. See \code{\link{kmeans}} for details on this parameter.
 #' @return The group classification for each observation as vector. This group
 #'           classification is needed for \code{\link{sjc.grpdisc}}-function to
 #'           check the goodness of classification.
+#' 
+#' @note To get similar results as in SPSS Quick Cluster function, following points
+#'        have to be considered:
+#'        \enumerate{
+#'          \item Use the \code{/PRINT INITIAL} option for SPSS Quick Cluster to get a table with initial cluster centers.
+#'          \item Create a \code{\link{matrix}} of this table, by consecutively copying the values, one row after another, from the SPSS output into a matrix and specifying \code{nrow} and \code{ncol} parameters.
+#'          \item Use \code{algorithm="Lloyd"}.
+#'          \item Use the same amount of \code{iter.max} both in SPSS and this \code{sjc.qclus}.
+#'        }
+#'        This ensures a fixed initial set of cluster centers (as in SPSS), while \code{\link{kmeans}} in R
+#'        always selects initial cluster sets randomly.
 #' 
 #' @examples
 #' # Hierarchical clustering of mtcars-dataset
@@ -540,7 +581,13 @@ sjc.qclus <- function(data,
 #' 
 #' @import ggplot2
 #' @export
-sjc.cluster <- function(data, groupcount, method="h", distance="euclidean", agglomeration="ward") {
+sjc.cluster <- function(data,
+                        groupcount,
+                        method="h",
+                        distance="euclidean",
+                        agglomeration="ward",
+                        iter.max=20,
+                        algorithm="Hartigan-Wong") {
   # Prepare Data
   # listwise deletion of missing
   data <- na.omit(data) 
@@ -556,7 +603,7 @@ sjc.cluster <- function(data, groupcount, method="h", distance="euclidean", aggl
     groups <- cutree(hc, k=groupcount)
   }
   else {
-    km <- kmeans(data, groupcount)
+    km <- kmeans(data, centers=groupcount, iter.max=iter.max, algorithm=algorithm)
     # return cluster assignment
     groups <- km$cluster
   }

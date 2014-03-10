@@ -3,14 +3,18 @@
 \title{Compute hierarchical or kmeans cluster analysis}
 \usage{
 sjc.cluster(data, groupcount, method = "h", distance = "euclidean",
-  agglomeration = "ward")
+  agglomeration = "ward", iter.max = 20, algorithm = "Hartigan-Wong")
 }
 \arguments{
   \item{data}{The data frame containing all variables that
   should be used for the cluster analysis.}
 
   \item{groupcount}{The amount of groups (clusters) that
-  should be retrieved. Following functions may be helpful
+  should be retrieved. May also be a set of initial
+  (distinct) cluster centres, in case \code{method} is
+  \code{"kmeans"} (see \code{\link{kmeans}} for details on
+  \code{centers} parameter). If \code{groupcount} indicates
+  a number of clusters, following functions may be helpful
   for estimating the amount of clusters: \itemize{ \item
   Use \code{\link{sjc.elbow}}-function to determine the
   group-count depending on the elbow-criterion.  \item If
@@ -41,6 +45,17 @@ sjc.cluster(data, groupcount, method = "h", distance = "euclidean",
   \code{"single"}, \code{"complete"}, \code{"average"},
   \code{"mcquitty"}, \code{"median"} or \code{"centroid"}.
   Default is \code{"ward"}. See \code{\link{hclust}}.}
+
+  \item{iter.max}{the maximum number of iterations allowed.
+  Only applies, if \code{method} is \code{"kmeans"}. See
+  \code{\link{kmeans}} for details on this parameter.}
+
+  \item{algorithm}{algorithm used for calculating kmeans
+  cluster. Only applies, if \code{method} is
+  \code{"kmeans"}. May be one of \code{"Hartigan-Wong"}
+  (default), \code{"Lloyd"} (used by SPSS), or
+  \code{"MacQueen"}. See \code{\link{kmeans}} for details
+  on this parameter.}
 }
 \value{
 The group classification for each observation as vector.
@@ -52,6 +67,21 @@ classification.
 Compute hierarchical or kmeans cluster analysis and returns
 the group association for each observation as vector.
 }
+\note{
+To get similar results as in SPSS Quick Cluster function,
+following points have to be considered: \enumerate{ \item
+Use the \code{/PRINT INITIAL} option for SPSS Quick Cluster
+to get a table with initial cluster centers.  \item Create
+a \code{\link{matrix}} of this table, by consecutively
+copying the values, one row after another, from the SPSS
+output into a matrix and specifying \code{nrow} and
+\code{ncol} parameters.  \item Use
+\code{algorithm="Lloyd"}.  \item Use the same amount of
+\code{iter.max} both in SPSS and this \code{sjc.qclus}.  }
+This ensures a fixed initial set of cluster centers (as in
+SPSS), while \code{\link{kmeans}} in R always selects
+initial cluster sets randomly.
+}
 \examples{
 # Hierarchical clustering of mtcars-dataset
 groups <- sjc.cluster(mtcars, 5)
@@ -61,6 +91,7 @@ groups <- sjc.cluster(mtcars, 5, method="k")
 }
 \seealso{
 \code{\link{sjc.dend}} \cr \code{\link{sjc.grpdisc}} \cr
-\code{\link{sjc.elbow}}
+\code{\link{sjc.elbow}} \cr \code{\link{kmeans}} \cr
+\code{\link{hclust}}
 }
 
