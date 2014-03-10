@@ -21,24 +21,24 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #' @param data The data frame containing all variables that should be used for the
 #'          cluster analysis.
 #' @param groupcount The amount of groups (clusters) that should be retrieved. May also be
-#'          a set of initial (distinct) cluster centres, in case \code{method} is \code{"k"}
+#'          a set of initial (distinct) cluster centres, in case \code{method} is \code{"kmeans"}
 #'          (see \code{\link{kmeans}} for details on \code{centers} parameter). By default
 #'          (\code{NULL}), the optimal amount of clusters is calculated using the gap statistics
 #'          (see \code{\link{sjc.kgap}}. However, this works only with kmeans as \code{method}. If
-#'          \code{method} is \code{"h"}, you have to specify a groupcount. Use the \code{\link{sjc.elbow}}-function 
+#'          \code{method} is \code{"hclust"}, you have to specify a groupcount. Use the \code{\link{sjc.elbow}}-function 
 #'          to determine the group-count depending on the elbow-criterion. Use \code{\link{sjc.grpdisc}}-function 
 #'          to inspect the goodness of grouping.
-#' @param method The method for computing the cluster analysis. By default (\code{"k"}), a
-#'          kmeans cluster analysis will be computed. Use \code{"h"} to compute a hierarchical
-#'          cluster analysis.
-#' @param distance The distance measure to be used when \code{"method"} is \code{"h"} (for hierarchical
+#' @param method The method for computing the cluster analysis. By default (\code{"kmeans"}), a
+#'          kmeans cluster analysis will be computed. Use \code{"hclust"} to compute a hierarchical
+#'          cluster analysis. You can specify the initial letters only.
+#' @param distance The distance measure to be used when \code{"method"} is \code{"hclust"} (for hierarchical
 #'          clustering). This must be one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"}, 
 #'          \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link{dist}}.
-#'          By default, method is \code{"k"} and this parameter will be ignored.
-#' @param agglomeration The agglomeration method to be used when \code{"method"} is \code{"h"} (for hierarchical
+#'          By default, method is \code{"kmeans"} and this parameter will be ignored.
+#' @param agglomeration The agglomeration method to be used when \code{"method"} is \code{"hclust"} (for hierarchical
 #'          clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"}, 
 #'          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"}. See \code{\link{hclust}}.
-#'          By default, method is \code{"k"} and this parameter will be ignored.
+#'          By default, method is \code{"kmeans"} and this parameter will be ignored.
 #' @param iter.max the maximum number of iterations allowed. Only applies, if \code{method}
 #'          is \code{"kmeans"}. See \code{\link{kmeans}} for details on this parameter.
 #' @param algorithm algorithm used for calculating kmeans cluster. Only applies, if \code{method}
@@ -214,7 +214,14 @@ sjc.qclus <- function(data,
                       hideGrid.y=FALSE,
                       flipCoordinates=FALSE,
                       printPlot=TRUE) {
+  # --------------------------------------------------------
+  # check for abbreviations
+  # --------------------------------------------------------
+  if (method=="kmeans") method <- "k"
+  if (method=="hclust") method <- "h"
+  # --------------------------------------------------------
   # save original data frame
+  # --------------------------------------------------------
   rownames(data) <- c(1:nrow(data))
   data.origin <- data
   # remove missings
@@ -543,13 +550,13 @@ sjc.qclus <- function(data,
 #'            \item If using hierarchical as \code{method} (default), use  \code{\link{sjc.dend}}-function to inspect different cluster group solutions.
 #'            \item Use \code{\link{sjc.grpdisc}}-function to inspect the goodness of grouping (accuracy of classification).
 #'            }
-#' @param method Indicates the clustering method. If \code{"h"} (default), a hierachical 
-#'          clustering using the ward method is computed. Use any other parameter to compute
-#'          a k-means clustering.
-#' @param distance The distance measure to be used when \code{"method"} is \code{"h"} (for hierarchical
+#' @param method Indicates the clustering method. If \code{"hclust"} (default), a hierachical 
+#'          clustering using the ward method is computed. Use \code{"kmeans"} to compute a k-means clustering.
+#'          You can specifiy inital letters only.
+#' @param distance The distance measure to be used when \code{"method"} is \code{"hclust"} (for hierarchical
 #'          clustering). This must be one of \code{"euclidean"} (default), \code{"maximum"}, \code{"manhattan"}, 
 #'          \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link{dist}}.
-#' @param agglomeration The agglomeration method to be used when \code{"method"} is \code{"h"} (for hierarchical
+#' @param agglomeration The agglomeration method to be used when \code{"method"} is \code{"hclust"} (for hierarchical
 #'          clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"}, 
 #'          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"}. See \code{\link{hclust}}.
 #' @param iter.max the maximum number of iterations allowed. Only applies, if \code{method}
@@ -588,6 +595,11 @@ sjc.cluster <- function(data,
                         agglomeration="ward",
                         iter.max=20,
                         algorithm="Hartigan-Wong") {
+  # --------------------------------------------------------
+  # check for abbreviations
+  # --------------------------------------------------------
+  if (method=="kmeans") method <- "k"
+  if (method=="hclust") method <- "h"
   # Prepare Data
   # listwise deletion of missing
   data <- na.omit(data) 
