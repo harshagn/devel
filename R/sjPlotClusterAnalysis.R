@@ -278,15 +278,21 @@ sjc.qclus <- function(data,
     groupcount <- kgap$solution
   }
   # ---------------------------------------------
+  # run cluster analysis with claculated group count
+  # ---------------------------------------------
+  grp <- sjc.cluster(data, groupcount, method, distance, agglomeration, iter.max, algorithm)
+  # ---------------------------------------------
+  # check whether groupcount was matrix or not
+  # ---------------------------------------------
+  if (is.matrix(groupcount)) {
+    groupcount <- length(unique(grp))
+  }
+  # ---------------------------------------------
   # auto-set legend labels
   # ---------------------------------------------
   if (is.null(legendLabels)) {
     legendLabels <- sprintf("Group %i", c(1:groupcount))
   }
-  # ---------------------------------------------
-  # run cluster analysis with claculated group count
-  # ---------------------------------------------
-  grp <- sjc.cluster(data, groupcount, method, distance, agglomeration, iter.max, algorithm)
   # --------------------------------------------------------
   # show goodness of classification
   # --------------------------------------------------------
