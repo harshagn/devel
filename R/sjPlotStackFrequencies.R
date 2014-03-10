@@ -234,7 +234,7 @@ sjp.stackfrq <- function(items,
     legendLabels <- unlistlabels(legendLabels)
   }
   if (is.null(legendLabels)) {
-    legendLabels <- c(as.character(sort(unique(efc$e42dep))))
+    legendLabels <- c(as.character(sort(unique(items[,1]))))
   }
   # --------------------------------------------------------
   # Check whether N of each item should be included into

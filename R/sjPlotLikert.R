@@ -251,7 +251,7 @@ sjp.likert <- function(items,
     legendLabels <- unlistlabels(legendLabels)
   }
   if (is.null(legendLabels)) {
-    legendLabels <- c(as.character(sort(unique(efc$e42dep))))
+    legendLabels <- c(as.character(sort(unique(items[,1]))))
   }
   # --------------------------------------------------------
   # transform data frame content into factor
