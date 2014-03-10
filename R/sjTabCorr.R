@@ -2,6 +2,7 @@
 #' @name sjt.corr
 #' @references \itemize{
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
+#'              \item \url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
 #'              }
 #' 
 #' @description Shows the results of a computed correlation as HTML table. Requires either 

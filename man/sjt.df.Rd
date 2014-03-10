@@ -97,9 +97,12 @@ html-table with inline-css for use with knitr
 }
 \description{
 Shows description or the content of data frame (rows and
-columns) as HTML table, or saves it as file.  Helpful if
-you want a quick overview of a data frame's content. See
-parameter \code{describe} for details.
+columns) as HTML table, or saves it as file. Helpful if you
+want a quick overview of a data frame's content. See
+parameter \code{describe} for details. By default,
+\code{describe} is \code{TRUE} and a description of the
+data frame is given, using the \code{\link{describe}}
+function of the \code{psych} package.
 }
 \examples{
 # init dataset
@@ -137,6 +140,13 @@ sjt.df(efc,
        CSS=list(css.table="border: 2px solid #999999;",
                 css.tdata="border-top: 1px solid;",
                 css.arc="color:blue;"))}
+}
+\references{
+\itemize{ \item
+\url{http://strengejacke.wordpress.com/sjplot-r-package/}
+\item
+\url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
+}
 }
 \seealso{
 \code{\link{sji.viewSPSS}}

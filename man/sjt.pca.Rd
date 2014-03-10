@@ -132,7 +132,7 @@ for further use.
 Performes a principle component analysis on a data frame or
 matrix and displays the factor solution as HTML table, or
 saves them as file.  \cr \cr In case a data frame is used
-as parameter, the cronbach's alpha value for each factor
+as parameter, the Cronbach's Alpha value for each factor
 scale will be calculated, i.e. all variables with the
 highest loading for a factor are taken for the reliability
 test. The result is an alpha value for each factor
@@ -190,7 +190,10 @@ sjt.pca(df, showMSA=TRUE, showVariance=TRUE)}
 }
 \references{
 \itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
+\url{http://strengejacke.wordpress.com/sjplot-r-package/}
+\item
+\url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
+}
 }
 \seealso{
 \code{\link{sjp.pca}} \cr \code{\link{sju.reliability}} \cr

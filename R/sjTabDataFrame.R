@@ -3,10 +3,16 @@
 #' 
 #' @seealso \code{\link{sji.viewSPSS}}
 #' 
+#' @references \itemize{
+#'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
+#'              \item \url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
+#'              }
+#'              
 #' @description Shows description or the content of data frame (rows and columns) as HTML table,
-#'                or saves it as file.
-#'                Helpful if you want a quick overview of a data frame's content. See parameter
-#'                \code{describe} for details.
+#'                or saves it as file. Helpful if you want a quick overview of a data frame's 
+#'                content. See parameter \code{describe} for details. By default, \code{describe} 
+#'                is \code{TRUE} and a description of the data frame is given,
+#'                using the \code{\link{describe}} function of the \code{psych} package.
 #'
 #' @param df A data frame that should be printed.
 #' @param describe If \code{TRUE} (default), a description of the data frame's variables is given.
@@ -62,12 +68,6 @@
 #'            \item the html-table with inline-css for use with knitr (\code{knitr})
 #'            }
 #'            for further use.
-#'
-#' @description By default, \code{describe} is \code{TRUE} and a description of the data frame is given,
-#'                using the \code{\link{describe}} function of the \code{\link{psych}} package.
-#' Shows description or the content of data frame (rows and columns) as HTML table,
-#'                or saves it as file. To view the data frame's content, use parameter
-#'                \code{describe=FALSE}.
 #'
 #' @examples
 #' # init dataset

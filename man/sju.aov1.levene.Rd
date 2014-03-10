@@ -21,6 +21,10 @@ data(efc)
 sju.aov1.levene(efc$c12hour, as.factor(efc$e42dep))
 }
 \seealso{
-\link{sjp.aov1}
+\link{sjp.aov1}, \code{\link{sju.chi2.gof}},
+\code{\link{sju.mwu}} and \code{\link{wilcox.test}},
+\code{\link{ks.test}}, \code{\link{kruskal.test}},
+\code{\link{t.test}}, \code{\link{chisq.test}},
+\code{\link{fisher.test}}#'
 }
 

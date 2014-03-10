@@ -31,8 +31,9 @@ sju.chi2.gof(efc$e42dep, c(0.3,0.2,0.22,0.28))
 sju.chi2.gof(efc$e42dep, prop.table(table(efc$e42dep)))
 }
 \seealso{
+\code{\link{sju.mwu}}, \code{\link{sju.aov1.levene}} and
 \code{\link{wilcox.test}}, \code{\link{ks.test}},
 \code{\link{kruskal.test}}, \code{\link{t.test}},
-\code{\link{chisq.test}}
+\code{\link{chisq.test}}, \code{\link{fisher.test}}
 }
 

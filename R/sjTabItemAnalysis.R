@@ -1,9 +1,9 @@
 #' @title Performs an item analysis on an item scale.
 #' @name sjt.itemanalysis
 #' @description This function performs an item analysis with certain statistics that are
-#'                useful for scale / index building. The resulting tables are shown in the
-#'                viewer pane / webbrowser or can be saved as file. Following statistics are calculated
-#'                for each item of a data frame:
+#'                useful for scale / index development. The resulting tables are shown in the
+#'                viewer pane / webbrowser or can be saved as file. Following statistics are 
+#'                computed for each item of a data frame:
 #'                \itemize{
 #'                  \item percentage of missing values
 #'                  \item mean value
@@ -14,8 +14,8 @@
 #'                  \item Cronbach's Alpha if item was removed from scale
 #'                }
 #'                If \code{factor.groups} is not \code{NULL}, the data frame \code{df} will be
-#'                splitted into groups, assuming that \code{factor.groups} indicate which column
-#'                of the data frame belongs to which factor (see return value of function \code{\link{sjt.pca}}
+#'                splitted into groups, assuming that \code{factor.groups} indicate those columns
+#'                of the data frame that belong to a certain factor (see return value of function \code{\link{sjt.pca}}
 #'                as example for retrieving factor groups for a scale and see examples for more details).
 #'
 #' @seealso \code{\link{sju.cronbach}} \cr
