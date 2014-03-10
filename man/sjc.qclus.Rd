@@ -29,38 +29,39 @@ sjc.qclus(data, groupcount = NULL, method = "k", distance = "euclidean",
   \item{groupcount}{The amount of groups (clusters) that
   should be retrieved. May also be a set of initial
   (distinct) cluster centres, in case \code{method} is
-  \code{"k"} (see \code{\link{kmeans}} for details on
+  \code{"kmeans"} (see \code{\link{kmeans}} for details on
   \code{centers} parameter). By default (\code{NULL}), the
   optimal amount of clusters is calculated using the gap
   statistics (see \code{\link{sjc.kgap}}. However, this
   works only with kmeans as \code{method}. If \code{method}
-  is \code{"h"}, you have to specify a groupcount. Use the
-  \code{\link{sjc.elbow}}-function to determine the
+  is \code{"hclust"}, you have to specify a groupcount. Use
+  the \code{\link{sjc.elbow}}-function to determine the
   group-count depending on the elbow-criterion. Use
   \code{\link{sjc.grpdisc}}-function to inspect the
   goodness of grouping.}
 
   \item{method}{The method for computing the cluster
-  analysis. By default (\code{"k"}), a kmeans cluster
-  analysis will be computed. Use \code{"h"} to compute a
-  hierarchical cluster analysis.}
+  analysis. By default (\code{"kmeans"}), a kmeans cluster
+  analysis will be computed. Use \code{"hclust"} to compute
+  a hierarchical cluster analysis. You can specify the
+  initial letters only.}
 
   \item{distance}{The distance measure to be used when
-  \code{"method"} is \code{"h"} (for hierarchical
+  \code{"method"} is \code{"hclust"} (for hierarchical
   clustering). This must be one of \code{"euclidean"},
   \code{"maximum"}, \code{"manhattan"}, \code{"canberra"},
   \code{"binary"} or \code{"minkowski"}. See
-  \code{\link{dist}}.  By default, method is \code{"k"} and
-  this parameter will be ignored.}
+  \code{\link{dist}}.  By default, method is
+  \code{"kmeans"} and this parameter will be ignored.}
 
   \item{agglomeration}{The agglomeration method to be used
-  when \code{"method"} is \code{"h"} (for hierarchical
+  when \code{"method"} is \code{"hclust"} (for hierarchical
   clustering). This should be one of \code{"ward"},
   \code{"single"}, \code{"complete"}, \code{"average"},
   \code{"mcquitty"}, \code{"median"} or \code{"centroid"}.
   Default is \code{"ward"}. See \code{\link{hclust}}.  By
-  default, method is \code{"k"} and this parameter will be
-  ignored.}
+  default, method is \code{"kmeans"} and this parameter
+  will be ignored.}
 
   \item{iter.max}{the maximum number of iterations allowed.
   Only applies, if \code{method} is \code{"kmeans"}. See

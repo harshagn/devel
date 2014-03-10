@@ -28,19 +28,20 @@ sjc.cluster(data, groupcount, method = "h", distance = "euclidean",
   goodness of grouping (accuracy of classification).  }}
 
   \item{method}{Indicates the clustering method. If
-  \code{"h"} (default), a hierachical clustering using the
-  ward method is computed. Use any other parameter to
-  compute a k-means clustering.}
+  \code{"hclust"} (default), a hierachical clustering using
+  the ward method is computed. Use \code{"kmeans"} to
+  compute a k-means clustering.  You can specifiy inital
+  letters only.}
 
   \item{distance}{The distance measure to be used when
-  \code{"method"} is \code{"h"} (for hierarchical
+  \code{"method"} is \code{"hclust"} (for hierarchical
   clustering). This must be one of \code{"euclidean"}
   (default), \code{"maximum"}, \code{"manhattan"},
   \code{"canberra"}, \code{"binary"} or \code{"minkowski"}.
   See \code{\link{dist}}.}
 
   \item{agglomeration}{The agglomeration method to be used
-  when \code{"method"} is \code{"h"} (for hierarchical
+  when \code{"method"} is \code{"hclust"} (for hierarchical
   clustering). This should be one of \code{"ward"},
   \code{"single"}, \code{"complete"}, \code{"average"},
   \code{"mcquitty"}, \code{"median"} or \code{"centroid"}.
