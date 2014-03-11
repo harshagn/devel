@@ -5,10 +5,10 @@
 sjt.stackfrq(items, weightBy = NULL, title = NULL, varlabels = NULL,
   breakLabelsAt = 40, valuelabels = NULL, breakValueLabelsAt = 20,
   orderBy = NULL, reverseOrder = FALSE, alternateRowColors = FALSE,
-  showN = FALSE, showNA = FALSE, labelNA = "NA", showSkew = FALSE,
-  showKurtosis = FALSE, skewString = "Skew", kurtosisString = "Kurtosis",
-  file = NULL, encoding = "UTF-8", CSS = NULL, useViewer = TRUE,
-  no.output = FALSE)
+  showN = FALSE, showTotalN = FALSE, showNA = FALSE, labelNA = "NA",
+  showSkew = FALSE, showKurtosis = FALSE, skewString = "Skew",
+  kurtosisString = "Kurtosis", file = NULL, encoding = "UTF-8",
+  CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{items}{A \code{\link{data.frame}} with each column
@@ -49,8 +49,11 @@ sjt.stackfrq(items, weightBy = NULL, title = NULL, varlabels = NULL,
   \item{reverseOrder}{If \code{TRUE}, the item order is
   reversed.}
 
-  \item{showN}{If \code{TRUE}, an additional column with
-  each item's N is printed.}
+  \item{showN}{If \code{TRUE}, each item's category N is
+  printed in the table cells.}
+
+  \item{showTotalN}{If \code{TRUE}, an additional column
+  with each item's total N is printed.}
 
   \item{showNA}{If \code{TRUE}, \code{\link{NA}}'s (missing
   values) are also printed in the table.}
@@ -182,6 +185,12 @@ sjt.stackfrq(efc[,c(start:end)],
              varlabels=varlabs[c(start:end)],
              alternateRowColors=TRUE,
              showN=TRUE,
+             showNA=TRUE)}
+\dontrun{
+sjt.stackfrq(efc[,c(start:end)],
+             varlabels=varlabs[c(start:end)],
+             alternateRowColors=TRUE,
+             showTotalN=TRUE,
              showSkew=TRUE,
              showKurtosis=TRUE,
              CSS=list(css.ncol="border-left:1px dotted black;",

@@ -30,7 +30,8 @@
 #'          In case you want to revers order (descending from highest count), use
 #'          \code{reverseOrder} parameter.
 #' @param reverseOrder If \code{TRUE}, the item order is reversed.
-#' @param showN If \code{TRUE}, an additional column with each item's N is printed.
+#' @param showN If \code{TRUE}, each item's category N is printed in the table cells.
+#' @param showTotalN If \code{TRUE}, an additional column with each item's total N is printed.
 #' @param showNA If \code{TRUE}, \code{\link{NA}}'s (missing values) are also printed in the table.
 #' @param labelNA The label for the missing column/row.
 #' @param showSkew If \code{TRUE}, an additional column with each item's skewness is printed.
@@ -127,6 +128,12 @@
 #'              varlabels=varlabs[c(start:end)],
 #'              alternateRowColors=TRUE,
 #'              showN=TRUE,
+#'              showNA=TRUE)}
+#' \dontrun{
+#' sjt.stackfrq(efc[,c(start:end)],
+#'              varlabels=varlabs[c(start:end)],
+#'              alternateRowColors=TRUE,
+#'              showTotalN=TRUE,
 #'              showSkew=TRUE,
 #'              showKurtosis=TRUE,
 #'              CSS=list(css.ncol="border-left:1px dotted black;",
@@ -145,6 +152,7 @@ sjt.stackfrq <- function (items,
                           reverseOrder=FALSE,
                           alternateRowColors=FALSE,
                           showN=FALSE,
+                          showTotalN=FALSE,
                           showNA=FALSE,
                           labelNA="NA",
                           showSkew=FALSE,
@@ -215,6 +223,7 @@ sjt.stackfrq <- function (items,
   # save counts for each items
   itemcount <- c()
   mat <- data.frame()
+  mat.n <- data.frame()
   for (i in 1:ncol(items)) {
     # ----------------------------
     # if we don't have weights, create simple frequency table
@@ -280,6 +289,7 @@ sjt.stackfrq <- function (items,
     # add proportional percentages to data frame row
     # ----------------------------
     mat <- rbind(mat, round(prop.table(fr),4))
+    mat.n <- rbind(mat.n, fr)
   }
   # ----------------------------
   # Check if ordering was requested
@@ -386,7 +396,7 @@ sjt.stackfrq <- function (items,
     page.content <- paste0(page.content, sprintf("    <th class=\"thead\">%s</th>\n", valuelabels[i]))
   }
   # add N column
-  if (showN) page.content <- paste0(page.content, "    <th class=\"thead ncol summary\">N</th>\n")
+  if (showTotalN) page.content <- paste0(page.content, "    <th class=\"thead ncol summary\">N</th>\n")
   # add skew column
   if (showSkew) page.content <- paste0(page.content, sprintf("    <th class=\"thead skewcol summary\">%s</th>\n", skewString))
   # add kurtosis column
@@ -410,10 +420,15 @@ sjt.stackfrq <- function (items,
     # iterate all columns
     # --------------------------------------------------------
     for (j in 1:ncol(mat)) {
-      page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign%s\">%.2f&nbsp;%%</td>\n", arcstring, 100*mat[facord[i],j]))
+      if (showN) {
+        page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign%s\">%i<br>(%.2f&nbsp;%%)</td>\n", arcstring, mat.n[facord[i],j], 100*mat[facord[i],j]))
+      }
+      else {
+        page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign%s\">%.2f&nbsp;%%</td>\n", arcstring, 100*mat[facord[i],j]))
+      }
     }
     # add column with N's
-    if (showN) page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign ncol summary%s\">%i</td>\n", arcstring, itemcount[facord[i]]))
+    if (showTotalN) page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign ncol summary%s\">%i</td>\n", arcstring, itemcount[facord[i]]))
     # add column with Skew's
     if (showSkew) page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign skewcol summary%s\">%.2f</td>\n", arcstring, pstat$skew[facord[i]]))
     # add column with Kurtosis's

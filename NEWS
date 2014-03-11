@@ -7,6 +7,8 @@ Version 1.3
 * Function "sju.reliability" now returns NULL if data frame has too less columns.
 * Function "sjt.df" now also includes amount of missings when describing a data frame.
 * Changed return value of function "sjc.qclus". Parameter "classification" now contains the group classification, including missing values, so this vector can be appended to the original data frame (because it has the same row length now).
+* Renamed parameter "showN" in function "sjt.stackfrq" to "showTotalN".
+* Added parameter "showN" to function "sjt.stackfrq" for showing count values in table cells.
 * Added parameter "showAccuracyLabels" to function "sjc.qclus" to plot group classificatoin accuracy to legend labels.
 * Added parameters "iter.max" and "algorithm" to functions "sjc.qclus" and "sjc.cluster", to define maximum of iterations and calculation algorithm for kmeans cluster method.
 * Added parameter "printPlot" to function "sjc.grpdisc", to suppress plotting the graph, if needed.
