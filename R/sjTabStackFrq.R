@@ -263,8 +263,13 @@ sjt.stackfrq <- function (items,
     # if we have missings, manually change table names
     # ----------------------------
     if (showNA) {
+      # retrieve amount of categories
       tl <- length(names(dummy))
-      names(dummy)[tl] <- tl
+      # retrieve maximum category value, omitting NA
+      maxtl <- max(as.numeric(na.omit(names(dummy))))
+      # set NA table name to max-value+1, so we have continuous
+      # vector-index (needed below)
+      names(dummy)[tl] <- maxtl+1
     }
     # ----------------------------
     # table name equals cateogory value,
