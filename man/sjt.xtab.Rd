@@ -7,8 +7,8 @@ sjt.xtab(var.row, var.col, var.grp = NULL, weightBy = NULL, digits = 1,
   breakVariableLabelsAt = 40, breakValueLabelsAt = 20,
   stringTotal = "Total", showCellPerc = FALSE, showRowPerc = FALSE,
   showColPerc = FALSE, showExpected = FALSE, showHorizontalLine = FALSE,
-  showSummary = TRUE, showLegend = TRUE, tdcol.n = "black",
-  tdcol.expected = "#339999", tdcol.cell = "#993333",
+  showSummary = TRUE, showLegend = TRUE, showNA = FALSE, labelNA = "NA",
+  tdcol.n = "black", tdcol.expected = "#339999", tdcol.cell = "#993333",
   tdcol.row = "#333399", tdcol.col = "#339933", highlightTotal = FALSE,
   highlightColor = "#f8f8f8", percSign = "&nbsp;\%", hundret = "100.0",
   encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
@@ -87,8 +87,13 @@ sjt.xtab(var.row, var.col, var.grp = NULL, weightBy = NULL, digits = 1,
   \item{showLegend}{If \code{TRUE} (default), the color
   legend for coloring observed and expected values as well
   as cell, row and column percentages is shown. See
-  \code{tdcol.n}, \code{tdcol.expectec}, \code{tdcol.cell},
+  \code{tdcol.n}, \code{tdcol.expected}, \code{tdcol.cell},
   \code{tdcol.row} and \code{tdcol.col}.}
+
+  \item{showNA}{If \code{TRUE}, \code{\link{NA}}'s (missing
+  values) are also printed in the table.}
+
+  \item{labelNA}{The label for the missing column/row.}
 
   \item{tdcol.n}{Color for highlighting count (observed)
   values in table cells. Default is black.}

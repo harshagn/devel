@@ -5,9 +5,10 @@
 sjt.stackfrq(items, weightBy = NULL, title = NULL, varlabels = NULL,
   breakLabelsAt = 40, valuelabels = NULL, breakValueLabelsAt = 20,
   orderBy = NULL, reverseOrder = FALSE, alternateRowColors = FALSE,
-  showN = FALSE, showSkew = FALSE, showKurtosis = FALSE,
-  skewString = "Skew", kurtosisString = "Kurtosis", file = NULL,
-  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
+  showN = FALSE, showNA = FALSE, labelNA = "NA", showSkew = FALSE,
+  showKurtosis = FALSE, skewString = "Skew", kurtosisString = "Kurtosis",
+  file = NULL, encoding = "UTF-8", CSS = NULL, useViewer = TRUE,
+  no.output = FALSE)
 }
 \arguments{
   \item{items}{A \code{\link{data.frame}} with each column
@@ -50,6 +51,11 @@ sjt.stackfrq(items, weightBy = NULL, title = NULL, varlabels = NULL,
 
   \item{showN}{If \code{TRUE}, an additional column with
   each item's N is printed.}
+
+  \item{showNA}{If \code{TRUE}, \code{\link{NA}}'s (missing
+  values) are also printed in the table.}
+
+  \item{labelNA}{The label for the missing column/row.}
 
   \item{showSkew}{If \code{TRUE}, an additional column with
   each item's skewness is printed.  The skewness is

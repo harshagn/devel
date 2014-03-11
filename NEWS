@@ -3,6 +3,7 @@ Version 1.3
 * New function "sjt.itemanalysis" to save/view results from an item analysis on a scale or data frame.
 * New function "sju.chi2.gof", which is a small and convenient helper function to quickly perform chi-squared goodness-of-fit tests.
 * Functions "sjt.frq", "sjp.frq", "sjp.grpfrq", "sjp.xtab", "sjt.xtab", "sjp.likert", "sjp.aov1", "sjp.stackfrq" and "sjt.stackfrq" now automatically try to retrieve value labels, if no value labels were supplied as parameters. Where appropriate, variable labels (if not specified) are also automatically retrieved (from data frame's column names).
+* Function "sjt.xtab" and "sjt.stackfrq" can now show missing values (parameter "showNA").
 * Function "sju.reliability" now returns NULL if data frame has too less columns.
 * Function "sjt.df" now also includes amount of missings when describing a data frame.
 * Changed return value of function "sjc.qclus". Parameter "classification" now contains the group classification, including missing values, so this vector can be appended to the original data frame (because it has the same row length now).

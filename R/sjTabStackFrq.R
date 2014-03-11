@@ -31,6 +31,8 @@
 #'          \code{reverseOrder} parameter.
 #' @param reverseOrder If \code{TRUE}, the item order is reversed.
 #' @param showN If \code{TRUE}, an additional column with each item's N is printed.
+#' @param showNA If \code{TRUE}, \code{\link{NA}}'s (missing values) are also printed in the table.
+#' @param labelNA The label for the missing column/row.
 #' @param showSkew If \code{TRUE}, an additional column with each item's skewness is printed.
 #'          The skewness is retrieved from the \code{\link{describe}} function of the \code{\link{psych}}
 #'          package.
@@ -143,6 +145,8 @@ sjt.stackfrq <- function (items,
                           reverseOrder=FALSE,
                           alternateRowColors=FALSE,
                           showN=FALSE,
+                          showNA=FALSE,
+                          labelNA="NA",
                           showSkew=FALSE,
                           showKurtosis=FALSE,
                           skewString="Skew",
@@ -184,6 +188,8 @@ sjt.stackfrq <- function (items,
   if (is.null(valuelabels)) {
     valuelabels <- as.character(minval:maxval)
   }
+  # check whether missings should be shown
+  if (showNA) valuelabels <- c(valuelabels, labelNA)
   # save amolunt of values
   catcount <- length(valuelabels)
   # check length of x-axis-labels and split longer strings at into new lines
@@ -196,7 +202,7 @@ sjt.stackfrq <- function (items,
   }
   # check length of x-axis-labels and split longer strings at into new lines
   varlabels <- sju.wordwrap(varlabels, breakLabelsAt, "<br>")
-  # ----------------------------
+  # ----------------------------  
   # additional statistics required from psych-package?
   # ----------------------------
   if (showSkew || showKurtosis) {
@@ -214,12 +220,29 @@ sjt.stackfrq <- function (items,
     # if we don't have weights, create simple frequency table
     # of each item
     # ----------------------------
-    if (is.null(weightBy)) {
-      dummy <- table(items[,i])
+    if (showNA) {
+      # ----------------------------
+      # include missing
+      # ----------------------------
+      if (is.null(weightBy)) {
+        dummy <- table(addNA(items[,i]))
+      }
+      else {
+        # else weight with xtabs
+        dummy <- round(xtabs(weightBy ~ addNA(items[,i])),0)
+      }
     }
+    # ----------------------------
+    # exclude missing
+    # ----------------------------
     else {
-      # else weight with xtabs
-      dummy <- round(xtabs(weightBy ~ items[,i]),0)
+      if (is.null(weightBy)) {
+        dummy <- table(items[,i])
+      }
+      else {
+        # else weight with xtabs
+        dummy <- round(xtabs(weightBy ~ items[,i]),0)
+      }
     }
     # ----------------------------
     # save n
@@ -236,6 +259,13 @@ sjt.stackfrq <- function (items,
     # to a vector, but vector indexing starts with 1, not 3.
     # ----------------------------
     diff <- minval-1
+    # ----------------------------
+    # if we have missings, manually change table names
+    # ----------------------------
+    if (showNA) {
+      tl <- length(names(dummy))
+      names(dummy)[tl] <- tl
+    }
     # ----------------------------
     # table name equals cateogory value,
     # table itself contains counts of each category

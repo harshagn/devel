@@ -1,6 +1,5 @@
 # -------------------------------------
 # Help-functions
-# -------------------------------------
 autoSetValueLabels <- function(x) {
   # check if we have value label attribut
   vl <- attr(x, "value.labels")

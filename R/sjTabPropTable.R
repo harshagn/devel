@@ -39,7 +39,9 @@
 #'          Cramer's V or Phi-value etc. is shown.
 #' @param showLegend If \code{TRUE} (default), the color legend for coloring observed and expected
 #'          values as well as cell, row and column percentages is shown. See \code{tdcol.n},
-#'          \code{tdcol.expectec}, \code{tdcol.cell}, \code{tdcol.row} and \code{tdcol.col}.
+#'          \code{tdcol.expected}, \code{tdcol.cell}, \code{tdcol.row} and \code{tdcol.col}.
+#' @param showNA If \code{TRUE}, \code{\link{NA}}'s (missing values) are also printed in the table.
+#' @param labelNA The label for the missing column/row.
 #' @param tdcol.n Color for highlighting count (observed) values in table cells. Default is black.
 #' @param tdcol.expected Color for highlighting expected values in table cells. Default is cyan.
 #' @param tdcol.cell Color for highlighting cell percentage values in table cells. Default is red.
@@ -170,6 +172,8 @@ sjt.xtab <- function (var.row,
                       showHorizontalLine=FALSE,
                       showSummary=TRUE,
                       showLegend=TRUE,
+                      showNA=FALSE,
+                      labelNA="NA",
                       tdcol.n="black",
                       tdcol.expected="#339999",
                       tdcol.cell="#993333",
@@ -196,7 +200,7 @@ sjt.xtab <- function (var.row,
         if (!is.null(var.grp)) {
           vl <- autoSetValueLabels(var.grp)
           if (!is.null(vl)) {
-            valueLabels <- list(valueLabels, vl)
+            valueLabels <- c(valueLabels, list(vl))
           }
         }
       }
@@ -223,27 +227,59 @@ sjt.xtab <- function (var.row,
   # -------------------------------------
   # compute xtab
   # -------------------------------------
-  # check if we have weights or not
-  if (is.null(weightBy)) {
-    # check if we have groupings or not
-    if (is.null(var.grp)) {
-      tab <- ftable(xtabs(~ var.row + var.col))
-      coladd <- 2
+  # check if we have missings or not
+  # -------------------------------------
+  if (showNA) {
+    # check if we have weights or not
+    if (is.null(weightBy)) {
+      # check if we have groupings or not
+      if (is.null(var.grp)) {
+        tab <- ftable(xtabs(~ addNA(var.row) + addNA(var.col)))
+        coladd <- 3
+      }
+      else {
+        tab <- ftable(xtabs(~ addNA(var.grp) + addNA(var.row) + addNA(var.col)))
+        coladd <- 4
+      }
     }
     else {
-      tab <- ftable(xtabs(~ var.grp + var.row + var.col))
-      coladd <- 3
+      # check if we have groupings or not
+      if (is.null(var.grp)) {
+        tab <- ftable(xtabs(weightBy ~ addNA(var.row) + addNA(var.col)))
+        coladd <- 3
+      }
+      else {
+        tab <- ftable(xtabs(weightBy ~ addNA(var.grp) + addNA(var.row) + addNA(var.col)))
+        coladd <- 4
+      }
     }
   }
+  # -------------------------------------
+  # no missings to show here
+  # -------------------------------------
   else {
-    # check if we have groupings or not
-    if (is.null(var.grp)) {
-      tab <- ftable(xtabs(weightBy ~ var.row + var.col))
-      coladd <- 2
+    # check if we have weights or not
+    if (is.null(weightBy)) {
+      # check if we have groupings or not
+      if (is.null(var.grp)) {
+        tab <- ftable(xtabs(~ var.row + var.col))
+        coladd <- 2
+      }
+      else {
+        tab <- ftable(xtabs(~ var.grp + var.row + var.col))
+        coladd <- 3
+      }
     }
     else {
-      tab <- ftable(xtabs(weightBy ~ var.grp + var.row + var.col))
-      coladd <- 3
+      # check if we have groupings or not
+      if (is.null(var.grp)) {
+        tab <- ftable(xtabs(weightBy ~ var.row + var.col))
+        coladd <- 2
+      }
+      else {
+        tab <- ftable(xtabs(weightBy ~ var.grp + var.row + var.col))
+        coladd <- 3
+      }
     }
   }
   # -------------------------------------
@@ -311,6 +347,14 @@ sjt.xtab <- function (var.row,
         labels.var.grp <- seq_along(unique(na.omit(var.grp)))
       }
     }
+  }
+  # ------------------------------------------
+  # add label for missing colum
+  # ------------------------------------------
+  if (showNA) {
+    labels.var.col <- c(labels.var.col, labelNA)
+    labels.var.row <- c(labels.var.row, labelNA)
+    if (!is.null(labels.var.grp)) labels.var.grp <- c(labels.var.grp, labelNA)
   }
   # check length of variable labels and split longer strings at into new lines
   if (!is.null(labels.var.row)) labels.var.row <- sju.wordwrap(labels.var.row, breakValueLabelsAt, "<br>")
