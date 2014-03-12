@@ -16,7 +16,8 @@
 #' @param weightBy A weight factor that will be applied to weight all cases from \code{items}.
 #' @param title A table caption.
 #' @param varlabels A list or vector of strings with variable names. If not specified, row names of \code{items}
-#'          will be used.
+#'          will be used, resp. variable labels will automatically be detected, when they have
+#'          a \code{"variable.lable"} attribute (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param breakLabelsAt Wordwrap for variable labels. Determines how many chars of the variable labels are displayed in 
 #'          one line and when a line break is inserted. Default is 40.
 #' @param valuelabels A list or vector of strings that category/value labels, which
@@ -129,6 +130,17 @@
 #'              alternateRowColors=TRUE,
 #'              showN=TRUE,
 #'              showNA=TRUE)}
+#'          
+#' # -------------------------------
+#' # auto-detection of labels
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, varlabs)
+#' \dontrun{
+#' sjt.stackfrq(efc[,c(start:end)])}
+#'          
+#' # -------------------------------- 
+#' # User defined style sheet
+#' # -------------------------------- 
 #' \dontrun{
 #' sjt.stackfrq(efc[,c(start:end)],
 #'              varlabels=varlabs[c(start:end)],

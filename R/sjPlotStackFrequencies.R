@@ -36,8 +36,8 @@
 #' @param includeN If \code{TRUE} (default), the N of each item is included into axis labels.
 #' @param axisLabels.y Labels for the y-axis (the labels of the \code{items}). These parameters must
 #'          be passed as list! Example: \code{axisLabels.y=list(c("Q1", "Q2", "Q3"))}
-#'          Use \code{"auto"} to automatically detect variable names that will be used as title
-#'          (see \code{\link{sji.setVariableLabels}}) for details).
+#'          Axis labels will automatically be detected, when they have
+#'          a \code{"variable.lable"} attribute (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param axisLabelSize The size of category labels at the axes. Default is 1.1, recommended values range
 #'          between 0.5 and 3.0
 #' @param axisLabelAngle.x Angle for axis-labels.

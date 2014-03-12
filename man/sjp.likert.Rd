@@ -77,7 +77,9 @@ sjp.likert(items, legendLabels = NULL, orderBy = NULL,
   \item{axisLabels.y}{Labels for the y-axis (the labels of
   the \code{items}). These parameters must be passed as
   list! Example: \code{axisLabels.y=list(c("Q1", "Q2",
-  "Q3"))}}
+  "Q3"))} Axis labels will automatically be detected, when
+  they have a \code{"variable.lable"} attribute (see
+  \code{\link{sji.setVariableLabels}}) for details).}
 
   \item{axisLabelSize}{The size of category labels at the
   axes. Default is 1.1, recommended values range between

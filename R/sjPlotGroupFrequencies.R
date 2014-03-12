@@ -345,7 +345,13 @@ sjp.grpfrq <- function(varCount,
   if (is.null(legendLabels)) legendLabels <- autoSetValueLabels(varGroup)
   if (is.null(interactionVarLabels) && !is.null(interactionVar)) interactionVarLabels <- autoSetValueLabels(interactionVar)
   if (!is.null(axisTitle.x) && axisTitle.x=="auto") axisTitle.x <- autoSetVariableLabels(varCount)
-  if (!is.null(title) && title=="auto") title <- paste0(autoSetVariableLabels(varCount), " by ", autoSetVariableLabels(varGroup))
+  if (!is.null(title) && title=="auto") {
+    t1 <- autoSetVariableLabels(varCount)
+    t2 <- autoSetVariableLabels(varGroup)
+    if (!is.null(t1) && !is.null(t2)) {
+      title <- paste0(t1, " by ", t2)
+    }
+  }
   # --------------------------------------------------------
   # count variable may not be a factor!
   # --------------------------------------------------------

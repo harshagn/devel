@@ -24,6 +24,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #'          shown. Only applies if parameter \code{type} is \code{"bars"}. Default value is \code{FALSE}.
 #' @param title Diagram's title as string.
 #'          Example: \code{title=c("my title")}
+#'          Use \code{"auto"} to automatically detect variable names that will be used as title
+#'          (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param titleSize The size of the plot title. Default is 1.3.
 #' @param titleColor The color of the plot title. Default is \code{"black"}.
 #' @param axisLabels.y Value labels of the grouping variable \code{grpVar} that are used for labelling the
@@ -44,6 +46,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #'          between 2 and 8.
 #' @param axisLabelColor The color of the category labels (predictor labels). Default is a dark grey (grey30).
 #' @param axisTitle.x A label for the x axis. Default is \code{NULL}, which means no x-axis title.
+#'          Use \code{"auto"} to automatically detect variable names that will be used as title
+#'          (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param axisTitleColor The color of the x axis label.
 #' @param axisTitleSize The size of the x axis label. Default is 1.2.
 #' @param axisLimits Defines the range of the axis where the beta coefficients and their confidence intervalls
@@ -120,7 +124,9 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #' 
 #' @examples
 #' data(efc)
-#' sjp.aov1(efc$c12hour, as.factor(efc$e42dep))
+#' # note: "grpVar" does not need to be a factor.
+#' # coercion to factor is done by the function
+#' sjp.aov1(efc$c12hour, efc$e42dep)
 #' 
 #' 
 #' data(efc)
@@ -131,18 +137,14 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #'          axisLabels.y=efc.val['e42dep'],
 #'          axisTitle.x=efc.var[['c12hour']])
 #'          
+#' # -------------------------------------------------
+#' # auto-detection of value labels and variable names
+#' # -------------------------------------------------
+#' efc <- sji.setVariableLabels(efc, efc.var)
 #' sjp.aov1(efc$c12hour,
-#'          as.factor(efc$e42dep),
-#'          axisLabels.y=efc.val['e42dep'],
-#'          title=efc.var[['c12hour']],
-#'          type="bars",
-#'          meansums=TRUE,
-#'          hideErrorBars=TRUE,
-#'          theme="minimal",
-#'          minorGridColor="white",
-#'          showTickMarks=FALSE,
-#'          showModelSummary=FALSE,
-#'          hideGrid.x=TRUE)
+#'          efc$e42dep,
+#'          title="auto",
+#'          axisTitle.x="auto")
 #' 
 #' sjp.aov1(efc$c12hour,
 #'          as.factor(efc$c172code),
@@ -210,6 +212,14 @@ sjp.aov1 <- function(depVar,
   # try to automatically set labels is not passed as parameter
   # --------------------------------------------------------
   if (is.null(axisLabels.y)) axisLabels.y <- autoSetValueLabels(grpVar)
+  if (!is.null(axisTitle.x) && axisTitle.x=="auto") axisTitle.x <- autoSetVariableLabels(depVar)
+  if (!is.null(title) && title=="auto") {
+    t1 <- autoSetVariableLabels(depVar)
+    t2 <- autoSetVariableLabels(grpVar)
+    if (!is.null(t1) && !is.null(t2)) {
+      title <- paste0(t1, " by ", t2)
+    }
+  }
   # --------------------------------------------------------
   # unlist labels
   # --------------------------------------------------------

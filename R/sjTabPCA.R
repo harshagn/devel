@@ -130,8 +130,12 @@
 #' \dontrun{
 #' sjt.pca(df)}
 #' 
+#' # -------------------------------
+#' # auto-detection of labels
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, varlabs)
 #' \dontrun{
-#' sjt.pca(df, showMSA=TRUE, showVariance=TRUE)}
+#' sjt.pca(efc[,c(start:end)])}
 #' 
 #' @export
 sjt.pca <- function (data,
@@ -152,6 +156,25 @@ sjt.pca <- function (data,
                      CSS=NULL,
                      useViewer=TRUE,
                      no.output=FALSE) {
+  # --------------------------------------------------------
+  # try to automatically set labels is not passed as parameter
+  # --------------------------------------------------------
+  if (is.null(varlabels) && is.data.frame(data)) {
+    # if yes, iterate each variable
+    for (i in 1:ncol(data)) {
+      # retrieve variable name attribute
+      vn <- autoSetVariableLabels(data[,i])
+      # if variable has attribute, add to variableLabel list
+      if (!is.null(vn)) {
+        varlabels <- c(varlabels, vn)
+      }
+      else {
+        # else break out of loop
+        varlabels <- NULL
+        break
+      }
+    }
+  }
   # ----------------------------
   # check if user has passed a data frame
   # or a pca object

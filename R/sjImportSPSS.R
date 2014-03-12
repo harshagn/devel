@@ -13,6 +13,9 @@
 #'          
 #' @param path The file path to the SPSS dataset.
 #' @param enc The file encoding of the SPSS dataset.
+#' @param autoAttachVarLabels if \code{TRUE}, variable labels will automatically be
+#'          attached to each variable as \code{"variable.label"} attribute.
+#'          See \code{\link{sji.setVariableLabels}} for details.
 #' @return A data frame containing the SPSS data. retrieve value labels with \code{\link{sji.getValueLabels}}
 #'   and variable labels with \code{\link{sji.getVariableLabels}}.
 #'   
@@ -32,9 +35,14 @@
 #' 
 #' @importFrom foreign read.spss
 #' @export
-sji.SPSS <- function(path, enc=NA) {
+sji.SPSS <- function(path, enc=NA, autoAttachVarLabels=FALSE) {
   # import data as data frame
   data.spss <- read.spss(path, to.data.frame=TRUE, use.value.labels=FALSE, reencode=enc)
+  # auto attach labels
+  if (autoAttachVarLabels) {
+    cat("Attaching variable labels. Please wait...\n")
+    data.spss <- sji.setVariableLabels(data.spss, sji.getVariableLabels(data.spss))
+  }
   # return data frame
   return(data.spss)
 }
@@ -103,15 +111,34 @@ getValLabels <- function(x){
 #' 
 #' @export
 sji.setValueLabels <- function(var, labels) {
-  # retrieve values
-  minval <- min(na.omit(var))
-  maxval <- max(na.omit(var))
-  # check for valid length of labels
-  if ((maxval-minval+1)!=length(labels)) {
-    stop("Parameter \"labels\" must be of same length as value range of \"var\"." , call.=FALSE)
+  # check for null
+  if (!is.null(labels)) {
+    # retrieve values
+    minval <- min(na.omit(var))
+    maxval <- max(na.omit(var))
+    # check for unlisting
+    if (is.list(labels)) {
+      labels <- as.vector(unlist(labels))
+    }
+    lablen <- length(labels)
+    valrange <- maxval-minval+1
+    if (is.infinite(valrange)) {
+      cat("Can't set value labels. Infinite value range.\n")
+    }
+    # check for valid length of labels
+    else if (valrange<lablen) {
+      cat(sprintf("More labels than values of \"var\". Using first %i labels.\n", valrange))
+      attr(var, "value.labels") <- c(as.character(c(minval:maxval)))
+      names(attr(var, "value.labels")) <- rev(labels[1:valrange])
+    }
+    else if (valrange>lablen) {
+      cat("Can't set value labels. Value range of \"var\" is longer than length of \"labels\".\n")
+    }
+    else {
+      attr(var, "value.labels") <- c(as.character(c(minval:maxval)))
+      names(attr(var, "value.labels")) <- rev(labels)
+    }
   }
-  attr(var, "value.labels") <- c(as.character(c(minval:maxval)))
-  names(attr(var, "value.labels")) <- rev(labels)
   return (var)
 }
 
@@ -194,16 +221,27 @@ sji.getVariableLabels <- function(dat) {
 #' 
 #' @export
 sji.setVariableLabels <- function(x, lab) {
-  if (is.data.frame(x)) {
-    if (ncol(x)!=length(lab)) {
-      stop("Parameter \"lab\" must be of same length as numbers of columns in \"x\"." , call.=FALSE)
+  if (!is.null(lab) && !is.null(x)) {
+    if (is.data.frame(x)) {
+      if (ncol(x)!=length(lab)) {
+        cat("Parameter \"lab\" must be of same length as numbers of columns in \"x\".\n")
+      }
+      else {
+        # -------------------------------------
+        # create progress bar
+        # -------------------------------------
+        pb <- txtProgressBar(min=0, max=ncol(x), style=3)
+        for (i in 1:ncol(x)) {
+          attr(x[,i], "variable.label") <- lab[i]
+          # update progress bar
+          setTxtProgressBar(pb, i)
+        }
+        close(pb)
+      }
     }
-    for (i in 1:ncol(x)) {
-      attr(x[,i], "variable.label") <- lab[i]
+    else {
+      attr(x, "variable.label") <- lab
     }
-  }
-  else {
-    attr(x, "variable.label") <- lab
   }
   return (x)
 }

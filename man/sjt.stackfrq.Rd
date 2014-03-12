@@ -21,7 +21,10 @@ sjt.stackfrq(items, weightBy = NULL, title = NULL, varlabels = NULL,
 
   \item{varlabels}{A list or vector of strings with
   variable names. If not specified, row names of
-  \code{items} will be used.}
+  \code{items} will be used, resp. variable labels will
+  automatically be detected, when they have a
+  \code{"variable.lable"} attribute (see
+  \code{\link{sji.setVariableLabels}}) for details).}
 
   \item{breakLabelsAt}{Wordwrap for variable labels.
   Determines how many chars of the variable labels are
@@ -186,6 +189,17 @@ sjt.stackfrq(efc[,c(start:end)],
              alternateRowColors=TRUE,
              showN=TRUE,
              showNA=TRUE)}
+
+# -------------------------------
+# auto-detection of labels
+# -------------------------------
+efc <- sji.setVariableLabels(efc, varlabs)
+\dontrun{
+sjt.stackfrq(efc[,c(start:end)])}
+
+# --------------------------------
+# User defined style sheet
+# --------------------------------
 \dontrun{
 sjt.stackfrq(efc[,c(start:end)],
              varlabels=varlabs[c(start:end)],

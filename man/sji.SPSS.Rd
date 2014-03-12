@@ -2,12 +2,17 @@
 \alias{sji.SPSS}
 \title{Import SPSS dataset as data frame into R}
 \usage{
-sji.SPSS(path, enc = NA)
+sji.SPSS(path, enc = NA, autoAttachVarLabels = FALSE)
 }
 \arguments{
   \item{path}{The file path to the SPSS dataset.}
 
   \item{enc}{The file encoding of the SPSS dataset.}
+
+  \item{autoAttachVarLabels}{if \code{TRUE}, variable
+  labels will automatically be attached to each variable as
+  \code{"variable.label"} attribute.  See
+  \code{\link{sji.setVariableLabels}} for details.}
 }
 \value{
 A data frame containing the SPSS data. retrieve value

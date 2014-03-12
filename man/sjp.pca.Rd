@@ -230,6 +230,12 @@ df <- as.data.frame(efc[,c(start:end)])
 colnames(df) <- varlabs[c(start:end)]
 
 sjp.pca(df)
+
+# -------------------------------
+# auto-detection of labels
+# -------------------------------
+efc <- sji.setVariableLabels(efc, varlabs)
+sjp.pca(efc[,c(start:end)])
 }
 \references{
 \url{http://strengejacke.wordpress.com/sjplot-r-package/}

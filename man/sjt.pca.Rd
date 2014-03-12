@@ -185,8 +185,12 @@ colnames(df) <- varlabs[c(start:end)]
 \dontrun{
 sjt.pca(df)}
 
+# -------------------------------
+# auto-detection of labels
+# -------------------------------
+efc <- sji.setVariableLabels(efc, varlabs)
 \dontrun{
-sjt.pca(df, showMSA=TRUE, showVariance=TRUE)}
+sjt.pca(efc[,c(start:end)])}
 }
 \references{
 \itemize{ \item

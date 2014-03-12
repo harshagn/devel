@@ -108,6 +108,12 @@
 #' \dontrun{
 #' sjt.itemanalysis(df)}
 #' 
+#' # -------------------------------
+#' # auto-detection of labels
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, varlabs)
+#' sjt.itemanalysis(efc[,c(start:end)])
+#'   
 #' # ---------------------------------------
 #' # Compute PCA on Cope-Index, and perform a
 #' # item analysis for each extracted factor.
@@ -129,6 +135,24 @@ sjt.itemanalysis <- function(df,
                              CSS=NULL,
                              useViewer=TRUE,
                              no.output=FALSE) {
+  # -----------------------------------
+  # auto-detect variable labels
+  # -----------------------------------
+  varlabels <- c()
+  for (i in 1:ncol(df)) {
+    # retrieve variable name attribute
+    vn <- autoSetVariableLabels(df[,i])
+    # if variable has attribute, add to variableLabel list
+    if (!is.null(vn)) {
+      varlabels <- c(varlabels, vn)
+    }
+    else {
+      # else break out of loop
+      varlabels <- NULL
+      break
+    }
+  }
+  if (!is.null(varlabels)) colnames(df) <- varlabels
   # -----------------------------------
   # check whether we have (factor) groups
   # for data frame

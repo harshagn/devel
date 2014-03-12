@@ -140,6 +140,12 @@
 #' 
 #' sjp.pca(df)
 #' 
+#' # -------------------------------
+#' # auto-detection of labels
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, varlabs)
+#' sjp.pca(efc[,c(start:end)])
+#' 
 #' 
 #' @import ggplot2
 #' @importFrom reshape2 melt
@@ -179,6 +185,25 @@ sjp.pca <- function(data,
                     minorGridColor=NULL,
                     theme=NULL,
                     printPlot=TRUE) {
+  # --------------------------------------------------------
+  # try to automatically set labels is not passed as parameter
+  # --------------------------------------------------------
+  if (is.null(axisLabels.y) && is.data.frame(data)) {
+    # if yes, iterate each variable
+    for (i in 1:ncol(data)) {
+      # retrieve variable name attribute
+      vn <- autoSetVariableLabels(data[,i])
+      # if variable has attribute, add to variableLabel list
+      if (!is.null(vn)) {
+        axisLabels.y <- c(axisLabels.y, vn)
+      }
+      else {
+        # else break out of loop
+        axisLabels.y <- NULL
+        break
+      }
+    }
+  }
   # ----------------------------
   # check if user has passed a data frame
   # or a pca object

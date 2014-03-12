@@ -272,8 +272,13 @@ sjp.xtab <- function(y,
   if (is.null(axisLabels.x)) axisLabels.x <- autoSetValueLabels(y)
   if (is.null(legendLabels)) legendLabels <- autoSetValueLabels(x)
   if (!is.null(axisTitle.x) && axisTitle.x=="auto") axisTitle.x <- autoSetVariableLabels(y)
-  if (!is.null(title) && title=="auto") title <- paste0(autoSetVariableLabels(y), " by ", autoSetVariableLabels(x))
-  
+  if (!is.null(title) && title=="auto") {
+    t1 <- autoSetVariableLabels(y)
+    t2 <- autoSetVariableLabels(x)
+    if (!is.null(t1) && !is.null(t2)) {
+      title <- paste0(t1, " by ", t2)
+    }
+  }
   # determine table index, i.e. if row-percentages, column-percentages
   # or cell-percentages should be displayed
   tindex <- ifelse (tableIndex=="row", 1, 2)
