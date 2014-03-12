@@ -103,7 +103,9 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   panel.}
 
   \item{title}{Title of the diagram, plotted above the
-  whole diagram panel.}
+  whole diagram panel.  Use \code{"auto"} to automatically
+  detect variable names that will be used as title (see
+  \code{\link{sji.setVariableLabels}}) for details).}
 
   \item{titleSize}{The size of the plot title. Default is
   1.3.}
@@ -318,7 +320,10 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
 
   \item{axisTitle.x}{A label for the x axis. Useful when
   plotting histograms with metric scales where no category
-  labels are assigned to the x axis.}
+  labels are assigned to the x axis.  Use \code{"auto"} to
+  automatically detect variable names that will be used as
+  title (see \code{\link{sji.setVariableLabels}}) for
+  details).}
 
   \item{axisTitle.y}{A label for the y axis. Useful when
   plotting histograms with metric scales where no category
@@ -434,11 +439,13 @@ sjp.grpfrq(sample(1:2, length(PlantGrowth$group), replace=TRUE),
 # dataset was importet from an SPSS-file, using:
 # efc <- sji.SPSS("efc.sav", enc="UTF-8")
 data(efc)
+# -------------------------------------------------
+# auto-detection of value labels and variable names
+# -------------------------------------------------
 efc.var <- sji.getVariableLabels(efc)
-sjp.grpfrq(efc$e42dep,
-           efc$e16sex,
-           title=efc.var['e42dep'],
-           legendTitle=efc.var['e16sex'])
+efc <- sji.setVariableLabels(efc, efc.var)
+# grouped bars using necessary y-limit
+sjp.grpfrq(efc$e42dep, efc$e16sex, title="auto")
 
 # grouped bars using the maximum y-limit
 sjp.grpfrq(efc$e42dep,
@@ -448,12 +455,6 @@ sjp.grpfrq(efc$e42dep,
            legendTitle=efc.var['e16sex'],
            legendLabels=efc.val[['e16sex']], # not needed for SPSS-data sets
            maxYlim=TRUE)
-
-# grouped bars using necessary y-limit
-sjp.grpfrq(efc$e16sex,
-           efc$e42dep,
-           title=efc.var['e16sex'],
-           legendTitle=efc.var['e42dep'])
 
 # box plots with interaction variable
 sjp.grpfrq(efc$e17age,

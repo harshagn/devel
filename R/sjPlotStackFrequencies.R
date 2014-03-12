@@ -36,6 +36,8 @@
 #' @param includeN If \code{TRUE} (default), the N of each item is included into axis labels.
 #' @param axisLabels.y Labels for the y-axis (the labels of the \code{items}). These parameters must
 #'          be passed as list! Example: \code{axisLabels.y=list(c("Q1", "Q2", "Q3"))}
+#'          Use \code{"auto"} to automatically detect variable names that will be used as title
+#'          (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param axisLabelSize The size of category labels at the axes. Default is 1.1, recommended values range
 #'          between 0.5 and 3.0
 #' @param axisLabelAngle.x Angle for axis-labels.
@@ -156,6 +158,13 @@
 #' sjp.stackfrq(efc[,c(start:end)], legendLabels=levels,
 #'              axisLabels.y=items, jitterValueLabels=TRUE)
 #' 
+#' # -------------------------------
+#' # auto-detection of labels
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, varlabs)
+#' sjp.stackfrq(efc[,c(start:end)])
+#' 
+#' 
 #' @import ggplot2
 #' @importFrom plyr ddply
 #' @importFrom scales percent
@@ -218,6 +227,23 @@ sjp.stackfrq <- function(items,
   # try to automatically set labels is not passed as parameter
   # --------------------------------------------------------
   if (is.null(legendLabels)) legendLabels <- autoSetValueLabels(items[,1])
+  if (is.null(axisLabels.y)) {
+    axisLabels.y <- c()
+    # if yes, iterate each variable
+    for (i in 1:ncol(items)) {
+      # retrieve variable name attribute
+      vn <- autoSetVariableLabels(items[,i])
+      # if variable has attribute, add to variableLabel list
+      if (!is.null(vn)) {
+        axisLabels.y <- c(axisLabels.y, vn)
+      }
+      else {
+        # else break out of loop
+        axisLabels.y <- NULL
+        break
+      }
+    }
+  }
   # --------------------------------------------------------
   # If axisLabels.y were not defined, simply use column names
   # --------------------------------------------------------

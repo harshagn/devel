@@ -81,7 +81,9 @@ sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
   y-axis. Overrides the \code{maxYlim} parameter.}
 
   \item{title}{Title of the diagram, plotted above the
-  whole diagram panel.}
+  whole diagram panel.  Use \code{"auto"} to automatically
+  detect variable names that will be used as title (see
+  \code{\link{sji.setVariableLabels}}) for details).}
 
   \item{titleSize}{The size of the plot title. Default is
   1.3.}
@@ -252,7 +254,10 @@ sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
 
   \item{axisTitle.x}{A label for the x axis. useful when
   plotting histograms with metric scales where no category
-  labels are assigned to the x axis.}
+  labels are assigned to the x axis.  Use \code{"auto"} to
+  automatically detect variable names that will be used as
+  title (see \code{\link{sji.setVariableLabels}}) for
+  details).}
 
   \item{axisTitle.y}{A label for the y axis. useful when
   plotting histograms with metric scales where no category
@@ -353,6 +358,12 @@ sjp.xtab(efc$e16sex,
          barPosition="stack",
          flipCoordinates=TRUE,
          jitterValueLabels=TRUE)
+
+# -------------------------------
+# auto-detection of labels
+# -------------------------------
+efc <- sji.setVariableLabels(efc, efc.var)
+sjp.xtab(efc$e16sex, efc$e42dep, title="auto", axisTitle.x="auto")
 }
 \references{
 \itemize{ \item

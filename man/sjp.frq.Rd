@@ -29,8 +29,11 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
   \item{varCount}{The variable which frequencies should be
   plotted.}
 
-  \item{title}{Title of diagram as string.  Example:
-  \code{title=c("my title")}}
+  \item{title}{Title of diagram as string. Example:
+  \code{title=c("my title")}.  Use \code{"auto"} to
+  automatically detect variable names that will be used as
+  title (see \code{\link{sji.setVariableLabels}}) for
+  details).}
 
   \item{titleSize}{The size of the plot title. Default is
   1.3.}
@@ -241,7 +244,10 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
 
   \item{axisTitle.x}{A label for the x axis. useful when
   plotting histograms with metric scales where no category
-  labels are assigned to the x axis.}
+  labels are assigned to the x axis.  Use \code{"auto"} to
+  automatically detect variable names that will be used as
+  title (see \code{\link{sji.setVariableLabels}}) for
+  details).}
 
   \item{axisTitle.y}{A label for the y axis. useful when
   plotting histograms with metric scales where no category
@@ -362,13 +368,18 @@ sjp.frq(efc$e17age,
         interactionVarLabels=efc.val['e16sex'],
         type="box")
 
+# -------------------------------------------------
+# auto-detection of value labels and variable names
+# -------------------------------------------------
+efc <- sji.setVariableLabels(efc, sji.getVariableLabels(efc))
+
 # negative impact scale, ranging from 7-28, assuming that
 # variable scale (lowest value) starts with 1
-sjp.frq(efc$neg_c_7, startAxisAt=1)
+sjp.frq(efc$neg_c_7, startAxisAt=1, title="auto")
 
 # negative impact scale, ranging from 7-28, using
 # automatic detection of start index of x-axis
-sjp.frq(efc$neg_c_7)
+sjp.frq(efc$neg_c_7, axisTitle.x="auto")
 }
 \references{
 \itemize{ \item

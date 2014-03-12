@@ -16,8 +16,9 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'                box plot etc. using ggplot.
 #' 
 #' @param varCount The variable which frequencies should be plotted.
-#' @param title Title of diagram as string.
-#'          Example: \code{title=c("my title")}
+#' @param title Title of diagram as string. Example: \code{title=c("my title")}.
+#'          Use \code{"auto"} to automatically detect variable names that will be used as title
+#'          (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param titleSize The size of the plot title. Default is 1.3.
 #' @param titleColor The color of the plot title. Default is \code{"black"}.
 #' @param weightBy A weight factor that will be applied to weight all cases from \code{varCount}.
@@ -119,6 +120,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #' @param valueLabelColor The color of the value labels (numbers) inside the digram.
 #' @param axisTitle.x A label for the x axis. useful when plotting histograms with metric scales where no category labels
 #'          are assigned to the x axis.
+#'          Use \code{"auto"} to automatically detect variable names that will be used as title
+#'          (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param axisTitle.y A label for the y axis. useful when plotting histograms with metric scales where no category labels
 #'          are assigned to the y axis.
 #' @param axisTitleColor The color of the x and y axis labels. Refers to \code{axisTitle.x} and \code{axisTitle.y}, not to the tick mark 
@@ -205,13 +208,18 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'         interactionVarLabels=efc.val['e16sex'],
 #'         type="box")
 #' 
+#' # -------------------------------------------------
+#' # auto-detection of value labels and variable names
+#' # -------------------------------------------------
+#' efc <- sji.setVariableLabels(efc, sji.getVariableLabels(efc))
+#' 
 #' # negative impact scale, ranging from 7-28, assuming that
 #' # variable scale (lowest value) starts with 1
-#' sjp.frq(efc$neg_c_7, startAxisAt=1)
+#' sjp.frq(efc$neg_c_7, startAxisAt=1, title="auto")
 #' 
 #' # negative impact scale, ranging from 7-28, using
 #' # automatic detection of start index of x-axis
-#' sjp.frq(efc$neg_c_7)
+#' sjp.frq(efc$neg_c_7, axisTitle.x="auto")
 #' 
 #' @import ggplot2
 #' @export
@@ -280,6 +288,9 @@ sjp.frq <- function(varCount,
   # try to automatically set labels is not passed as parameter
   # --------------------------------------------------------
   if (is.null(axisLabels.x)) axisLabels.x <- autoSetValueLabels(varCount)
+  if (is.null(interactionVarLabels) && !is.null(interactionVar)) interactionVarLabels <- autoSetValueLabels(interactionVar)
+  if (!is.null(axisTitle.x) && axisTitle.x=="auto") axisTitle.x <- autoSetVariableLabels(varCount)
+  if (!is.null(title) && title=="auto") title <- autoSetVariableLabels(varCount)
   # --------------------------------------------------------
   # count variable may not be a factor!
   # --------------------------------------------------------

@@ -168,6 +168,22 @@ sjt.stackfrq <- function (items,
   # try to automatically set labels is not passed as parameter
   # --------------------------------------------------------
   if (is.null(valuelabels)) valuelabels <- autoSetValueLabels(items[,1])
+  if (is.null(varlabels)) {
+    # if yes, iterate each variable
+    for (i in 1:ncol(items)) {
+      # retrieve variable name attribute
+      vn <- autoSetVariableLabels(items[,i])
+      # if variable has attribute, add to variableLabel list
+      if (!is.null(vn)) {
+        varlabels <- c(varlabels, vn)
+      }
+      else {
+        # else break out of loop
+        varlabels <- NULL
+        break
+      }
+    }
+  }
   # --------------------------------------------------------
   # check abbreviations
   # --------------------------------------------------------

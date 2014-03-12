@@ -39,6 +39,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "
 #'          depending on the variable.
 #' @param upperYlim Uses a pre-defined upper limit for the y-axis. Overrides the \code{maxYlim} parameter.
 #' @param title Title of the diagram, plotted above the whole diagram panel.
+#'          Use \code{"auto"} to automatically detect variable names that will be used as title
+#'          (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param titleSize The size of the plot title. Default is 1.3.
 #' @param titleColor The color of the plot title. Default is \code{"black"}.
 #' @param legendTitle Title of the diagram's legend.
@@ -115,6 +117,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "
 #' @param valueLabelColor The color of the value labels (numbers) inside the diagram.
 #' @param axisTitle.x A label for the x axis. useful when plotting histograms with metric scales where no category labels
 #'          are assigned to the x axis.
+#'          Use \code{"auto"} to automatically detect variable names that will be used as title
+#'          (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param axisTitle.y A label for the y axis. useful when plotting histograms with metric scales where no category labels
 #'          are assigned to the y axis.
 #' @param axisTitleColor The color of the x and y axis labels. refers to \code{axisTitle.x} and \code{axisTitle.y},
@@ -190,6 +194,12 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "
 #'          flipCoordinates=TRUE,
 #'          jitterValueLabels=TRUE)
 #'
+#' # -------------------------------
+#' # auto-detection of labels
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, efc.var)
+#' sjp.xtab(efc$e16sex, efc$e42dep, title="auto", axisTitle.x="auto")
+#'
 #' @import ggplot2
 #' @importFrom plyr ddply
 #' @importFrom scales percent
@@ -261,6 +271,9 @@ sjp.xtab <- function(y,
   # --------------------------------------------------------
   if (is.null(axisLabels.x)) axisLabels.x <- autoSetValueLabels(y)
   if (is.null(legendLabels)) legendLabels <- autoSetValueLabels(x)
+  if (!is.null(axisTitle.x) && axisTitle.x=="auto") axisTitle.x <- autoSetVariableLabels(y)
+  if (!is.null(title) && title=="auto") title <- paste0(autoSetVariableLabels(y), " by ", autoSetVariableLabels(x))
+  
   # determine table index, i.e. if row-percentages, column-percentages
   # or cell-percentages should be displayed
   tindex <- ifelse (tableIndex=="row", 1, 2)

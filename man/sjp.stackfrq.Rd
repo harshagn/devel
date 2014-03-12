@@ -72,7 +72,9 @@ sjp.stackfrq(items, legendLabels = NULL, orderBy = NULL, weightBy = NULL,
   \item{axisLabels.y}{Labels for the y-axis (the labels of
   the \code{items}). These parameters must be passed as
   list! Example: \code{axisLabels.y=list(c("Q1", "Q2",
-  "Q3"))}}
+  "Q3"))} Use \code{"auto"} to automatically detect
+  variable names that will be used as title (see
+  \code{\link{sji.setVariableLabels}}) for details).}
 
   \item{axisLabelSize}{The size of category labels at the
   axes. Default is 1.1, recommended values range between
@@ -297,6 +299,12 @@ items <- list(varlabs[c(start:end)])
 
 sjp.stackfrq(efc[,c(start:end)], legendLabels=levels,
              axisLabels.y=items, jitterValueLabels=TRUE)
+
+# -------------------------------
+# auto-detection of labels
+# -------------------------------
+efc <- sji.setVariableLabels(efc, varlabs)
+sjp.stackfrq(efc[,c(start:end)])
 }
 \references{
 \itemize{ \item

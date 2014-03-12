@@ -52,6 +52,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #'          bar charts. Ideal for larger amount of groups. This parameter wraps a single panel into 
 #'          \code{varGrpup} amount of panels, i.e. each group is represented within a new panel.
 #' @param title Title of the diagram, plotted above the whole diagram panel.
+#'          Use \code{"auto"} to automatically detect variable names that will be used as title
+#'          (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param titleSize The size of the plot title. Default is 1.3.
 #' @param titleColor The color of the plot title. Default is \code{"black"}.
 #' @param legendTitle Title of the diagram's legend.
@@ -150,6 +152,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #' @param valueLabelColor The color of the value labels (numbers) inside the diagram.
 #' @param axisTitle.x A label for the x axis. Useful when plotting histograms with metric scales where no category labels
 #'          are assigned to the x axis.
+#'          Use \code{"auto"} to automatically detect variable names that will be used as title
+#'          (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param axisTitle.y A label for the y axis. Useful when plotting histograms with metric scales where no category labels
 #'          are assigned to the y axis.
 #' @param axisTitleColor The color of the x and y axis labels. Refers to \code{axisTitle.x} and \code{axisTitle.y},
@@ -220,11 +224,13 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #' # dataset was importet from an SPSS-file, using:
 #' # efc <- sji.SPSS("efc.sav", enc="UTF-8")
 #' data(efc)
+#' # -------------------------------------------------
+#' # auto-detection of value labels and variable names
+#' # -------------------------------------------------
 #' efc.var <- sji.getVariableLabels(efc)
-#' sjp.grpfrq(efc$e42dep,
-#'            efc$e16sex,
-#'            title=efc.var['e42dep'],
-#'            legendTitle=efc.var['e16sex'])
+#' efc <- sji.setVariableLabels(efc, efc.var)
+#' # grouped bars using necessary y-limit            
+#' sjp.grpfrq(efc$e42dep, efc$e16sex, title="auto")
 #'
 #' # grouped bars using the maximum y-limit            
 #' sjp.grpfrq(efc$e42dep,
@@ -234,12 +240,6 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #'            legendTitle=efc.var['e16sex'],
 #'            legendLabels=efc.val[['e16sex']], # not needed for SPSS-data sets
 #'            maxYlim=TRUE)
-#'            
-#' # grouped bars using necessary y-limit            
-#' sjp.grpfrq(efc$e16sex,
-#'            efc$e42dep,
-#'            title=efc.var['e16sex'],
-#'            legendTitle=efc.var['e42dep'])
 #'            
 #' # box plots with interaction variable            
 #' sjp.grpfrq(efc$e17age,
@@ -343,6 +343,9 @@ sjp.grpfrq <- function(varCount,
   # --------------------------------------------------------
   if (is.null(axisLabels.x)) axisLabels.x <- autoSetValueLabels(varCount)
   if (is.null(legendLabels)) legendLabels <- autoSetValueLabels(varGroup)
+  if (is.null(interactionVarLabels) && !is.null(interactionVar)) interactionVarLabels <- autoSetValueLabels(interactionVar)
+  if (!is.null(axisTitle.x) && axisTitle.x=="auto") axisTitle.x <- autoSetVariableLabels(varCount)
+  if (!is.null(title) && title=="auto") title <- paste0(autoSetVariableLabels(varCount), " by ", autoSetVariableLabels(varGroup))
   # --------------------------------------------------------
   # count variable may not be a factor!
   # --------------------------------------------------------

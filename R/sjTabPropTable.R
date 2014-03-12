@@ -20,6 +20,8 @@
 #'          the associated variable names. Following order is needed: name of \code{var.row},
 #'          name of \code{var.col}, and - if \code{var.grp} is not \code{NULL} - name of \code{var.grp}.
 #'          See examples for more details.
+#'          variableLabels are detected automatically, if \code{var.row} or \code{var.col}
+#'          have a \code{"variable.label"} attribute (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param valueLabels A list of character vectors that indicate the value labels of the supplied
 #'          variables. Following order is needed: value labels of \code{var.row},
 #'          value labels  of \code{var.col}, and - if \code{var.grp} is not \code{NULL} - 
@@ -123,11 +125,13 @@
 #'          showCellPerc=FALSE,
 #'          highlightTotal=TRUE)}
 #' 
+#' # -------------------------------
+#' # auto-detection of labels
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, sji.getVariableLabels(efc))
 #' # print cross table with labels and all percentages
 #' \dontrun{
-#' sjt.xtab(efc$e16sex, efc$e42dep, 
-#'          variableLabels=c("Elder's gender", "Elder's dependency"),
-#'          valueLabels=list(efc.labels[['e16sex']], efc.labels[['e42dep']]),
+#' sjt.xtab(efc$e16sex, efc$e42dep,
 #'          showRowPerc=TRUE, showColPerc=TRUE)}
 #' 
 #' # print cross table with labels and all percentages, including
@@ -203,6 +207,20 @@ sjt.xtab <- function (var.row,
             valueLabels <- c(valueLabels, list(vl))
           }
         }
+      }
+    }
+  }
+  if (is.null(variableLabels)) {
+    variableLabels <- c()
+    vn1 <- autoSetVariableLabels(var.row)
+    vn2 <- autoSetVariableLabels(var.col)
+    if (!is.null(vn1) && !is.null(vn2)) {
+      variableLabels <- c(vn1, vn2)
+    }
+    if (!is.null(var.grp)) {
+      vn3 <- autoSetVariableLabels(var.grp)
+      if (!is.null(vn3)) {
+        variableLabels <- c(variableLabels, vn3)
       }
     }
   }

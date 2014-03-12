@@ -41,7 +41,10 @@ sjt.xtab(var.row, var.col, var.grp = NULL, weightBy = NULL, digits = 1,
   names. Following order is needed: name of \code{var.row},
   name of \code{var.col}, and - if \code{var.grp} is not
   \code{NULL} - name of \code{var.grp}.  See examples for
-  more details.}
+  more details.  variableLabels are detected automatically,
+  if \code{var.row} or \code{var.col} have a
+  \code{"variable.label"} attribute (see
+  \code{\link{sji.setVariableLabels}}) for details).}
 
   \item{valueLabels}{A list of character vectors that
   indicate the value labels of the supplied variables.
@@ -215,11 +218,13 @@ sjt.xtab(efc$e16sex, efc$e42dep,
          showCellPerc=FALSE,
          highlightTotal=TRUE)}
 
+# -------------------------------
+# auto-detection of labels
+# -------------------------------
+efc <- sji.setVariableLabels(efc, sji.getVariableLabels(efc))
 # print cross table with labels and all percentages
 \dontrun{
 sjt.xtab(efc$e16sex, efc$e42dep,
-         variableLabels=c("Elder's gender", "Elder's dependency"),
-         valueLabels=list(efc.labels[['e16sex']], efc.labels[['e42dep']]),
          showRowPerc=TRUE, showColPerc=TRUE)}
 
 # print cross table with labels and all percentages, including

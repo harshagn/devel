@@ -15,6 +15,16 @@ autoSetValueLabels <- function(x) {
   }
   return(label)
 }
+autoSetVariableLabels <- function(x) {
+  # check if we have variable label attribut
+  vl <- as.vector(attr(x, "variable.label"))
+  label <- NULL
+  # check if we have variable labels
+  if (!is.null(vl)) {
+    label <- vl
+  }
+  return(label)
+}
 PseudoR2 <- function(rr) { # rr must be the result of lm/glm
   n <- nrow(rr$model)
   COX <- (1-exp((rr$deviance-rr$null)/n))

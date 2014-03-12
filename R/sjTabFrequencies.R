@@ -241,6 +241,43 @@ sjt.frq <- function (data,
   toWrite <- paste(toWrite, page.style)
   toWrite <- paste(toWrite, "\n</head>\n<body>\n")
   # -------------------------------------
+  # auto-retrieve variable labels
+  # -------------------------------------
+  if (is.null(variableLabels)) {
+    # init variable Labels as list
+    variableLabels <- list()
+    # check if we have data frame with several variables
+    if (is.data.frame(data)) {
+      # if yes, iterate each variable
+      for (i in 1:ncol(data)) {
+        # retrieve variable name attribute
+        vn <- autoSetVariableLabels(data[,i])
+        # if variable has attribute, add to variableLabel list
+        if (!is.null(vn)) {
+          variableLabels <- c(variableLabels, vn)
+        }
+        else {
+          # else break out of loop
+          variableLabels <- NULL
+          break
+        }
+      }
+    }
+    # we have a single variable only
+    else {
+      # retrieve variable name attribute
+      vn <- autoSetVariableLabels(data)
+      # if variable has attribute, add to variableLabel list
+      if (!is.null(vn)) {
+        variableLabels <- c(variableLabels, vn)
+      }
+      else {
+        # else reset variableLabels
+        variableLabels <- NULL
+      }
+    }
+  }
+  # -------------------------------------
   # make data frame of single variable, so we have
   # unique handling for the data
   # -------------------------------------

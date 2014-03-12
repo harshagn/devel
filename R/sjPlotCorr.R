@@ -22,6 +22,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ordx", "ordy"))
 #' @param titleSize The size of the plot title. Default is 1.3.
 #' @param titleColor The color of the plot title. Default is \code{"black"}.
 #' @param axisLabels Labels for the x- andy y-axis.
+#'          axisLabels are detected automatically if \code{data} is a data frame where each variable has
+#'          a \code{"variable.label"} attribute (see \code{\link{sji.setVariableLabels}}) for details).
 #' @param type Indicates whether the geoms of correlation values should be plotted
 #'          as \code{"circle"} (default) or as \code{"tile"}.
 #' @param sortCorrelations If \code{TRUE} (default), the axis labels are sorted
@@ -125,6 +127,12 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ordx", "ordy"))
 #' # belong to one factor. See example from "sjp.pca". 
 #' sjp.corr(df, type="tile", theme="none", outlineColor="white", hideLegend=FALSE)
 #'  
+#' # -------------------------------
+#' # auto-detection of labels
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, varlabs)
+#' sjp.corr(efc[,c(start:end)])
+#'  
 #'
 #' @import ggplot2
 #' @importFrom reshape2 melt
@@ -167,6 +175,26 @@ sjp.corr <- function(data,
                      minorGridColor=NULL,
                      theme=NULL,
                      printPlot=TRUE) {
+  # --------------------------------------------------------
+  # try to automatically set labels is not passed as parameter
+  # --------------------------------------------------------
+  if (is.null(axisLabels) && is.data.frame(data)) {
+    axisLabels <- c()
+    # if yes, iterate each variable
+    for (i in 1:ncol(data)) {
+      # retrieve variable name attribute
+      vn <- autoSetVariableLabels(data[,i])
+      # if variable has attribute, add to variableLabel list
+      if (!is.null(vn)) {
+        axisLabels <- c(axisLabels, vn)
+      }
+      else {
+        # else break out of loop
+        axisLabels <- NULL
+        break
+      }
+    }
+  }
   # ----------------------------
   # check for valid parameter
   # ----------------------------
