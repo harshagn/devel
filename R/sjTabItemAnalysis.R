@@ -112,7 +112,8 @@
 #' # auto-detection of labels
 #' # -------------------------------
 #' efc <- sji.setVariableLabels(efc, varlabs)
-#' sjt.itemanalysis(efc[,c(start:end)])
+#' \dontrun{
+#' sjt.itemanalysis(efc[,c(start:end)])}
 #'   
 #' # ---------------------------------------
 #' # Compute PCA on Cope-Index, and perform a
