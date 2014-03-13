@@ -8,11 +8,12 @@ Version 1.3
 * Functions "sjp.frq", "sjt.frq", "sjp.grpfrq", "sjt.stackfrq", "sjp.stackfrq", "sjp.corr", "sjt.corr", "sjt.xtab", "sjp.xtab", "sjp.aov1", "sjp.likert", "sjp.chi2", "sjt.pca", "sjp.pca" and "sjp.scatter" can now automatically retrieve variable labels for (axis) titles. For some functions, this will work only when paramater "title" resp. "axisTitle" (or similar, depending on the function) is set to "auto" (refer to documentation). Generally, this only works when varibales have a "variable.label" attribute (which can be set via the new "setVariableLabels" function).
 * Function "sjt.xtab" and "sjt.stackfrq" can now show missing values (parameter "showNA").
 * Function "sju.reliability" now returns NULL if data frame has too less columns.
-* Function "sjt.df" now also includes amount of missings when describing a data frame.
+* Function "sjt.df" now also includes amount and proportion of missings when describing a data frame.
 * Function "sji.SPSS" can now automatically attach variable labels to each variable of an imported SPSS dataset.
 * Changed return value of function "sjc.qclus". Parameter "classification" now contains the group classification, including missing values, so this vector can be appended to the original data frame (because it has the same row length now).
 * Renamed parameter "showN" in function "sjt.stackfrq" to "showTotalN".
 * Added parameter "showN" to function "sjt.stackfrq" for showing count values in table cells.
+* Added parameter "repeatHeader" to function "sjt.df", which adds the header row to the end of the table. Useful when having long tables.
 * Added parameter "showAccuracyLabels" to function "sjc.qclus" to plot group classificatoin accuracy to legend labels.
 * Added parameters "iter.max" and "algorithm" to functions "sjc.qclus" and "sjc.cluster", to define maximum of iterations and calculation algorithm for kmeans cluster method.
 * Added parameter "printPlot" to function "sjc.grpdisc", to suppress plotting the graph, if needed.

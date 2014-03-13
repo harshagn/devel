@@ -4,9 +4,9 @@
 \usage{
 sjt.df(df, describe = TRUE, file = NULL, alternateRowColors = FALSE,
   orderColumn = NULL, orderAscending = TRUE, title = NULL,
-  stringVariable = "Variable", showType = FALSE, showCommentRow = FALSE,
-  commentString = "No comment...", encoding = "UTF-8", CSS = NULL,
-  useViewer = TRUE, no.output = FALSE)
+  repeatHeader = FALSE, stringVariable = "Variable", showType = FALSE,
+  showCommentRow = FALSE, commentString = "No comment...",
+  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{df}{A data frame that should be printed.}
@@ -44,6 +44,11 @@ sjt.df(df, describe = TRUE, file = NULL, alternateRowColors = FALSE,
 
   \item{stringVariable}{A string used for the first column
   name. Default is \code{"Variable"}.}
+
+  \item{repeatHeader}{If \code{TRUE}, the header row will
+  also be added at the bottom at the table. This might be
+  helpful, if you have longer tables and want to see the
+  column names at the end of the table as well.}
 
   \item{showType}{If \code{TRUE}, the variable type is
   shown in a separate row below the column names.}
