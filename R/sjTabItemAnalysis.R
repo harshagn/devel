@@ -314,7 +314,8 @@ sjt.itemanalysis <- function(df,
     # delete temp file
     # unlink(htmlFile)
   }
-  invisible (list(df.list=df.ia,
+  invisible (list(class="sjtitemanalysis",
+                  df.list=df.ia,
                   index.scores=index.scores,
                   df.index.scores=df.index.scores,
                   cronbach.values=cronbach.total,

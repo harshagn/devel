@@ -64,6 +64,7 @@
 #'          value.
 #' @return Invisibly returns a \code{\link{structure}} with
 #'          \itemize{
+#'            \item the data frame with the description information (\code{data}),
 #'            \item the web page style sheet (\code{page.style}),
 #'            \item the web page content (\code{page.content}),
 #'            \item the complete html-output (\code{output.complete}) and
@@ -371,7 +372,8 @@ sjt.df <- function (df,
   # return results
   # -------------------------------------
   invisible (structure(class = "sjtdf",
-                       list(page.style = page.style,
+                       list(data = df,
+                            page.style = page.style,
                             page.content = page.content,
                             output.complete = toWrite,
                             knitr = knitr)))
