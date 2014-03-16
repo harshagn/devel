@@ -638,22 +638,6 @@ sjp.grpfrq <- function(varCount,
     # return (substring(completeString, 12))
   }
   # -----------------------------------------------------------
-  # Retrieve Phi coefficient for table
-  # -----------------------------------------------------------
-  getPhiValue <- function(x) {
-    tab <- summary(loglm(~1+2, x))$tests
-    phi <- sqrt(tab[2,1]/sum(x))
-    return (phi)
-  }
-  # -----------------------------------------------------------
-  # Retrieve Cramer's V coefficient for table
-  # -----------------------------------------------------------
-  getCramerValue <- function(x) {
-    phi <- getPhiValue(x)
-    cramer <- sqrt(phi^2/min(dim(x)-1))
-    return (cramer)
-  }
-  # -----------------------------------------------------------
   # Check whether table summary should be printed
   # -----------------------------------------------------------
   if (showTableSummary) {
@@ -672,7 +656,7 @@ sjp.grpfrq <- function(varCount,
                      list(tn=summary(ftab)$n.cases,
                           c2=sprintf("%.2f", chsq$statistic),
                           dft=c(chsq$parameter),
-                          kook=sprintf("%.2f", getCramerValue(ftab)),
+                          kook=sprintf("%.2f", sju.cramer(ftab)),
                           pva=sprintf("%.3f", chsq$p.value)))))
       }
       # if variables have two categories (2x2 table), use phi to calculate
@@ -683,7 +667,7 @@ sjp.grpfrq <- function(varCount,
                      list(tn=summary(ftab)$n.cases,
                           c2=sprintf("%.2f", chsq$statistic),
                           dft=c(chsq$parameter),
-                          kook=sprintf("%.2f", getPhiValue(ftab)),
+                          kook=sprintf("%.2f", sju.phi(ftab)),
                           pva=sprintf("%.3f", chsq$p.value)))))
       }
     }

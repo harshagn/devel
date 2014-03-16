@@ -5,9 +5,11 @@
 sju.table.values(tab, digits = 2)
 }
 \arguments{
-  \item{tab}{A simple \code{\link{table}} of which cell,
-  row and column percentages as well as expected values are
-  calculated.}
+  \item{tab}{A simple \code{\link{table}} or
+  \code{\link{ftable}} of which cell, row and column
+  percentages as well as expected values are calculated.
+  Tables of class \code{\link{xtabs}} and other will be
+  coerced to \code{\link{ftable}} objects.}
 
   \item{digits}{The amount of digits for the table
   percentage values.}
@@ -31,5 +33,8 @@ tab <- table(sample(1:2, 30, TRUE), sample(1:3, 30, TRUE))
 sju.table.values(tab)$expected
 # show cell percentages
 sju.table.values(tab)$cell
+}
+\seealso{
+\code{\link{sju.phi}} \cr \code{\link{sju.cramer}}
 }
 

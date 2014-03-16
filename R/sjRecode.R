@@ -916,8 +916,12 @@ sju.reliability <- function(df, scaleItems=FALSE, digits=3) {
 #' @description This function calculates a table's cell, row and column percentages as
 #'                well as expected values and returns all results as lists of tables.
 #'
-#' @param tab A simple \code{\link{table}} of which cell, row and column percentages as well as expected
-#'          values are calculated.
+#' @seealso \code{\link{sju.phi}} \cr
+#'          \code{\link{sju.cramer}}
+#'
+#' @param tab A simple \code{\link{table}} or \code{\link{ftable}} of which cell, row and column percentages 
+#'          as well as expected values are calculated. Tables of class \code{\link{xtabs}} and other will
+#'          be coerced to \code{\link{ftable}} objects.
 #' @param digits The amount of digits for the table percentage values.
 #' @return (invisibly) returns a list with four tables:
 #'         \enumerate{
@@ -949,4 +953,52 @@ sju.table.values <- function(tab, digits=2) {
                             row = tab.row,
                             col = tab.col,
                             expected = tab.expected)))
+}
+
+
+#' @title Phi value for a contingency table
+#' @name sju.phi
+#' @description Compute Phi value for a contingency table.
+#'
+#' @seealso \code{\link{sju.table.values}} \cr
+#'          \code{\link{sju.cramer}}
+#'
+#' @param tab A simple \code{\link{table}} or \code{\link{ftable}}. Tables of class 
+#'          \code{\link{xtabs}} and other will be coerced to \code{\link{ftable}} objects.
+#' @return The table's Phi value.
+#' 
+#' @examples
+#' tab <- table(sample(1:2, 30, TRUE), sample(1:2, 30, TRUE))
+#' sju.phi(tab)
+#' 
+#' @export
+sju.phi <- function(tab) {
+  if (class(tab)!="ftable") tab <- ftable(tab)
+  tb <- summary(loglm(~1+2, tab))$tests
+  phi <- sqrt(tb[2,1]/sum(tab))
+  return (phi)
+}
+
+
+#' @title Cramer's V value for a contingency table
+#' @name sju.cramer
+#' @description Compute Cramer's V for a table with more than 2x2 fields.
+#'
+#' @seealso \code{\link{sju.table.values}} \cr
+#'          \code{\link{sju.phi}}
+#'
+#' @param tab A simple \code{\link{table}} or \code{\link{ftable}}. Tables of class 
+#'          \code{\link{xtabs}} and other will be coerced to \code{\link{ftable}} objects.
+#' @return The table's Cramer's V value.
+#' 
+#' @examples
+#' tab <- table(sample(1:2, 30, TRUE), sample(1:3, 30, TRUE))
+#' sju.cramer(tab)
+#' 
+#' @export
+sju.cramer <- function(tab) {
+  if (class(tab)!="ftable") tab <- ftable(tab)
+  phi <- sju.phi(tab)
+  cramer <- sqrt(phi^2/min(dim(tab)-1))
+  return (cramer)
 }

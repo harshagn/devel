@@ -84,8 +84,14 @@ sjt.xtab(var.row, var.col, var.grp = NULL, weightBy = NULL, digits = 1,
   separated with a horizontal line.}
 
   \item{showSummary}{If \code{TRUE} (default), a summary
-  row with chi-square statistics, Cramer's V or Phi-value
-  etc. is shown.}
+  row with Chi-square statistics (see
+  \code{\link{chisq.test}}), Cramer's V or Phi-value etc.
+  is shown. If a cell contains expected values lower than
+  five, the Fisher's excact test (see
+  \code{\link{fisher.test}} is computed instead of
+  Chi-square test.  If the table's matrix is larger than
+  2x2, Fisher's excact test with Monte Carlo simulation is
+  computed.}
 
   \item{showLegend}{If \code{TRUE} (default), the color
   legend for coloring observed and expected values as well

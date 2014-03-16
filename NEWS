@@ -5,6 +5,8 @@ Version 1.3
 * New function "sji.setValueLabels" to attach value labels to a variable or vector.
 * New function "sji.setVariableLabels" to attach variable labels to a variable / vector or to variables of a data frame.
 * New functiom "sju.table.values", which is a convenient function to calculate cell, row and column percentages as well as expected values of a table.
+* New function "sju.phi", which is a small and convenient helper function to compute Phi values for contigency tables.
+* New function "sju.cramer", which is a small and convenient helper function to compute Cramer's V values for tables.
 * Functions "sjt.frq", "sjp.frq", "sjp.grpfrq", "sjp.xtab", "sjt.xtab", "sjp.likert", "sjp.aov1", "sjp.stackfrq" and "sjt.stackfrq" now automatically try to retrieve value labels, if no value labels were supplied as parameters. Where appropriate, variable labels (if not specified) are also automatically retrieved (from data frame's column names).
 * Functions "sjp.frq", "sjt.frq", "sjp.grpfrq", "sjt.stackfrq", "sjp.stackfrq", "sjp.corr", "sjt.corr", "sjt.xtab", "sjp.xtab", "sjp.aov1", "sjp.likert", "sjp.chi2", "sjt.pca", "sjp.pca" and "sjp.scatter" can now automatically retrieve variable labels for (axis) titles. For some functions, this will work only when paramater "title" resp. "axisTitle" (or similar, depending on the function) is set to "auto" (refer to documentation). Generally, this only works when varibales have a "variable.label" attribute (which can be set via the new "setVariableLabels" function).
 * Function "sjt.xtab" and "sjt.stackfrq" can now show missing values (parameter "showNA").
@@ -12,7 +14,7 @@ Version 1.3
 * Function "sjt.df" now also includes amount and proportion of missings when describing a data frame.
 * Function "sjt.df" now also returns the description of the data frame.
 * Function "sji.SPSS" can now automatically attach variable labels to each variable of an imported SPSS dataset.
-* Function "sjt.xtab" now computes Fisher's exact test instead of Chi-squared test when expected values in a table cell are less than 5.
+* Function "sjt.xtab" now computes Fisher's exact test instead of Chi-squared test when expected values in a table cell are lower than 5.
 * Changed return value of function "sjc.qclus". Parameter "classification" now contains the group classification, including missing values, so this vector can be appended to the original data frame (because it has the same row length now).
 * Renamed parameter "showN" in function "sjt.stackfrq" to "showTotalN".
 * Added parameter "showN" to function "sjt.stackfrq" for showing count values in table cells.

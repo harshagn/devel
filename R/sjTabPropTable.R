@@ -38,8 +38,10 @@
 #' @param showColPerc If \code{TRUE}, column percentage values are shown.
 #' @param showExpected If \code{TRUE}, expected values are also shown.
 #' @param showHorizontalLine If \code{TRUE}, data rows are separated with a horizontal line.
-#' @param showSummary If \code{TRUE} (default), a summary row with chi-square statistics,
-#'          Cramer's V or Phi-value etc. is shown.
+#' @param showSummary If \code{TRUE} (default), a summary row with Chi-square statistics (see \code{\link{chisq.test}}),
+#'          Cramer's V or Phi-value etc. is shown. If a cell contains expected values lower than five,
+#'          the Fisher's excact test (see \code{\link{fisher.test}} is computed instead of Chi-square test. 
+#'          If the table's matrix is larger than 2x2, Fisher's excact test with Monte Carlo simulation is computed.
 #' @param showLegend If \code{TRUE} (default), the color legend for coloring observed and expected
 #'          values as well as cell, row and column percentages is shown. See \code{tdcol.n},
 #'          \code{tdcol.expected}, \code{tdcol.cell}, \code{tdcol.row} and \code{tdcol.col}.
@@ -648,22 +650,6 @@ sjt.xtab <- function (var.row,
   # table summary
   # -------------------------------------
   if (showSummary) {
-    # -----------------------------------------------------------
-    # Retrieve Phi coefficient for table
-    # -----------------------------------------------------------
-    getPhiValue <- function(x) {
-      tab <- summary(loglm(~1+2, x))$tests
-      phi <- sqrt(tab[2,1]/sum(x))
-      return (phi)
-    }
-    # -----------------------------------------------------------
-    # Retrieve Cramer's V coefficient for table
-    # -----------------------------------------------------------
-    getCramerValue <- function(x) {
-      phi <- getPhiValue(x)
-      cramer <- sqrt(phi^2/min(dim(x)-1))
-      return (cramer)
-    }
     # start new table row
     page.content <- paste(page.content, "\n  <tr>\n    ", sep="")
     # calculate chi square value
@@ -673,12 +659,12 @@ sjt.xtab <- function (var.row,
     # than two categories. if they have more, use Cramer's V to calculate
     # the contingency coefficient
     if (nrow(tab)>2 || ncol(tab)>2) {
-      kook <- sprintf("&Phi;<sub>c</sub>=%.3f", getCramerValue(tab))
+      kook <- sprintf("&Phi;<sub>c</sub>=%.3f", sju.cramer(tab))
       # if minimum expected values below 5, compute fisher's exact test
       if(min(tab.expected)<5) fish <- fisher.test(tab, simulate.p.value=TRUE)
     }
     else {
-      kook <- sprintf("&Phi;=%.3f", getPhiValue(tab))
+      kook <- sprintf("&Phi;=%.3f", sju.phi(tab))
       # if minimum expected values below 5, compute fisher's exact test
       if(min(tab.expected)<5) fish <- fisher.test(tab)
     }
