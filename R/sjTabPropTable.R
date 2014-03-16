@@ -3,7 +3,8 @@
 #' 
 #' @description Shows contingency tables as HTML file in browser or viewer pane, or saves them as file.
 #' 
-#' @seealso \code{\link{sjp.xtab}}
+#' @seealso \code{\link{sjp.xtab}} \cr
+#'          \code{\link{sju.table.values}}
 #' 
 #' @param var.row Variable that should be displayed in the table rows.
 #' @param var.col Variable that should be displayed in the table columns.
@@ -303,10 +304,11 @@ sjt.xtab <- function (var.row,
   # -------------------------------------
   # compute table percentages
   # -------------------------------------
-  tab.cell <- round(100*prop.table(tab),digits)
-  tab.row <- round(100*prop.table(tab,1),digits)
-  tab.col <- round(100*prop.table(tab,2),digits)
-  tab.expected <- as.table(round(as.array(margin.table(tab,1)) %*% t(as.array(margin.table(tab,2))) / margin.table(tab)))
+  tab.values <- sju.table.values(tab, digits)
+  tab.cell <- tab.values$cell
+  tab.row <- tab.values$row
+  tab.col <- tab.values$col
+  tab.expected <- tab.values$expected
   # -------------------------------------
   # determine total number of columns
   # we have an optional column for the grouping variable,
@@ -667,16 +669,18 @@ sjt.xtab <- function (var.row,
     # calculate chi square value
     chsq <- chisq.test(tab)
     fish <- NULL
-    # if minimum expected values below 5, compute fisher's exact test
-    if(min(tab.expected)<5) fish <- fisher.test(tab)
     # check whether variables are dichotome or if they have more
     # than two categories. if they have more, use Cramer's V to calculate
     # the contingency coefficient
     if (nrow(tab)>2 || ncol(tab)>2) {
       kook <- sprintf("&Phi;<sub>c</sub>=%.3f", getCramerValue(tab))
+      # if minimum expected values below 5, compute fisher's exact test
+      if(min(tab.expected)<5) fish <- fisher.test(tab, simulate.p.value=TRUE)
     }
     else {
       kook <- sprintf("&Phi;=%.3f", getPhiValue(tab))
+      # if minimum expected values below 5, compute fisher's exact test
+      if(min(tab.expected)<5) fish <- fisher.test(tab)
     }
     # create summary row
     if (is.null(fish)) {

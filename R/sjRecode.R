@@ -749,7 +749,7 @@ sju.chi2.gof <- function(var, prob, weights=NULL) {
 
 #' @title Calculates Cronbach's Alpha for a matrix
 #' @name sju.cronbach
-#' @description This function calcates the Cronbach's alpha value for each column
+#' @description This function calculates the Cronbach's alpha value for each column
 #'                of a data frame or matrix.
 #'
 #' @seealso \code{\link{sju.reliability}} \cr
@@ -908,4 +908,45 @@ sju.reliability <- function(df, scaleItems=FALSE, digits=3) {
   }
   # -----------------------------------
   return(ret.df)
+}
+
+
+#' @title Compute table's values
+#' @name sju.table.values
+#' @description This function calculates a table's cell, row and column percentages as
+#'                well as expected values and returns all results as lists of tables.
+#'
+#' @param tab A simple \code{\link{table}} of which cell, row and column percentages as well as expected
+#'          values are calculated.
+#' @param digits The amount of digits for the table percentage values.
+#' @return (invisibly) returns a list with four tables:
+#'         \enumerate{
+#'          \item \code{cell} a table with cell percentages of \code{tab}
+#'          \item \code{row} a table with row percentages of \code{tab}
+#'          \item \code{col} a table with column percentages of \code{tab}
+#'          \item \code{expected} a table with expected values of \code{tab}
+#'         }
+#' 
+#' @examples
+#' tab <- table(sample(1:2, 30, TRUE), sample(1:3, 30, TRUE))
+#' # show expected values
+#' sju.table.values(tab)$expected
+#' # show cell percentages
+#' sju.table.values(tab)$cell
+#' 
+#' @export
+sju.table.values <- function(tab, digits=2) {
+  if (class(tab)!="ftable") tab <- ftable(tab)
+  tab.cell <- round(100*prop.table(tab),digits)
+  tab.row <- round(100*prop.table(tab,1),digits)
+  tab.col <- round(100*prop.table(tab,2),digits)
+  tab.expected <- as.table(round(as.array(margin.table(tab,1)) %*% t(as.array(margin.table(tab,2))) / margin.table(tab)))
+  # -------------------------------------
+  # return results
+  # -------------------------------------
+  invisible (structure(class = "sjutablevalues",
+                       list(cell = tab.cell,
+                            row = tab.row,
+                            col = tab.col,
+                            expected = tab.expected)))
 }

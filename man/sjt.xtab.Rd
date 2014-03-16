@@ -251,6 +251,6 @@ sjt.xtab(efc$e16sex, efc$e42dep,
                  css.horline="border-bottom: double blue;"))}
 }
 \seealso{
-\code{\link{sjp.xtab}}
+\code{\link{sjp.xtab}} \cr \code{\link{sju.table.values}}
 }
 
