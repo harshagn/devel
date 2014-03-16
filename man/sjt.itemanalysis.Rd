@@ -1,6 +1,6 @@
 \name{sjt.itemanalysis}
 \alias{sjt.itemanalysis}
-\title{Performs an item analysis on an item scale.}
+\title{Show item analysis of an item scale as HTML table}
 \usage{
 sjt.itemanalysis(df, factor.groups = NULL, scaleItems = FALSE,
   alternateRowColors = TRUE, orderColumn = NULL, orderAscending = TRUE,

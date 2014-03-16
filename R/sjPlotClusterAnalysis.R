@@ -861,7 +861,7 @@ sjc.grpdisc <- function(data, groups, groupcount, showTotalCorrect=TRUE, printPl
 }
 
 
-#' @title Plot elbow values of a k-means cluster analysis
+#' @title Compute elbow values of a k-means cluster analysis
 #' @name sjc.elbow
 #' @description Plot elbow values of a k-means cluster analysis. This function
 #'                computes a k-means cluster analysis on the provided data frame

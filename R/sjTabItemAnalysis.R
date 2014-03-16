@@ -1,4 +1,4 @@
-#' @title Performs an item analysis on an item scale.
+#' @title Show item analysis of an item scale as HTML table
 #' @name sjt.itemanalysis
 #' @description This function performs an item analysis with certain statistics that are
 #'                useful for scale / index development. The resulting tables are shown in the
