@@ -9,12 +9,13 @@ Version 1.3
 * New function "sju.cramer", which is a small and convenient helper function to compute Cramer's V values for tables.
 * Functions "sjt.frq", "sjp.frq", "sjp.grpfrq", "sjp.xtab", "sjt.xtab", "sjp.likert", "sjp.aov1", "sjp.stackfrq" and "sjt.stackfrq" now automatically try to retrieve value labels, if no value labels were supplied as parameters. Where appropriate, variable labels (if not specified) are also automatically retrieved (from data frame's column names).
 * Functions "sjp.frq", "sjt.frq", "sjp.grpfrq", "sjt.stackfrq", "sjp.stackfrq", "sjp.corr", "sjt.corr", "sjt.xtab", "sjp.xtab", "sjp.aov1", "sjp.likert", "sjp.chi2", "sjt.pca", "sjp.pca" and "sjp.scatter" can now automatically retrieve variable labels for (axis) titles. For some functions, this will work only when paramater "title" resp. "axisTitle" (or similar, depending on the function) is set to "auto" (refer to documentation). Generally, this only works when varibales have a "variable.label" attribute (which can be set via the new "setVariableLabels" function).
-* Function "sjt.xtab" and "sjt.stackfrq" can now show missing values (parameter "showNA").
+* Functions "sjt.xtab" and "sjt.stackfrq" can now show missing values (parameter "showNA").
+* Functions "sjt.xtab", "sjp.xtab" and "sjp.grpfrq" now computes Fisher's exact test instead of Chi-squared test when expected values in a table cell are lower than 5 (or lower than 10 if df is 1).
 * Function "sju.reliability" now returns NULL if data frame has too less columns.
 * Function "sjt.df" now also includes amount and proportion of missings when describing a data frame.
 * Function "sjt.df" now also returns the description of the data frame.
 * Function "sji.SPSS" can now automatically attach variable labels to each variable of an imported SPSS dataset.
-* Function "sjt.xtab" now computes Fisher's exact test instead of Chi-squared test when expected values in a table cell are lower than 5.
+* Function "sjc.grpdisc" now (invisibly) returns the ggplot-object and a vector with accuracy values.
 * Changed return value of function "sjc.qclus". Parameter "classification" now contains the group classification, including missing values, so this vector can be appended to the original data frame (because it has the same row length now).
 * Renamed parameter "showN" in function "sjt.stackfrq" to "showTotalN".
 * Added parameter "showN" to function "sjt.stackfrq" for showing count values in table cells.
@@ -22,7 +23,6 @@ Version 1.3
 * Added parameter "showAccuracyLabels" to function "sjc.qclus" to plot group classificatoin accuracy to legend labels.
 * Added parameters "iter.max" and "algorithm" to functions "sjc.qclus" and "sjc.cluster", to define maximum of iterations and calculation algorithm for kmeans cluster method.
 * Added parameter "printPlot" to function "sjc.grpdisc", to suppress plotting the graph, if needed.
-* Function "sjc.grpdisc" now (invisibly) returns the ggplot-object and a vector with accuracy values.
 * Added parameter "newLineConf" to functions "sjt.lm" and "sjt.glm", which can be used to add a line break between OR-/B- and CI-values, if OR-/B- and CI-values are printed in the same column.
 * Added parameter "cellSpacing" to functions "sjt.lm" and "sjt.glm", which is a convenient parameter for changing cell spacing, alternatively to using the "CSS" parameter.
 * Fixed bug in "sju.reliability" when data frame had too less columns, and row names of return value could not be set.

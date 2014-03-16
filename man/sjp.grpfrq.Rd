@@ -291,9 +291,15 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   mean value resp. group}
 
   \item{showTableSummary}{If \code{TRUE} (default), a
-  summary of the cross tabulation with N, chi-square, df
+  summary of the cross tabulation with N, Chi-square (see
+  \code{\link{chisq.test}}), df, Cramer's V or Phi-value
   and p-value is printed to the upper right corner of the
-  diagram. Only applies to bar-charts or dot-plots, i.e.
+  diagram. If a cell contains expected values lower than
+  five (or lower than 10 if df is 1), the Fisher's excact
+  test (see \code{\link{fisher.test}} is computed instead
+  of Chi-square test.  If the table's matrix is larger than
+  2x2, Fisher's excact test with Monte Carlo simulation is
+  computed.  Only applies to bar-charts or dot-plots, i.e.
   when parameter \code{type} is either \code{"bars"} or
   \code{"dots"}.}
 

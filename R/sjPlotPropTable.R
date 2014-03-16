@@ -107,9 +107,12 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "
 #'          if \code{showTotalColumn} is \code{TRUE}. Default is \code{"Total"}.
 #' @param showCategoryLabels Whether x axis text (category names) should be shown or not.
 #' @param showTickMarks Whether tick marks of axes should be shown or not.
-#' @param showTableSummary If \code{TRUE} (default), a summary of the cross tabulation with N, chi-square, df and p-value is printed
-#'          to the upper right corner of the diagram. Only applies to bar-charts or dot-plots, i.e. when parameter \code{type} is
-#'          either \code{"bars"} or \code{"dots"}.
+#' @param showTableSummary If \code{TRUE} (default), a summary of the cross tabulation with N, Chi-square (see \code{\link{chisq.test}}),
+#'          df, Cramer's V or Phi-value and p-value is printed to the upper right corner of the diagram. If a cell contains expected 
+#'          values lower than five (or lower than 10 if df is 1),
+#'          the Fisher's excact test (see \code{\link{fisher.test}} is computed instead of Chi-square test. 
+#'          If the table's matrix is larger than 2x2, Fisher's excact test with Monte Carlo simulation is computed.
+#'          Only applies to bar-charts or dot-plots, i.e. when parameter \code{type} is either \code{"bars"} or \code{"dots"}.
 #' @param tableSummaryPos Position of the model summary which is printed when \code{showTableSummary} is \code{TRUE}. Default is
 #'          \code{"r"}, i.e. it's printed to the upper right corner. Use \code{"l"} for upper left corner.
 #' @param showTotalColumn if \code{tableIndex} is \code{"col"}, an additional bar chart with the sum within each category and
@@ -495,34 +498,8 @@ sjp.xtab <- function(y,
   # for plotting in the diagram later
   # ----------------------------
   if (showTableSummary) {
-    # calculate chi square value
-    chsq <- chisq.test(ftab)
-    # check whether variables are dichotome or if they have more
-    # than two categories. if they have more, use Cramer's V to calculate
-    # the contingency coefficient
-    if (nrow(ftab)>2 || ncol(ftab)>2) {
-      modsum <- as.character(as.expression(
-        substitute("N" == tn * "," ~~ chi^2 == c2 * "," ~~ "df" == dft * "," ~~ phi[c] == kook * "," ~~ "p" == pva,
-                   list(tn=summary(ftab)$n.cases,
-                        c2=sprintf("%.2f", chsq$statistic),
-                        dft=c(chsq$parameter),
-                        kook=sprintf("%.2f", sju.cramer(ftab)),
-                        pva=sprintf("%.3f", chsq$p.value)))))
-    }
-    # if variables have two categories (2x2 table), use phi to calculate
-    # the degree of association
-    else {
-      modsum <- as.character(as.expression(
-        substitute("N" == tn * "," ~~ chi^2 == c2 * "," ~~ "df" == dft * "," ~~ phi == kook * "," ~~ "p" == pva,
-                   list(tn=summary(ftab)$n.cases,
-                        c2=sprintf("%.2f", chsq$statistic),
-                        dft=c(chsq$parameter),
-                        kook=sprintf("%.2f", sju.phi(ftab)),
-                        pva=sprintf("%.3f", chsq$p.value)))))
-    }
+    modsum <- crosstabsum(ftab)
   }  
-  
-  
   # --------------------------------------------------------
   # Prepare and trim legend labels to appropriate size
   # --------------------------------------------------------

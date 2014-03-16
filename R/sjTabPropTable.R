@@ -39,8 +39,8 @@
 #' @param showExpected If \code{TRUE}, expected values are also shown.
 #' @param showHorizontalLine If \code{TRUE}, data rows are separated with a horizontal line.
 #' @param showSummary If \code{TRUE} (default), a summary row with Chi-square statistics (see \code{\link{chisq.test}}),
-#'          Cramer's V or Phi-value etc. is shown. If a cell contains expected values lower than five,
-#'          the Fisher's excact test (see \code{\link{fisher.test}} is computed instead of Chi-square test. 
+#'          Cramer's V or Phi-value etc. is shown. If a cell contains expected values lower than five (or lower than 10 
+#'          if df is 1), the Fisher's excact test (see \code{\link{fisher.test}} is computed instead of Chi-square test. 
 #'          If the table's matrix is larger than 2x2, Fisher's excact test with Monte Carlo simulation is computed.
 #' @param showLegend If \code{TRUE} (default), the color legend for coloring observed and expected
 #'          values as well as cell, row and column percentages is shown. See \code{tdcol.n},
@@ -661,12 +661,12 @@ sjt.xtab <- function (var.row,
     if (nrow(tab)>2 || ncol(tab)>2) {
       kook <- sprintf("&Phi;<sub>c</sub>=%.3f", sju.cramer(tab))
       # if minimum expected values below 5, compute fisher's exact test
-      if(min(tab.expected)<5) fish <- fisher.test(tab, simulate.p.value=TRUE)
+      if(min(tab.expected)<5 || (min(tab.expected)<10 && chsq$parameter==1)) fish <- fisher.test(tab, simulate.p.value=TRUE)
     }
     else {
       kook <- sprintf("&Phi;=%.3f", sju.phi(tab))
       # if minimum expected values below 5, compute fisher's exact test
-      if(min(tab.expected)<5) fish <- fisher.test(tab)
+      if(min(tab.expected)<5 || (min(tab.expected)<10 && chsq$parameter==1)) fish <- fisher.test(tab)
     }
     # create summary row
     if (is.null(fish)) {
