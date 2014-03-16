@@ -3,13 +3,14 @@
 crosstabsum <- function(ftab) {
   # calculate chi square value
   chsq <- chisq.test(ftab)
+  tab <- sju.table.values(ftab)
   fish <- NULL
   # check whether variables are dichotome or if they have more
   # than two categories. if they have more, use Cramer's V to calculate
   # the contingency coefficient
   if (nrow(ftab)>2 || ncol(ftab)>2) {
     # if minimum expected values below 5, compute fisher's exact test
-    if(min(tab.expected)<5 || (min(tab.expected)<10 && chsq$parameter==1)) fish <- fisher.test(ftab, simulate.p.value=TRUE)
+    if(min(tab$expected)<5 || (min(tab$expected)<10 && chsq$parameter==1)) fish <- fisher.test(ftab, simulate.p.value=TRUE)
     # check whether fisher's test or chi-squared should be printed
     if (is.null(fish)) {
       modsum <- as.character(as.expression(
@@ -33,7 +34,7 @@ crosstabsum <- function(ftab) {
   # the degree of association
   else {
     # if minimum expected values below 5, compute fisher's exact test
-    if(min(tab.expected)<5 || (min(tab.expected)<10 && chsq$parameter==1)) fish <- fisher.test(ftab)
+    if(min(tab$expected)<5 || (min(tab$expected)<10 && chsq$parameter==1)) fish <- fisher.test(ftab)
     # check whether fisher's test or chi-squared should be printed
     if (is.null(fish)) {
       modsum <- as.character(as.expression(
