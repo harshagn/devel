@@ -40,7 +40,7 @@
 #' @param showHorizontalLine If \code{TRUE}, data rows are separated with a horizontal line.
 #' @param showSummary If \code{TRUE} (default), a summary row with Chi-square statistics (see \code{\link{chisq.test}}),
 #'          Cramer's V or Phi-value etc. is shown. If a cell contains expected values lower than five (or lower than 10 
-#'          if df is 1), the Fisher's excact test (see \code{\link{fisher.test}} is computed instead of Chi-square test. 
+#'          if df is 1), the Fisher's excact test (see \code{\link{fisher.test}}) is computed instead of Chi-square test. 
 #'          If the table's matrix is larger than 2x2, Fisher's excact test with Monte Carlo simulation is computed.
 #' @param showLegend If \code{TRUE} (default), the color legend for coloring observed and expected
 #'          values as well as cell, row and column percentages is shown. See \code{tdcol.n},
