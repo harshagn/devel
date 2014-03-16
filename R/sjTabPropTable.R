@@ -666,6 +666,9 @@ sjt.xtab <- function (var.row,
     page.content <- paste(page.content, "\n  <tr>\n    ", sep="")
     # calculate chi square value
     chsq <- chisq.test(tab)
+    fish <- NULL
+    # if minimum expected values below 5, compute fisher's exact test
+    if(min(tab.expected)<5) fish <- fisher.test(tab)
     # check whether variables are dichotome or if they have more
     # than two categories. if they have more, use Cramer's V to calculate
     # the contingency coefficient
@@ -676,7 +679,12 @@ sjt.xtab <- function (var.row,
       kook <- sprintf("&Phi;=%.3f", getPhiValue(tab))
     }
     # create summary row
-    page.content <- paste(page.content, sprintf("    <td class=\"summary tdata\" colspan=\"%i\">&Chi;<sup>2</sup>=%.3f &middot; df=%i &middot; %s &middot; p=%.3f</td>", totalncol, chsq$statistic, chsq$parameter, kook, chsq$p.value), sep="")
+    if (is.null(fish)) {
+      page.content <- paste(page.content, sprintf("    <td class=\"summary tdata\" colspan=\"%i\">&Chi;<sup>2</sup>=%.3f &middot; df=%i &middot; %s &middot; p=%.3f</td>", totalncol, chsq$statistic, chsq$parameter, kook, chsq$p.value), sep="")
+    }
+    else {
+      page.content <- paste(page.content, sprintf("    <td class=\"summary tdata\" colspan=\"%i\">Fisher's p=%.3f &middot; df=%i &middot; %s</td>", totalncol, fish$p.value, chsq$parameter, kook), sep="")
+    }
     # close table row
     page.content <- paste(page.content, "\n  </tr>\n")
   }  
