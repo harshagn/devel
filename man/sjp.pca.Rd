@@ -3,7 +3,7 @@
 \title{Plot PCA results}
 \usage{
 sjp.pca(data, numberOfFactors = NULL, factorLoadingTolerance = 0.1,
-  plotEigenvalues = FALSE, title = NULL, titleSize = 1.3,
+  plotEigenvalues = FALSE, digits = 2, title = NULL, titleSize = 1.3,
   titleColor = "black", axisLabels.y = NULL, type = "tile",
   geomAlpha = 0.8, valueLabelColor = "black", valueLabelSize = 4.5,
   valueLabelAlpha = 1, circleSize = 10, outlineColor = "black",
@@ -40,6 +40,8 @@ sjp.pca(data, numberOfFactors = NULL, factorLoadingTolerance = 0.1,
   \item{plotEigenvalues}{If \code{TRUE}, a plot showing the
   Eigenvalues according to the Kaiser criteria is plotted
   to determine the number of factors.}
+
+  \item{digits}{The amount of decimals used. Default is 2.}
 
   \item{title}{Title of the diagram, plotted above the
   whole diagram panel.}

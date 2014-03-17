@@ -27,6 +27,7 @@
 #'          between the highest and 2nd highest factor should be 0.1
 #' @param plotEigenvalues If \code{TRUE}, a plot showing the Eigenvalues according to the
 #'          Kaiser criteria is plotted to determine the number of factors.
+#' @param digits The amount of decimals used. Default is 2.
 #' @param title Title of the diagram, plotted above the whole diagram panel.
 #' @param titleSize The size of the plot title. Default is 1.3.
 #' @param titleColor The color of the plot title. Default is \code{"black"}.
@@ -155,6 +156,7 @@ sjp.pca <- function(data,
                     numberOfFactors=NULL,
                     factorLoadingTolerance=0.1,
                     plotEigenvalues=FALSE,
+                    digits=2,
                     title=NULL,
                     titleSize=1.3,
                     titleColor="black",
@@ -426,7 +428,7 @@ sjp.pca <- function(data,
     valueLabels <- c("")
   }
   else {
-    valueLabels <- c(round(df$value,2))
+    valueLabels <- sprintf("%.*f", digits, df$value)
   }
   # --------------------------------------------------------
   # start with base plot object here
@@ -493,7 +495,7 @@ sjp.pca <- function(data,
   if (showCronbachsAlpha) {
     heatmap <- heatmap +
       # annotate("text", x=alphaValues$nr, y=Inf, parse=TRUE, label=sprintf("alpha == %.2f", alphaValues$alpha), size=0.9*valueLabelSize, colour=axisLabelColor, vjust=alphaValues$vpos)
-      annotate("text", x=alphaValues$nr, y=Inf, parse=TRUE, label=sprintf("alpha == %.2f", alphaValues$alpha), size=0.9*valueLabelSize, colour=axisLabelColor, vjust=-0.5)
+      annotate("text", x=alphaValues$nr, y=Inf, parse=TRUE, label=sprintf("alpha == %.*f", digits, alphaValues$alpha), size=0.9*valueLabelSize, colour=axisLabelColor, vjust=-0.5)
   }
   # --------------------------------------------------------
   # the panel-border-property can only be applied to the bw-theme

@@ -224,8 +224,8 @@ sjp.lm <- function(fit,
   # retrieve standardized betas
   stdbv <- sju.betaCoef(fit)
   # init data column for p-values
-  ps <- c(round(bv,labelDigits))
-  pstdbv <- c(round(stdbv,labelDigits))
+  ps <- sprintf("%.*f", labelDigits, bv)
+  pstdbv <- sprintf("%.*f", labelDigits, stdbv)
   # if no values should be shown, clear
   # vector now
   if (!showValueLabels) {

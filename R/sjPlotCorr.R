@@ -328,7 +328,7 @@ sjp.corr <- function(data,
       }
     }
     else {
-      cpv <- c(sprintf("\n(%.3f)", round(cpvalues$value,3)))
+      cpv <- sprintf("\n(%.*f)", decimals, cpvalues$value)
     }
   }
   else {
@@ -385,7 +385,7 @@ sjp.corr <- function(data,
     correlationPValues <- c("")
   }
   else {
-    correlationValueLabels <- c(round(orderedCorr$value,decimals))
+    correlationValueLabels <- sprintf("%.*f", decimals, orderedCorr$value)
     if (showCorrelationPValues) {
       correlationPValues <- orderedCorr$ps
     }

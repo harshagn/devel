@@ -271,7 +271,7 @@ sjp.glm <- function(fit,
   # ----------------------------
   if (showValueLabels) {
     for (i in 1:length(pv)) {
-      ps[i] <- c(round(ov[i],labelDigits))
+      ps[i] <- sprintf("%.*f", labelDigits, ov[i])
     }
   }
   # ----------------------------

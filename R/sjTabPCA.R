@@ -455,10 +455,10 @@ sjt.pca <- function (data,
       # start table column
       colcss <- sprintf(" class=\"tdata centeralign%s%s\"", arcstring, rowcss)
       if (maxdf[[i]]!=max(abs(df[i,j]))) colcss <- sprintf(" class=\"tdata centeralign minval%s%s\"", arcstring, rowcss)
-      page.content <- paste0(page.content, sprintf("    <td%s>%s</td>\n", colcss, round(df[i,j],digits)))
+      page.content <- paste0(page.content, sprintf("    <td%s>%.*f</td>\n", colcss, digits, df[i,j]))
     }
     # check if msa column should be shown
-    if (showMSA) page.content <- paste0(page.content, sprintf("    <td class=\"tdata msa centeralign%s%s\">%s</td>\n", arcstring, rowcss, round(kmo$MSAi[[i]],digits)))
+    if (showMSA) page.content <- paste0(page.content, sprintf("    <td class=\"tdata msa centeralign%s%s\">%.*f</td>\n", arcstring, rowcss, digits, kmo$MSAi[[i]]))
     # close row
     page.content <- paste0(page.content, "  </tr>\n")
   }
@@ -472,7 +472,7 @@ sjt.pca <- function (data,
     page.content <- paste0(page.content, sprintf("    <td class=\"tdata pov\">%s</td>\n", stringPov))
     # iterate alpha-values
     for (i in 1:length(pov)) {
-      page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign pov\">%s&nbsp;%%</td>\n", 100*round(pov[i],digits+2)))
+      page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign pov\">%.*f&nbsp;%%</td>\n", digits, 100*pov[i]))
     }
     # check if msa column should be shown
     if (showMSA) page.content <- paste0(page.content, "    <td class=\"tdata centeralign pov\"></td>\n")
@@ -481,7 +481,7 @@ sjt.pca <- function (data,
     page.content <- paste0(page.content, sprintf("    <td class=\"tdata cpov\">%s</td>\n", stringCpov))
     # iterate alpha-values
     for (i in 1:length(pov)) {
-      page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign cpov\">%s&nbsp;%%</td>\n", 100*round(cpov[i],digits+2)))
+      page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign cpov\">%.*f&nbsp;%%</td>\n", digits, 100*cpov[i]))
     }
     # check if msa column should be shown
     if (showMSA) page.content <- paste0(page.content, "    <td class=\"tdata centeralign cpov\"></td>\n")
@@ -497,7 +497,7 @@ sjt.pca <- function (data,
     page.content <- paste0(page.content, "    <td class=\"tdata cronbach\">Cronbach's &alpha;</td>\n")
     # iterate alpha-values
     for (i in 1:length(alphaValues)) {
-      page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign cronbach\">%s</td>\n", round(alphaValues[i],digits)))
+      page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign cronbach\">%.*f</td>\n", digits, alphaValues[i]))
     }
     # check if msa column should be shown
     if (showMSA) page.content <- paste0(page.content, "    <td class=\"tdata centeralign cronbach\"></td>\n")
@@ -511,7 +511,7 @@ sjt.pca <- function (data,
     page.content <- paste0(page.content, "  <tr>\n")
     page.content <- paste0(page.content, "    <td class=\"tdata kmo\">Kaiser-Meyer-Olkin</td>\n")
     page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign kmo\" colspan=\"%i\"></td>\n", ncol(df)))
-    page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign kmo\">%s</td>\n", round(kmo$MSA,digits)))
+    page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign kmo\">%.*f</td>\n", digits, kmo$MSA))
     page.content <- paste0(page.content, "  </tr>\n")
   }
   # -------------------------------------

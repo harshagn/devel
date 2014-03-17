@@ -332,7 +332,7 @@ sjt.corr <- function (data,
             # --------------------------------------------------------
             # if we have p-values as number, print them in new row
             # --------------------------------------------------------
-            cellval <- sprintf("%s<br><span class=\"pval\">(%.3f)</span>", cellval, cpvalues[i,j])
+            cellval <- sprintf("%s<br><span class=\"pval\">(%.*f)</span>", cellval, digits, cpvalues[i,j])
           }
           else {
             # --------------------------------------------------------
