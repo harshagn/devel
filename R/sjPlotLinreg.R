@@ -73,6 +73,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("vars", "Beta", "xv", "lo
 #'          for a better overview. With this parameter you can specify the line type.
 #' @param stdBetaLineAlpha The alpha-value for the line that connects the
 #'          standardized beta-value dots.
+#' @param interceptLineType The linetype of the intercept line (zero point). Default is \code{2} (dashed line).
+#' @param interceptLineColor The color of the intercept line. Default value is \code{"grey70"}.
 #' @param breakTitleAt Wordwrap for diagram title. Determines how many chars of the title are displayed in
 #'          one line and when a line break is inserted into the title
 #' @param breakLabelsAt Wordwrap for diagram labels. Determines how many chars of the category labels are displayed in 
@@ -156,6 +158,8 @@ sjp.lm <- function(fit,
                     pointSizeStdBeta=3,
                     stdBetaLineType=2,
                     stdBetaLineAlpha=0.3,
+                    interceptLineType=2,
+                    interceptLineColor="grey70",
                     breakTitleAt=50, 
                     breakLabelsAt=12, 
                     gridBreaksAt=NULL,
@@ -403,6 +407,8 @@ sjp.lm <- function(fit,
     }
   }
   betaplot <- betaplot +
+    # Intercept-line
+    geom_hline(yintercept=0, linetype=interceptLineType, color=interceptLineColor) +
     # Print p-values. With vertical adjustment, so they don't overlap with the errorbars
     geom_text(aes(label=p, y=Beta, colour=pv>0.05), vjust=-0.8, size=valueLabelSize, alpha=valueLabelAlpha, show_guide=FALSE) +
     # give value labels different colours depending on significance level
