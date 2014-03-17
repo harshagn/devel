@@ -7,12 +7,14 @@ sjt.glm(..., file = NULL, labelPredictors = NULL,
   stringDependentVariables = "Dependent Variables",
   showHeaderStrings = FALSE, stringModel = "Model",
   stringIntercept = "(Intercept)", stringObservations = "Observations",
-  pvaluesAsNumbers = FALSE, boldpvalues = TRUE, showConfInt = TRUE,
-  showStdError = FALSE, separateConfColumn = FALSE, newLineConf = TRUE,
-  showAbbrHeadline = TRUE, showPseudoR = TRUE, showLogLik = FALSE,
-  showAIC = FALSE, showChi2 = FALSE, showFamily = FALSE,
-  cellSpacing = 0.2, encoding = "UTF-8", CSS = NULL, useViewer = TRUE,
-  no.output = FALSE)
+  stringOR = "OR", stringCI = "CI", stringSE = "std. Error",
+  stringP = "p", digits.est = 2, digits.p = 3, digits.ci = 2,
+  digits.se = 2, digits.summary = 3, pvaluesAsNumbers = FALSE,
+  boldpvalues = TRUE, showConfInt = TRUE, showStdError = FALSE,
+  separateConfColumn = FALSE, newLineConf = TRUE, showAbbrHeadline = TRUE,
+  showPseudoR = TRUE, showLogLik = FALSE, showAIC = FALSE,
+  showChi2 = FALSE, showFamily = FALSE, cellSpacing = 0.2,
+  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{...}{One or more fitted glm-objects.}
@@ -53,6 +55,30 @@ sjt.glm(..., file = NULL, labelPredictors = NULL,
   \item{stringObservations}{String constant used in the
   summary row for the count of observation (cases). Default
   is \code{"Observations"}.}
+
+  \item{stringOR}{String used for the column heading of
+  odds ratio values. Default is \code{"OR"}.}
+
+  \item{stringCI}{String used for the column heading of
+  confidence interval values. Default is \code{"CI"}.}
+
+  \item{stringSE}{String used for the column heading of
+  standard error values. Default is \code{"std. Error"}.}
+
+  \item{stringP}{String used for the column heading of p
+  values. Default is \code{"p"}.}
+
+  \item{digits.est}{Amount of decimals for estimators.}
+
+  \item{digits.p}{Amount of decimals for p-values.}
+
+  \item{digits.ci}{Amount of decimals for confidence
+  intervals.}
+
+  \item{digits.se}{Amount of decimals for standard error.}
+
+  \item{digits.summary}{Amount of decimals for values in
+  model summary.}
 
   \item{pvaluesAsNumbers}{If \code{TRUE}, p-values are
   shown as numbers. If \code{FALSE} (default), p-values are

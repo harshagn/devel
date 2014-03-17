@@ -18,6 +18,8 @@ Version 1.3
 * Function "sjc.grpdisc" now (invisibly) returns the ggplot-object and a vector with accuracy values.
 * Changed return value of function "sjc.qclus". Parameter "classification" now contains the group classification, including missing values, so this vector can be appended to the original data frame (because it has the same row length now).
 * Renamed parameter "showN" in function "sjt.stackfrq" to "showTotalN".
+* Added several parameters to functions "sjt.lm" and "sjt.glm" to specifiy the string values of column headings (OR, B, std. error, CI etc.).
+* Added several "digits." parameters to functions "sjt.lm" and "sjt.glm" to specifiy the amount of decimals for different values (estimators, ci, p etc.).
 * Added parameter "showN" to function "sjt.stackfrq" for showing count values in table cells.
 * Added parameter "repeatHeader" to function "sjt.df", which adds the header row to the end of the table. Useful when having long tables.
 * Added parameter "showAccuracyLabels" to function "sjc.qclus" to plot group classificatoin accuracy to legend labels.

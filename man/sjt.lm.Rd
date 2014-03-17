@@ -6,12 +6,15 @@ sjt.lm(..., file = NULL, labelPredictors = NULL,
   labelDependentVariables = NULL, stringPredictors = "Predictors",
   stringDependentVariables = "Dependent Variables", stringModel = "Model",
   showHeaderStrings = FALSE, stringIntercept = "(Intercept)",
-  stringObservations = "Observations", showConfInt = TRUE,
-  showStdBeta = FALSE, showStdError = FALSE, pvaluesAsNumbers = FALSE,
-  boldpvalues = TRUE, separateConfColumn = FALSE, newLineConf = TRUE,
-  showAbbrHeadline = TRUE, showR2 = TRUE, showFStat = FALSE,
-  showAIC = FALSE, cellSpacing = 0.2, encoding = "UTF-8", CSS = NULL,
-  useViewer = TRUE, no.output = FALSE)
+  stringObservations = "Observations", stringB = "B",
+  stringSB = "std. Beta", stringCI = "CI", stringSE = "std. Error",
+  stringP = "p", showConfInt = TRUE, showStdBeta = FALSE,
+  showStdError = FALSE, digits.est = 2, digits.p = 3, digits.ci = 2,
+  digits.se = 2, digits.sb = 2, digits.summary = 3,
+  pvaluesAsNumbers = FALSE, boldpvalues = TRUE,
+  separateConfColumn = FALSE, newLineConf = TRUE, showAbbrHeadline = TRUE,
+  showR2 = TRUE, showFStat = FALSE, showAIC = FALSE, cellSpacing = 0.2,
+  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{...}{One or more fitted lm-objects.}
@@ -53,6 +56,22 @@ sjt.lm(..., file = NULL, labelPredictors = NULL,
   summary row for the count of observation (cases). Default
   is \code{"Observations"}.}
 
+  \item{stringB}{String used for the column heading of beta
+  coefficients. Default is \code{"B"}.}
+
+  \item{stringSB}{String used for the column heading of
+  standardized beta coefficients. Default is \code{"std.
+  Beta"}.}
+
+  \item{stringCI}{String used for the column heading of
+  confidence interval values. Default is \code{"CI"}.}
+
+  \item{stringSE}{String used for the column heading of
+  standard error values. Default is \code{"std. Error"}.}
+
+  \item{stringP}{String used for the column heading of p
+  values. Default is \code{"p"}.}
+
   \item{showConfInt}{If \code{TRUE} (default), the
   confidence intervall is also printed to the table. Use
   \code{FALSE} to omit the CI in the table.}
@@ -63,6 +82,21 @@ sjt.lm(..., file = NULL, labelPredictors = NULL,
 
   \item{showStdError}{If \code{TRUE}, the standard errors
   are also printed.  Default is \code{FALSE}.}
+
+  \item{digits.est}{Amount of decimals for estimators.}
+
+  \item{digits.p}{Amount of decimals for p-values.}
+
+  \item{digits.ci}{Amount of decimals for confidence
+  intervals.}
+
+  \item{digits.se}{Amount of decimals for standard error.}
+
+  \item{digits.sb}{Amount of decimals for standardized
+  beta.}
+
+  \item{digits.summary}{Amount of decimals for values in
+  model summary.}
 
   \item{pvaluesAsNumbers}{If \code{TRUE}, p-values are
   shown as numbers. If \code{FALSE} (default), p-values are
