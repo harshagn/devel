@@ -1,6 +1,6 @@
 \name{sjt.xtab}
 \alias{sjt.xtab}
-\title{Show contigency tables as HTML table}
+\title{Show contingency tables as HTML table}
 \usage{
 sjt.xtab(var.row, var.col, var.grp = NULL, weightBy = NULL, digits = 1,
   file = NULL, variableLabels = NULL, valueLabels = NULL,

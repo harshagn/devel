@@ -109,8 +109,16 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'          when \code{showMeanIntercept} is \code{TRUE}.
 #' @param meanInterceptLineSize The size of the mean intercept line. Only applies to histogram-charts and when 
 #'          \code{showMeanIntercept} is \code{TRUE}.
-#' @param showNormalCurve If \code{TRUE}, a normal curve is plotted over the histogram. Default is
-#'          \code{FALSE}. Only applies when histograms are plotted.
+#' @param showNormalCurve If \code{TRUE}, a normal curve, which is adjusted to the data,
+#'          is plotted over the histogram or density plot. Default is
+#'          \code{FALSE}. Only applies when histograms or density plots are plotted (see \code{type}).
+#' @param showStandardNormalCurve If \code{TRUE}, a normal curve, which is not adjusted to the data (thus
+#'          representing a "true" standard normal curve, which is, however, still just an approximation),
+#'          is plotted over the histogram or density plot. Default is \code{FALSE}. Only applies when 
+#'          histograms or density plots are plotted (see \code{type}).
+#' @param adjustNormalCurve.x If \code{TRUE} and \code{showStandardNormalCurve} is also \code{TRUE}, the 
+#'          x-axis-start of the standard normal curve starts with the x-axis limits of the graph. This
+#'          is only necessary, if minimum value of \code{varCount} is larger than 0 or 1.
 #' @param normalCurveColor Specify the color of the normal curve line. Only
 #'          applies if \code{showNormalCurve} is \code{TRUE}.
 #' @param normalCurveSize Specifiy the size of the normal curve line. Only
@@ -128,6 +136,12 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'          or category labels.
 #' @param axisTitleSize the size of the x and y axis labels. Refers to \code{axisTitle.x} and \code{axisTitle.y}, not to the tick mark 
 #'          or category labels. Default is 1.3.
+#' @param hist.skipZeros If \code{TRUE}, zero counts (categories with no answer) in \code{varCout} are omitted
+#'          when drawing histrograms, and the mapping is changed to \code{\link{stat_bin}}. Only applies to 
+#'          histograms (see \code{tye}). Use this parameter to get identical results to the default
+#'          \code{\link{qplot}} or \code{\link{geom_histogram}} histogram plots of ggplot. You may need
+#'          to adjust the \code{barWidth} parameter for better visual results (which, by ggplot-default, is
+#'          1/30 of the x-axis-range).
 #' @param startAxisAt Determines the first value on the x-axis. By default, this value is set
 #'          to \code{"auto"}, i.e. the value range on the x axis starts with the lowest value of \code{varCount}.
 #'          If you set \code{startAxisAt} to 1, you may have zero counts if the lowest value of \code{varCount}
@@ -155,26 +169,37 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'           was used for setting up the ggplot-object (\code{df}).
 #' 
 #' @examples
+#' # ---------------
 #' # boxplot
+#' # ---------------
 #' sjp.frq(ChickWeight$weight, type="box")
 #' 
+#' # ---------------
 #' # histogram
+#' # ---------------
 #' sjp.frq(discoveries, type="hist", showMeanIntercept=TRUE)
-#' # histogram with minimal theme
+#' # histogram with minimal theme and w/0 labels
 #' sjp.frq(discoveries, type="hist", showMeanIntercept=TRUE,
 #'         theme="minimal", minorGridColor="white",
-#'         showTickMarks=FALSE, hideGrid.x=TRUE)
+#'         showTickMarks=FALSE, hideGrid.x=TRUE,
+#'         showValueLabels=FALSE)
 #'         
+#' # ---------------
 #' # violin plot
+#' # ---------------
 #' sjp.frq(ChickWeight$weight, type="v")
 #' 
+#' # ---------------
 #' # bar plot
+#' # ---------------
 #' sjp.frq(ChickWeight$Diet)
 #' sjp.frq(ChickWeight$Diet, maxYlim=TRUE)
 #' 
+#' # ---------------
 #' # bar plot with EUROFAMCARE sample dataset
 #' # dataset was importet from an SPSS-file, using:
 #' # efc <- sji.SPSS("efc.sav", enc="UTF-8")
+#' # ---------------
 #' data(efc)
 #' efc.val <- sji.getValueLabels(efc)
 #' efc.var <- sji.getVariableLabels(efc)
@@ -199,9 +224,11 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'         showTickMarks=FALSE,
 #'         hideGrid.x=TRUE)
 #' 
+#' # ---------------
 #' # box plots with interaction variable
 #' # the following example is equal to the function call
 #' # sjp.grpfrq(efc$e17age, efc$e16sex, type="box")
+#' # ---------------
 #' sjp.frq(efc$e17age,
 #'         title=paste(efc.var[['e17age']], "by", efc.var[['e16sex']]),
 #'         interactionVar=efc$e16sex,
@@ -221,6 +248,13 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #' # automatic detection of start index of x-axis
 #' sjp.frq(efc$neg_c_7, axisTitle.x="auto")
 #' 
+#' # -------------------------------------------------
+#' # Simulate ggplot-default histogram, using "hist.skipZeros"
+#' # and adjusted "barWidth".
+#' # -------------------------------------------------
+#' sjp.frq(efc$c160age, type="h", hist.skipZeros=TRUE, barWidth=1)
+#' 
+#'   
 #' @import ggplot2
 #' @export
 sjp.frq <- function(varCount, 
@@ -269,16 +303,19 @@ sjp.frq <- function(varCount,
                     showMeanValue=TRUE,
                     showStandardDeviation=TRUE,
                     showNormalCurve=FALSE,
+                    showStandardNormalCurve=FALSE,
+                    adjustNormalCurve.x=FALSE,
                     meanInterceptLineType=2,
                     meanInterceptLineSize=0.5,
                     normalCurveColor="red",
-                    normalCurveSize=0.7,
+                    normalCurveSize=0.8,
                     normalCurveAlpha=0.4,
                     axisTitle.x=NULL,
                     axisTitle.y=NULL,
                     axisTitleColor="black",
                     axisTitleSize=1.3,
                     startAxisAt="auto",
+                    hist.skipZeros=FALSE,
                     autoGroupAt=NULL,
                     theme=NULL,
                     flipCoordinates=FALSE,
@@ -704,6 +741,12 @@ sjp.frq <- function(varCount,
   # ----------------------------------
   # Print plot
   # ----------------------------------
+  # calculate mean and sd for non-adjusted normal curve
+  stdmean <- diff(range(varCount, na.rm=TRUE))/2
+  stdadjust <- min(na.omit(varCount))
+  stdsd <- stdmean/4
+  stdlen <- length(na.omit(varCount))
+  # ----------------------------------
   # Check how many categories we have on the x-axis.
   # If it exceeds the user defined limits, plot
   # histrogram instead of bar chart
@@ -771,15 +814,36 @@ sjp.frq <- function(varCount,
     # Start density plot here
     # --------------------------------------------------
     else if (type=="dens") {
-        geoh <- geom_histogram(fill=barColor, colour=outlineColor, size=barOutlineSize, alpha=barAlpha)
-        densityDat <- data.frame(cbind(varCount))
-        # First, plot histogram with density curve
-        baseplot <- ggplot(densityDat, aes(x=varCount, y=..density..)) +
-          geoh +
-          # transparent density curve above bars
-          geom_density(fill="cornsilk", alpha=0.3) +
-          # remove margins from left and right diagram side
-          scale_x_continuous(expand=c(0,0), breaks=histgridbreaks)
+      geoh <- geom_histogram(aes(y=..density..), fill=barColor, colour=outlineColor, size=barOutlineSize, alpha=barAlpha)
+      x <- na.omit(varCount)
+      densityDat <- data.frame(x)
+      # First, plot histogram with density curve
+      baseplot <- ggplot(densityDat, aes(x=x)) +
+        geoh +
+        # transparent density curve above bars
+        geom_density(aes(y=..density..), fill="cornsilk", alpha=0.3) +
+        # remove margins from left and right diagram side
+        scale_x_continuous(expand=c(0,0), breaks=histgridbreaks)
+      # check whether user wants to overlay the histogram
+      # with a normal curve
+      if (showNormalCurve) {
+        baseplot <- baseplot +
+          stat_function(fun=dnorm,
+                        args=list(mean=mean(densityDat$x),
+                                  sd=sd(densityDat$x)),
+                        colour=normalCurveColor,
+                        size=normalCurveSize,
+                        alpha=normalCurveAlpha)
+      }
+      if (showStandardNormalCurve) {
+        baseplot <- baseplot +
+          stat_function(fun=dnorm,
+                        args=list(mean=stdmean,
+                                  sd=stdsd),
+                        colour=normalCurveColor,
+                        size=normalCurveSize,
+                        alpha=normalCurveAlpha)
+      }
     }
     else {
       # -----------------------------------------------------------------
@@ -787,10 +851,18 @@ sjp.frq <- function(varCount,
       # y-axis, have also the opportunity to plot "real" histrograms with 
       # counts on the y-axis
       # -----------------------------------------------------------------
-      basehist <- geom_histogram(stat="identity", fill=barColor, colour=outlineColor, size=barOutlineSize, alpha=barAlpha, binwidth=barWidth)
-      basehistline <- geom_area(fill=barColor, alpha=0.3)
       # base constructor
-      baseplot <- ggplot(mydat, aes(x=var, y=frq))
+      if (hist.skipZeros) {
+        x <- na.omit(varCount)
+        hist.dat <- data.frame(x)
+        baseplot <- ggplot(mydat)
+        basehist <- geom_histogram(data=hist.dat, aes(x=x), fill=barColor, colour=outlineColor, size=barOutlineSize, alpha=barAlpha, binwidth=barWidth)
+      }
+      else {
+        baseplot <- ggplot(mydat, aes(x=var, y=frq))
+        basehist <- geom_histogram(stat="identity", fill=barColor, colour=outlineColor, size=barOutlineSize, alpha=barAlpha, binwidth=barWidth)
+      }
+      basehistline <- geom_area(fill=barColor, alpha=0.3)
       # check whether user wants line or bar histogram
       if (type=="line") {
         baseplot <- baseplot + basehistline + geom_line()
@@ -804,6 +876,17 @@ sjp.frq <- function(varCount,
         baseplot <- baseplot +
           stat_function(fun=function(x, mean, sd, n) { n*dnorm(x=x, mean=mean, sd=sd) },
                         args=with(mydat, c(mean=mittelwert, sd=stddev, n=length(varCount))),
+                        colour=normalCurveColor,
+                        size=normalCurveSize,
+                        alpha=normalCurveAlpha)
+      }
+      if (showStandardNormalCurve) {
+        baseplot <- baseplot +
+          stat_function(fun=function(x, mean, sd, n) { 
+              if (adjustNormalCurve.x) x <- x-stdadjust
+              n*dnorm(x=x, mean=mean, sd=sd)
+            },
+                        args=with(mydat, c(mean=stdmean, sd=stdsd, n=stdlen)),
                         colour=normalCurveColor,
                         size=normalCurveSize,
                         alpha=normalCurveAlpha)
@@ -835,9 +918,12 @@ sjp.frq <- function(varCount,
           }
         }
       }
+      if (!hist.skipZeros) {
+        baseplot <- baseplot +
+          # show absolute and percentage value of each bar.
+          ggvaluelabels
+      }
       baseplot <- baseplot +
-        # show absolute and percentage value of each bar.
-        ggvaluelabels +
         # remove margins from left and right diagram side
         scale_x_continuous(limits=c(catmin,maxx), expand=c(0,0), breaks=histgridbreaks) +
         yscale

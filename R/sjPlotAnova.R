@@ -697,9 +697,10 @@ sjp.aov1 <- function(depVar,
 #' @name sju.aov1.levene
 #' 
 #' @description Plot results of Levene's Test for Equality of Variances for One-Way-Anova.
-#' @seealso \link{sjp.aov1}, \code{\link{sju.chi2.gof}}, \code{\link{sju.mwu}} and \code{\link{wilcox.test}}, 
+#' @seealso \code{\link{sjp.aov1}}, \code{\link{sju.chi2.gof}}, \code{\link{sju.mwu}} and \code{\link{wilcox.test}}, 
 #'          \code{\link{ks.test}}, \code{\link{kruskal.test}}, \code{\link{t.test}}, \code{\link{chisq.test}}, 
-#'          \code{\link{fisher.test}}#'                
+#'          \code{\link{fisher.test}}
+#'           
 #' @param depVar The dependent variable. Will be used with following formular:
 #'          \code{aov(depVar ~ grpVar)}
 #' @param grpVar The grouping variable, as unordered factor. Will be used with following formular:
@@ -707,10 +708,12 @@ sjp.aov1 <- function(depVar,
 #' 
 #' @examples
 #' data(efc)
-#' sju.aov1.levene(efc$c12hour, as.factor(efc$e42dep))
+#' sju.aov1.levene(efc$c12hour, efc$e42dep)
 #' 
 #' @export
 sju.aov1.levene <- function(depVar, grpVar) {
+  # check if grpVar is factor
+  if (!is.factor(grpVar)) grpVar <- factor(grpVar)
   # remove missings
   df <- na.omit(data.frame(depVar, grpVar))
   # calculate means
@@ -726,6 +729,6 @@ sju.aov1.levene <- function(depVar, grpVar) {
     cat("Groups are homogeneous. Everything's fine.\n")
   }
   else {
-    cat("Groups are not homogeneous! Consider logarithmic transformation.\n")
+    cat("Groups are not homogeneous!\n")
   }
 }

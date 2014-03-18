@@ -62,7 +62,7 @@ autoSetValueLabels <- function(x) {
   lv <- levels(x)
   label <- NULL
   # check  if we have value labels
-  if (!is.null(vl)) {
+  if (!is.null(vl) && length(vl)>0) {
     label <- rev(names(vl))
   }
   # check  if we have factor levels
@@ -76,7 +76,7 @@ autoSetVariableLabels <- function(x) {
   vl <- as.vector(attr(x, "variable.label"))
   label <- NULL
   # check if we have variable labels
-  if (!is.null(vl)) {
+  if (!is.null(vl) && length(vl)>0) {
     label <- vl
   }
   return(label)

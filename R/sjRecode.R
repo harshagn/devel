@@ -335,7 +335,7 @@ sju.adjustPlotRange.y <- function(gp, upperMargin=1.05) {
 #' @export
 sju.wordwrap <- function(labels, wrap, linesep=NULL) {
   # check for valid value
-  if (is.null(labels)) {
+  if (is.null(labels) || length(labels)==0) {
     return(NULL)
   }
   # default line separator is \n

@@ -1,4 +1,4 @@
-#' @title Show contigency tables as HTML table
+#' @title Show contingency tables as HTML table
 #' @name sjt.xtab
 #' 
 #' @description Shows contingency tables as HTML file in browser or viewer pane, or saves them as file.
@@ -213,6 +213,16 @@ sjt.xtab <- function (var.row,
       }
     }
   }
+  # -------------------------------------
+  # list conversion needed here. in case value labels
+  # of only one variable were detected, "valueLabels" is now
+  # of type "character", thus length would differ from "valueLabels"'s
+  # length if it were a list. needed below.
+  # -------------------------------------
+  if (!is.null(valueLabels) && !is.list(valueLabels)) valueLabels <- list(valueLabels)
+  # --------------------------------------------------------
+  # try to automatically set labels is not passed as parameter
+  # --------------------------------------------------------
   if (is.null(variableLabels)) {
     variableLabels <- c()
     vn1 <- autoSetVariableLabels(var.row)
