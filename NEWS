@@ -14,6 +14,7 @@ Version 1.3
 * Function "sju.reliability" now returns NULL if data frame has too less columns.
 * Function "sjt.df" now also includes amount and proportion of missings when describing a data frame.
 * Function "sjp.frq" can now add a normal curve to density plots.
+* Function "sjp.lm.ma" now plots an additional normal curve in non-normality check of residuals.
 * Function "sjt.df" now also returns the description of the data frame.
 * Function "sji.SPSS" can now automatically attach variable labels to each variable of an imported SPSS dataset.
 * Function "sjc.grpdisc" now (invisibly) returns the ggplot-object and a vector with accuracy values.

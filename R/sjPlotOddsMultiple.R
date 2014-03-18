@@ -277,7 +277,7 @@ sjp.glmm <- function(...,
     # print p-values in bar charts
     # ----------------------------
     # retrieve sigificance level of independent variables (p-values)
-    pv <- coef(summary(fit))[,4]
+    pv <- unname(coef(summary(fit))[,4])
     # for better readability, convert p-values to asterisks
     # with:
     # p < 0.001 = ***
