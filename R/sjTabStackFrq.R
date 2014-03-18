@@ -2,6 +2,7 @@
 #' @name sjt.stackfrq
 #' @references \itemize{
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
+#'              \item \url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
 #'              }
 #' 
 #' @description Shows the results of stacked frequencies (such as likert scales) as HTML table.
@@ -215,8 +216,8 @@ sjt.stackfrq <- function (items,
   # ----------------------------
   # retrieve min and max values
   # ----------------------------
-  minval <- as.numeric(min(apply(items, 2, function(x) min(na.omit(x)))))
-  maxval <- as.numeric(max(apply(items, 2, function(x) max(na.omit(x)))))
+  minval <- as.numeric(min(apply(items, 2, function(x) min(x, na.rm=TRUE))))
+  maxval <- as.numeric(max(apply(items, 2, function(x) max(x, na.rm=TRUE))))
   # ----------------------------
   # if we have no value labels, set default labels and find amount
   # of unique categories

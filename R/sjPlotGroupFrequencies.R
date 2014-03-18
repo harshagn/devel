@@ -190,7 +190,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #' @param legendBorderColor Color of the legend's border. Default is \code{"white"}, so no visible border is drawn.
 #' @param legendBackColor Fill color of the legend's background. Default is \code{"white"}, so no visible background is drawn.
 #' @param flipCoordinates If \code{TRUE}, the x and y axis are swapped.
-#' @param omitNA If \code{TRUE}, missings are not included in the frequency calculation and diagram plot.
+#' @param na.rm If \code{TRUE}, missings are not included in the frequency calculation and diagram plot.
 #' @param printPlot If \code{TRUE} (default), plots the results as graph. Use \code{FALSE} if you don't
 #'          want to plot any graphs. In either case, the ggplot-object will be returned as value.
 #' @return (Insisibily) returns the ggplot-object with the complete plot (\code{plot}) as well as the data frame that
@@ -339,7 +339,7 @@ sjp.grpfrq <- function(varCount,
                        legendBorderColor="white",
                        legendBackColor="white",
                        flipCoordinates=FALSE,
-                       omitNA=TRUE,
+                       na.rm=TRUE,
                        printPlot=TRUE) {
   # --------------------------------------------------------
   # try to automatically set labels is not passed as parameter
@@ -432,9 +432,9 @@ sjp.grpfrq <- function(varCount,
   # first, check the total amount of different factor levels
   catcount_1 <- length(unique(na.omit(varCount)))
   # second, check the maximum factor level
-  catcount_2 <- max(na.omit(varCount))
+  catcount_2 <- max(varCount, na.rm=TRUE)
   # if categories start with zero, fix this here
-  if (min(na.omit(varCount))==0) {
+  if (min(varCount, na.rm=TRUE)==0) {
     catcount_2 <- catcount_2+1
   }
   # catcount should contain the higher values, i.e. the maximum count of
@@ -442,7 +442,7 @@ sjp.grpfrq <- function(varCount,
   # value or to the amount of different factor levels, depending on which one
   # is larger
   catcount <- ifelse (catcount_1 > catcount_2, catcount_1, catcount_2)
-  catmin <- min(na.omit(varCount))
+  catmin <- min(varCount, na.rm=TRUE)
   # ----------------------------------------------
   # check for axis start, depending on lowest value
   # ----------------------------------------------
@@ -514,7 +514,7 @@ sjp.grpfrq <- function(varCount,
     # --------------------------------------------------------
     # Handle missings
     # --------------------------------------------------------
-    if (!omitNA) {
+    if (!na.rm) {
       # get amount of missings
       frq <- length(which(is.na(varCount[which(varGroup==i)])))
       # create data frame
@@ -613,7 +613,7 @@ sjp.grpfrq <- function(varCount,
   # for plotting in the diagram later
   # ----------------------------
   mannwhitneyu <-function(count, grp) {
-    if (min(na.omit(grp))==0) {
+    if (min(grp, na.rm=TRUE)==0) {
       grp <- grp+1
     }
     completeString <- c("")
@@ -741,14 +741,14 @@ sjp.grpfrq <- function(varCount,
   }
   # If missings are not removed, add an
   # "NA" to labels and a new row to data frame which contains the missings
-  if (!omitNA) {
+  if (!na.rm) {
     axisLabels.x = c(axisLabels.x, "NA")
   }
   # --------------------------------------------------------
   # add group counts to category labels
   # --------------------------------------------------------
   if (showGroupCount) {
-    nas <- ifelse(omitNA==TRUE, "ifany", "no")
+    nas <- ifelse(na.rm==TRUE, "ifany", "no")
     # check whether we have interaction variables or not
     if (!is.null(interactionVarLabels)) {
       # retrieve group counts by converting data column
@@ -793,8 +793,8 @@ sjp.grpfrq <- function(varCount,
     # the y axis
     if (type=="boxplots" || type=="violin") {
       # use an extra standard-deviation as limits for the y-axis when we have boxplots
-      lower_lim <- min(na.omit(varCount)) - floor(sd(na.omit(varCount)))
-      upper_lim <- max(na.omit(varCount)) + ceiling(sd(na.omit(varCount)))
+      lower_lim <- min(varCount, na.rm=TRUE) - floor(sd(varCount, na.rm=TRUE))
+      upper_lim <- max(varCount, na.rm=TRUE) + ceiling(sd(varCount, na.rm=TRUE))
       # make sure that the y-axis is not below zero
       if (lower_lim < 0) {
         lower_lim <- 0

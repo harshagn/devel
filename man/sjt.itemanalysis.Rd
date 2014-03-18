@@ -13,7 +13,10 @@ sjt.itemanalysis(df, factor.groups = NULL, scaleItems = FALSE,
   \item{factor.groups}{If not \code{NULL}, the data frame
   \code{df} will be splitted into sub-groups, where the
   item analysis is carried out for each of these groups.
-  See examples for more details.}
+  Must be a vector of same length as \code{ncol(df)}, where
+  each item in this vector represents the group number of
+  the related columns of \code{df}. See examples for more
+  details.}
 
   \item{scaleItems}{If \code{TRUE}, the data frame's
   vectors will be scaled when calculating the Cronbach's

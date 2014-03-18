@@ -9,12 +9,13 @@ sjt.glm(..., file = NULL, labelPredictors = NULL,
   stringIntercept = "(Intercept)", stringObservations = "Observations",
   stringOR = "OR", stringCI = "CI", stringSE = "std. Error",
   stringP = "p", digits.est = 2, digits.p = 3, digits.ci = 2,
-  digits.se = 2, digits.summary = 3, pvaluesAsNumbers = FALSE,
-  boldpvalues = TRUE, showConfInt = TRUE, showStdError = FALSE,
-  separateConfColumn = FALSE, newLineConf = TRUE, showAbbrHeadline = TRUE,
-  showPseudoR = TRUE, showLogLik = FALSE, showAIC = FALSE,
-  showChi2 = FALSE, showFamily = FALSE, cellSpacing = 0.2,
-  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
+  digits.se = 2, digits.summary = 3, exp.coef = TRUE,
+  pvaluesAsNumbers = FALSE, boldpvalues = TRUE, showConfInt = TRUE,
+  showStdError = FALSE, separateConfColumn = FALSE, newLineConf = TRUE,
+  showAbbrHeadline = TRUE, showPseudoR = TRUE, showLogLik = FALSE,
+  showAIC = FALSE, showChi2 = FALSE, showFamily = FALSE,
+  cellSpacing = 0.2, encoding = "UTF-8", CSS = NULL, useViewer = TRUE,
+  no.output = FALSE)
 }
 \arguments{
   \item{...}{One or more fitted glm-objects.}
@@ -79,6 +80,12 @@ sjt.glm(..., file = NULL, labelPredictors = NULL,
 
   \item{digits.summary}{Amount of decimals for values in
   model summary.}
+
+  \item{exp.coef}{If \code{TRUE} (default), regression
+  coefficients and confidence intervals are exponentiated
+  (\code{\link{exp}(\link{coef}(fit))}. Use \code{FALSE} if
+  you want the non-exponentiated coefficients as they are
+  provided by the \code{\link{summary}} function.}
 
   \item{pvaluesAsNumbers}{If \code{TRUE}, p-values are
   shown as numbers. If \code{FALSE} (default), p-values are

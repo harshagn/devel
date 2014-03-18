@@ -5,8 +5,8 @@ Version 1.3
 * New function "sji.setValueLabels" to attach value labels to a variable or vector.
 * New function "sji.setVariableLabels" to attach variable labels to a variable / vector or to variables of a data frame.
 * New functiom "sju.table.values", which is a convenient function to calculate cell, row and column percentages as well as expected values of a table.
-* New function "sju.phi", which is a small and convenient helper function to compute Phi values for contigency tables.
-* New function "sju.cramer", which is a small and convenient helper function to compute Cramer's V values for tables.
+* New function "sju.phi", which is a small and convenient helper function to compute Phi values for contingency tables.
+* New function "sju.cramer", which is a small and convenient helper function to compute Cramer's V for tables.
 * Functions "sjt.frq", "sjp.frq", "sjp.grpfrq", "sjp.xtab", "sjt.xtab", "sjp.likert", "sjp.aov1", "sjp.stackfrq" and "sjt.stackfrq" now automatically try to retrieve value labels, if no value labels were supplied as parameters. Where appropriate, variable labels (if not specified) are also automatically retrieved (from data frame's column names).
 * Functions "sjp.frq", "sjt.frq", "sjp.grpfrq", "sjt.stackfrq", "sjp.stackfrq", "sjp.corr", "sjt.corr", "sjt.xtab", "sjp.xtab", "sjp.aov1", "sjp.likert", "sjp.chi2", "sjt.pca", "sjp.pca" and "sjp.scatter" can now automatically retrieve variable labels for (axis) titles. For some functions, this will work only when paramater "title" resp. "axisTitle" (or similar, depending on the function) is set to "auto" (refer to documentation). Generally, this only works when varibales have a "variable.label" attribute (which can be set via the new "setVariableLabels" function).
 * Functions "sjt.xtab" and "sjt.stackfrq" can now show missing values (parameter "showNA").
@@ -20,11 +20,13 @@ Version 1.3
 * Function "sjc.grpdisc" now (invisibly) returns the ggplot-object and a vector with accuracy values.
 * Changed return value of function "sjc.qclus". Parameter "classification" now contains the group classification, including missing values, so this vector can be appended to the original data frame (because it has the same row length now).
 * Renamed parameter "showN" in function "sjt.stackfrq" to "showTotalN".
+* Renamed parameter "omitNA" in functions "sjp.frq" and "sjp.grpfrq" to "na.rm".
 * Added parameter "hist.skipZeros" to function "sjp.frq", to drop zero-counts and missings when drawing histograms. With this parameter, the default geom_histogram-behaviour can be replicated.
 * Added several parameters to functions "sjt.lm" and "sjt.glm" to specifiy the string values of column headings (OR, B, std. error, CI etc.).
 * Added several "digits." parameters to functions "sjt.lm" and "sjt.glm" to specifiy the amount of decimals for different values (estimators, ci, p etc.).
 * Added parameter "digits" to function "sjp.pca", so amount of decimals for values can be defined.
 * Added parameter "showN" to function "sjt.stackfrq" for showing count values in table cells.
+* Added parameter "exp.coef" to function "sjt.glm" to display non-exponentiated coefficients.
 * Added parameter "repeatHeader" to function "sjt.df", which adds the header row to the end of the table. Useful when having long tables.
 * Added parameters "interceptLineType" and "interceptLineColor" to function "sjp.lm" to highlight the zero point on the x-axis.
 * Added parameter "showAccuracyLabels" to function "sjc.qclus" to plot group classificatoin accuracy to legend labels.

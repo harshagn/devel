@@ -1,6 +1,6 @@
 \name{sju.cramer}
 \alias{sju.cramer}
-\title{Cramer's V value for a contingency table}
+\title{Cramer's V for a contingency table}
 \usage{
 sju.cramer(tab)
 }
@@ -11,7 +11,7 @@ sju.cramer(tab)
   objects.}
 }
 \value{
-The table's Cramer's V value.
+The table's Cramer's V.
 }
 \description{
 Compute Cramer's V for a table with more than 2x2 fields.

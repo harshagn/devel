@@ -3,6 +3,11 @@
 #' 
 #' @description Shows contingency tables as HTML file in browser or viewer pane, or saves them as file.
 #' 
+#' @references \itemize{
+#'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
+#'              \item \url{http://strengejacke.wordpress.com/2014/02/20/no-need-for-spss-beautiful-output-in-r-rstats/}
+#'              }
+#'              
 #' @seealso \code{\link{sjp.xtab}} \cr
 #'          \code{\link{sju.table.values}}
 #' 

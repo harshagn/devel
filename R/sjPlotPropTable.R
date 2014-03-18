@@ -1,7 +1,7 @@
 # bind global variables
 if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "Group"))
 
-#' @title Plot contigency tables
+#' @title Plot contingency tables
 #' @name sjp.xtab
 #' @references \itemize{
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
@@ -304,8 +304,6 @@ sjp.xtab <- function(y,
   if (type=="l" || type=="line") {
     type <- c("lines")
   }
-
-
   # --------------------------------------------------------
   # unlist labels
   # --------------------------------------------------------
@@ -315,8 +313,6 @@ sjp.xtab <- function(y,
   if (!is.null(legendLabels) && is.list(legendLabels)) {
     legendLabels <- unlistlabels(legendLabels)
   }
-  
-  
   # -----------------------------------------------
   # handle zero-counts
   # -----------------------------------------------
@@ -339,8 +335,6 @@ sjp.xtab <- function(y,
   else {
     catcount <- length(axisLabels.x)
   }
-  
-  
   # -----------------------------------------------
   # create cross table for stats, summary etc.
   # and weight variable
@@ -351,8 +345,6 @@ sjp.xtab <- function(y,
   else {
     ftab <- round(xtabs(weightBy ~ y + x),0)
   }
-
-  
   # -----------------------------------------------
   # create proportional table so we have the percentage
   # values that should be used as y-value for the bar charts
@@ -371,8 +363,6 @@ sjp.xtab <- function(y,
   # -----------------------------------------------
   df <- cbind(df, as.data.frame(ftab)[,3])
   names(df) <- c("Count", "Group", "Perc", "Sum")
-
-  
   # -----------------------------------------------
   # don't show bar with category sum score when we 
   # have column or cell percentages
@@ -380,8 +370,6 @@ sjp.xtab <- function(y,
   if (tableIndex=="row" || tableIndex=="cell") {
     showTotalColumn <- FALSE
   }
-
-  
   # -----------------------------------------------
   # Sum scores / total percentages for each category
   # -----------------------------------------------
@@ -394,12 +382,10 @@ sjp.xtab <- function(y,
     dummy <- cbind(dummy, c(apply(ftab, MARGIN=1, function(x) sum(x))))
     names(dummy) <- c("Count", "Group", "Perc", "Sum")
     # "modify" resp. correct the Group-column
-    dummy$Group <- as.factor(rep(max(na.omit(x))+1))
+    dummy$Group <- as.factor(rep(max(x, na.rm=TRUE)+1))
     # bind data to data frame
     df <- rbind(df, dummy)
   }
-
-
   # --------------------------------------------------------
   # Define amount of categories, include zero counts
   # --------------------------------------------------------
@@ -526,8 +512,6 @@ sjp.xtab <- function(y,
     # if yes, wrap legend title line
     legendTitle <- sju.wordwrap(legendTitle, breakLegendTitleAt)
   }
-  
-  
   # --------------------------------------------------------
   # Trim labels and title to appropriate size
   # --------------------------------------------------------
@@ -551,17 +535,12 @@ sjp.xtab <- function(y,
     axisLabels.x <- c(1:catcount)
   }
   # --------------------------------------------------------
-  
-  
-  # --------------------------------------------------------
   # check if category-oder on x-axis should be reversed
   # change category label order then
   # --------------------------------------------------------
   if (reverseOrder) {
     axisLabels.x <- rev(axisLabels.x)
   }
-
-  
   # --------------------------------------------------------
   # Prepare bar charts
   # --------------------------------------------------------
@@ -584,8 +563,6 @@ sjp.xtab <- function(y,
       }
     }
   }
-
-  
   # --------------------------------------------------------
   # define vertical position for labels
   # --------------------------------------------------------
@@ -612,8 +589,6 @@ sjp.xtab <- function(y,
   if (!barOutline) {
     outlineColor <- waiver()
   }
-
-  
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours
   # might be adjusted later

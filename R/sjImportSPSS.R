@@ -114,8 +114,8 @@ sji.setValueLabels <- function(var, labels) {
   # check for null
   if (!is.null(labels)) {
     # retrieve values
-    minval <- min(na.omit(var))
-    maxval <- max(na.omit(var))
+    minval <- min(var, na.rm=TRUE)
+    maxval <- max(var, na.rm=TRUE)
     # check for unlisting
     if (is.list(labels)) {
       labels <- as.vector(unlist(labels))

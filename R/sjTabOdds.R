@@ -46,6 +46,9 @@
 #' @param digits.ci Amount of decimals for confidence intervals.
 #' @param digits.se Amount of decimals for standard error.
 #' @param digits.summary Amount of decimals for values in model summary.
+#' @param exp.coef If \code{TRUE} (default), regression coefficients and confidence intervals are exponentiated
+#'          (\code{\link{exp}(\link{coef}(fit))}. Use \code{FALSE} if you want the non-exponentiated coefficients
+#'          as they are provided by the \code{\link{summary}} function.
 #' @param pvaluesAsNumbers If \code{TRUE}, p-values are shown as numbers. If \code{FALSE} (default),
 #'          p-values are indicated by asterisks.
 #' @param boldpvalues If \code{TRUE} (default), significant p-values are shown bold faced.
@@ -204,6 +207,7 @@ sjt.glm <- function (...,
                      digits.ci=2,
                      digits.se=2,
                      digits.summary=3,
+                     exp.coef=TRUE,
                      pvaluesAsNumbers=FALSE,
                      boldpvalues=TRUE,
                      showConfInt=TRUE,
@@ -394,9 +398,16 @@ sjt.glm <- function (...,
   # -------------------------------------
   for (i in 1:length(input_list)) {
     fit <- input_list[[i]]
-    coeffs <- rbind(coeffs, exp(coef(fit)))
-    confi_lower <- cbind(confi_lower, exp(confint(fit))[,1])
-    confi_higher <- cbind(confi_higher, exp(confint(fit))[,2])
+    if (exp.coef) {
+      coeffs <- rbind(coeffs, exp(coef(fit)))
+      confi_lower <- cbind(confi_lower, exp(confint(fit))[,1])
+      confi_higher <- cbind(confi_higher, exp(confint(fit))[,2])
+    }
+    else {
+      coeffs <- rbind(coeffs, coef(fit))
+      confi_lower <- cbind(confi_lower, confint(fit)[,1])
+      confi_higher <- cbind(confi_higher, confint(fit)[,2])
+    }
     pv <- cbind(pv, round(summary(fit)$coefficients[,4],digits.p))
     # standard error
     se <- cbind(se, round(summary(fit)$coefficients[,2],digits.se))

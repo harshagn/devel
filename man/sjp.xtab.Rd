@@ -1,6 +1,6 @@
 \name{sjp.xtab}
 \alias{sjp.xtab}
-\title{Plot contigency tables}
+\title{Plot contingency tables}
 \usage{
 sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
   legendTitle = NULL, weightBy = NULL, weightByTitleString = NULL,

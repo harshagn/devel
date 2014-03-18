@@ -256,6 +256,13 @@ sjt.xtab(efc$e16sex, efc$e42dep,
                  css.tdata="border: 1px solid;",
                  css.horline="border-bottom: double blue;"))}
 }
+\references{
+\itemize{ \item
+\url{http://strengejacke.wordpress.com/sjplot-r-package/}
+\item
+\url{http://strengejacke.wordpress.com/2014/02/20/no-need-for-spss-beautiful-output-in-r-rstats/}
+}
+}
 \seealso{
 \code{\link{sjp.xtab}} \cr \code{\link{sju.table.values}}
 }

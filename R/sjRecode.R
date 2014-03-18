@@ -50,14 +50,14 @@ sju.dicho <- function(var, dichBy="median", dichVal=-1) {
 }
 
 
-#' @title Recode scales into grouped factors
+#' @title Recode count variables into grouped factors
 #' @name sju.groupVar
-#' @description Recode scales into grouped factors.
+#' @description Recode count variables into grouped factors.
 #' @seealso \code{\link{sju.groupVarLabels}}
 #'
-#' @param var The scale variable, which should recoded into groups.
+#' @param var The count variable, which should recoded into groups.
 #' @param groupsize The group-size, i.e. the range for grouping. By default, for each 5 categories 
-#'          new group is built, i.e. \code{groupsize=5}. Use \code{groupsize="auto"} to automatically
+#'          a new group is defined, i.e. \code{groupsize=5}. Use \code{groupsize="auto"} to automatically
 #'          resize a variable into a maximum of 30 groups (which is the ggplot-default grouping when
 #'          plotting histograms). Use \code{autoGroupCount} to determin the amount of groups.
 #' @param asNumeric If \code{TRUE} (default), the recoded variable will be returned as numeric vector.
@@ -66,7 +66,7 @@ sju.dicho <- function(var, dichBy="median", dichVal=-1) {
 #'          case, groups cover the ranges from 50-54, 55-59, 60-64 etc. \cr
 #'          If \code{FALSE} (default), grouping starts with the upper bound of \code{groupsize}. In this
 #'          case, groups cover the ranges from 51-55, 56-60, 61-65 etc.
-#' @param autoGroupCount Sets the maximum number of groups that are built when auto-grouping is on
+#' @param autoGroupCount Sets the maximum number of groups that are defined when auto-grouping is on
 #'          (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 #'          this parameter will be ignored.
 
@@ -108,15 +108,15 @@ sju.groupVar <- function(var, groupsize=5, asNumeric=TRUE, rightInterval=FALSE, 
   # check for auto-grouping
   if (groupsize=="auto") {
     # determine groupsize, which is 1/30 of range
-    size <- ceiling((max(na.omit(var)-min(na.omit(var))))/autoGroupCount)
+    size <- ceiling((max(var, na.rm=TRUE)-min(var, na.rm=TRUE))/autoGroupCount)
     # reset groupsize var
     groupsize <- as.numeric(size)
     # change minvalue
-    minval <- min(na.omit(var))
+    minval <- min(var, na.rm=TRUE)
     multip <- 1
   }
   # Einteilung der Variablen in Gruppen. Dabei werden unbenutzte Faktoren gleich entfernt
-  var <- droplevels(cut(var, breaks=c(seq(minval, max(na.omit(var))+multip*groupsize, by=groupsize)), right=rightInterval))
+  var <- droplevels(cut(var, breaks=c(seq(minval, max(var, na.rm=TRUE)+multip*groupsize, by=groupsize)), right=rightInterval))
   # Die Level der Gruppierung wird neu erstellt
   levels(var) <- c(1:length(levels(var)))
   # in numerisch umwandeln
@@ -194,15 +194,15 @@ sju.groupVarLabels <- function(var, groupsize=5, rightInterval=FALSE, autoGroupC
   # check for auto-grouping
   if (groupsize=="auto") {
     # determine groupsize, which is 1/30 of range
-    size <- ceiling((max(na.omit(var)-min(na.omit(var))))/autoGroupCount)
+    size <- ceiling((max(var, na.rm=TRUE)-min(var, na.rm=TRUE))/autoGroupCount)
     # reset groupsize var
     groupsize <- as.numeric(size)
     # change minvalue
-    minval <- min(na.omit(var))
+    minval <- min(var, na.rm=TRUE)
     multip <- 1
   }
   # Einteilung der Variablen in Gruppen. Dabei werden unbenutzte Faktoren gleich entfernt
-  var <- droplevels(cut(var,breaks=c(seq(minval, max(na.omit(var))+multip*groupsize, by=groupsize)), right=rightInterval))
+  var <- droplevels(cut(var,breaks=c(seq(minval, max(var, na.rm=TRUE)+multip*groupsize, by=groupsize)), right=rightInterval))
   # Gruppen holen
   lvl <- levels(var) 
   # rückgabewert init
@@ -414,7 +414,7 @@ sju.recodeTo <- function(var, lowest=0, highest=-1) {
     var <- as.numeric(as.character(var))
   }
   # retrieve lowest category
-  minval <- min(na.omit(var))
+  minval <- min(var, na.rm=TRUE)
   # check substraction difference between current lowest value
   # and requested lowest value
   downsize <- minval-lowest
@@ -679,7 +679,7 @@ sju.weight <- function(var, weights) {
 #' 
 #' @export
 sju.mwu <- function(var, grp, alternative="two.sided") {
-  if (min(na.omit(grp))==0) {
+  if (min(grp, na.rm=TRUE)==0) {
     grp <- grp+1
   }
   cnt <- length(unique(na.omit(grp)))
@@ -980,7 +980,7 @@ sju.phi <- function(tab) {
 }
 
 
-#' @title Cramer's V value for a contingency table
+#' @title Cramer's V for a contingency table
 #' @name sju.cramer
 #' @description Compute Cramer's V for a table with more than 2x2 fields.
 #'
@@ -989,7 +989,7 @@ sju.phi <- function(tab) {
 #'
 #' @param tab A simple \code{\link{table}} or \code{\link{ftable}}. Tables of class 
 #'          \code{\link{xtabs}} and other will be coerced to \code{\link{ftable}} objects.
-#' @return The table's Cramer's V value.
+#' @return The table's Cramer's V.
 #' 
 #' @examples
 #' tab <- table(sample(1:2, 30, TRUE), sample(1:3, 30, TRUE))

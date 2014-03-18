@@ -212,7 +212,10 @@ sjt.stackfrq(efc[,c(start:end)],
 }
 \references{
 \itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
+\url{http://strengejacke.wordpress.com/sjplot-r-package/}
+\item
+\url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
+}
 }
 \seealso{
 \code{\link{sjp.stackfrq}} \cr \code{\link{sjp.likert}}

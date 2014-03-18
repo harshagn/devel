@@ -119,8 +119,6 @@ sjp.chi2 <- function(df,
                       "p.value" = round(test$p.value, 4))
     return(out)
   })
-  
-  
   # ----------------------------
   # check if user defined labels have been supplied
   # if not, use variable names from data frame

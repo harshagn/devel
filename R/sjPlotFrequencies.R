@@ -162,7 +162,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'          \item \code{"none"} for no borders, grids and ticks.
 #'          }
 #' @param flipCoordinates If \code{TRUE}, the x and y axis are swapped. Default is \code{FALSE}.
-#' @param omitNA If \code{TRUE}, missings are not included in the frequency calculation and diagram plot.
+#' @param na.rm If \code{TRUE}, missings are not included in the frequency calculation and diagram plot.
 #' @param printPlot If \code{TRUE} (default), plots the results as graph. Use \code{FALSE} if you don't
 #'          want to plot any graphs. In either case, the ggplot-object will be returned as value.
 #' @return (Insisibily) returns the ggplot-object with the complete plot (\code{plot}) as well as the data frame that
@@ -319,7 +319,7 @@ sjp.frq <- function(varCount,
                     autoGroupAt=NULL,
                     theme=NULL,
                     flipCoordinates=FALSE,
-                    omitNA=TRUE,
+                    na.rm=TRUE,
                     printPlot=TRUE) {
   # --------------------------------------------------------
   # try to automatically set labels is not passed as parameter
@@ -402,7 +402,7 @@ sjp.frq <- function(varCount,
   # columns represents the highest category number
   catcount <- 0
   lower_lim <- 0
-  catmin <- min(na.omit(varCount))
+  catmin <- min(varCount, na.rm=TRUE)
   # ----------------------------------------------
   # check for axis start, depending on lowest value
   # ----------------------------------------------
@@ -427,9 +427,9 @@ sjp.frq <- function(varCount,
     # first, check the total amount of different factor levels
     catcount_1 <- length(unique(na.omit(varCount)))
     # second, check the maximum factor level
-    catcount_2 <- max(na.omit(varCount))
+    catcount_2 <- max(varCount, na.rm=TRUE)
     # if categories start with zero, fix this here
-    if (min(na.omit(varCount))==0) {
+    if (min(varCount, na.rm=TRUE)==0) {
       catcount_2 <- catcount_2+1
     }
     # catcount should contain the higher values, i.e. the maximum count of
@@ -500,7 +500,7 @@ sjp.frq <- function(varCount,
   # --------------------------------------------------------
   # If missings are not removed, add an
   # "NA" to labels and a new row to data frame which contains the missings
-  if (!omitNA) {
+  if (!na.rm) {
     axisLabels.x = c(axisLabels.x, "NA")
     mydat <- rbind(mydat, c(catcount+1, missingcount))
     # also add a columns with percentage values of count distribution
@@ -559,8 +559,8 @@ sjp.frq <- function(varCount,
       # the y axis
       if (type=="boxplots" || type=="violin") {
         # use an extra standard-deviation as limits for the y-axis when we have boxplots
-        lower_lim <- min(na.omit(varCount)) - floor(sd(na.omit(varCount)))
-        upper_lim <- max(na.omit(varCount)) + ceiling(sd(na.omit(varCount)))
+        lower_lim <- min(varCount, na.rm=TRUE) - floor(sd(varCount, na.rm=TRUE))
+        upper_lim <- max(varCount, na.rm=TRUE) + ceiling(sd(varCount, na.rm=TRUE))
         # make sure that the y-axis is not below zero
         if (lower_lim < 0) {
           lower_lim <- 0
@@ -743,7 +743,7 @@ sjp.frq <- function(varCount,
   # ----------------------------------
   # calculate mean and sd for non-adjusted normal curve
   stdmean <- diff(range(varCount, na.rm=TRUE))/2
-  stdadjust <- min(na.omit(varCount))
+  stdadjust <- min(varCount, na.rm=TRUE)
   stdsd <- stdmean/4
   stdlen <- length(na.omit(varCount))
   # ----------------------------------

@@ -24,7 +24,7 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
   axisTitle.x = NULL, axisTitle.y = NULL, axisTitleColor = "black",
   axisTitleSize = 1.3, startAxisAt = "auto", hist.skipZeros = FALSE,
   autoGroupAt = NULL, theme = NULL, flipCoordinates = FALSE,
-  omitNA = TRUE, printPlot = TRUE)
+  na.rm = TRUE, printPlot = TRUE)
 }
 \arguments{
   \item{varCount}{The variable which frequencies should be
@@ -325,8 +325,8 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
   \item{flipCoordinates}{If \code{TRUE}, the x and y axis
   are swapped. Default is \code{FALSE}.}
 
-  \item{omitNA}{If \code{TRUE}, missings are not included
-  in the frequency calculation and diagram plot.}
+  \item{na.rm}{If \code{TRUE}, missings are not included in
+  the frequency calculation and diagram plot.}
 
   \item{printPlot}{If \code{TRUE} (default), plots the
   results as graph. Use \code{FALSE} if you don't want to
