@@ -562,7 +562,15 @@ sjt.frq <- function (data,
   # -------------------------------------
   # copy page content
   # -------------------------------------
-  knitr <- page.content
+  if (nvar>1) {
+    knitr <- c()
+    for (i in 1:length(page.content.list)) {
+      knitr <- paste0(knitr, page.content.list[[i]], sprintf("\n<p style=\"%s\">&nbsp;</p>\n", css.abstand))
+    }
+  }
+  else {
+    knitr <- page.content
+  }
   # -------------------------------------
   # set style attributes for main table tags
   # -------------------------------------
