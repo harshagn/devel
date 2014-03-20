@@ -239,8 +239,6 @@ sjp.corr <- function(data,
     }
     cpvalues <- computePValues(data)
   }
-  
-  
   # ----------------------------
   # check if user defined labels have been supplied
   # if not, use variable names from data frame
@@ -265,8 +263,6 @@ sjp.corr <- function(data,
   if (!is.null(axisLabels)) {
     axisLabels <- sju.wordwrap(axisLabels, breakLabelsAt)
   }
-
-  
   # --------------------------------------------------------
   # order correlations from highest to lowest correlation coefficient
   # --------------------------------------------------------
@@ -308,11 +304,8 @@ sjp.corr <- function(data,
   if (hideDiagCircle) {
     orderedCorr$psize[which(orderedCorr$value>=0.999)] <- 0
   }
-
   orderedCorr$ordx <- as.factor(orderedCorr$ordx)
   orderedCorr$ordy <- as.factor(orderedCorr$ordy)
-  
-
   # --------------------------------------------------------
   # add column with significance value
   # --------------------------------------------------------
@@ -335,8 +328,6 @@ sjp.corr <- function(data,
     cpv <- c("")
   }
   orderedCorr$ps <- cpv
-
-  
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours
   # might be adjusted later
@@ -359,8 +350,6 @@ sjp.corr <- function(data,
     minorGridColor <- c("white")
     showTickMarks <-FALSE
   }
-  
-  
   # --------------------------------------------------------
   # Set up grid colours
   # --------------------------------------------------------
@@ -372,8 +361,6 @@ sjp.corr <- function(data,
   if (!is.null(minorGridColor)) {
     minorgrid <- element_line(colour=minorGridColor)
   }
-  
-  
   # --------------------------------------------------------
   # Set up visibility oftick marks
   # --------------------------------------------------------
@@ -393,10 +380,7 @@ sjp.corr <- function(data,
       correlationPValues <- c("")
     }
   }
-  
-  
   cat(sprintf("Computing correlation using %s-method with %s-deletion...\n", corMethod, missingDeletion))
-  
   # --------------------------------------------------------
   # start with base plot object here
   # --------------------------------------------------------

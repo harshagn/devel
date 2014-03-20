@@ -234,8 +234,6 @@ sjp.lm.int <- function(fit,
   # retrieve estimate of intercept
   # -----------------------------------------------------------
   b0 <- estimates.intercept <- summary(fit)$coefficients[1,1]
-
-  
   # -----------------------------------------------------------
   # find all significant interactions
   # we start looking for significant p-values beginning
@@ -262,9 +260,6 @@ sjp.lm.int <- function(fit,
   if(firstit==0) {
     stop("No interaction term found in fitted model...", call.=FALSE)
   }
-#   if((predvars.length+1) > length(pval)) {
-#     stop("No interaction term found in fitted model...", call.=FALSE)
-#   }
   # save names of interaction predictor variables into this object
   intnames <- c()
   for (i in firstit:length(pval)) {
@@ -272,17 +267,10 @@ sjp.lm.int <- function(fit,
       intnames <- c(intnames, it[i])
     }
   }
-  #   for (i in (predvars.length+1):length(pval)) {
-#     if (pval[i] < plevel) {
-#       intnames <- c(intnames, names(pval[i]))
-#     }
-#   }
   # check for any signigicant interactions, stop if nothing found
   if (is.null(intnames)) {
     stop("No significant interactions found...", call.=FALSE)
   }
-  
-  
   # --------------------------------------------------------
   # Check whether we have any estimate names. this variable is
   # null in case we only have one interaction in the fitted
@@ -291,8 +279,6 @@ sjp.lm.int <- function(fit,
   if (is.null(estimates.names)) {
     estimates.names <- it
   }
-
-  
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours
   # might be adjusted later
@@ -335,8 +321,6 @@ sjp.lm.int <- function(fit,
     minorgrid <- element_line(colour=minorGridColor)
   }
   hidegrid <- element_line(colour=hideGridColor)
-  
-
   # -----------------------------------------------------------
   # check whether parameter X=TRUE was set when fitting the linear
   # model. if not, we cannot procede here
@@ -568,8 +552,6 @@ sjp.lm.int <- function(fit,
     lLabels <- sju.wordwrap(lLabels, breakLegendLabelsAt)
     # wrap annotation labels
     annoLabels <- sju.wordwrap(annoLabels, breakAnnotationLabelsAt)
-
-                    
     # -----------------------------------------------------------
     # prepare base plot of interactions
     # -----------------------------------------------------------

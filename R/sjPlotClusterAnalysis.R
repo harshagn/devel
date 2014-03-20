@@ -759,7 +759,8 @@ sjc.dend <- function(data, groupcount, distance="euclidean", agglomeration="ward
 sjc.grpdisc <- function(data, groups, groupcount, showTotalCorrect=TRUE, printPlot=TRUE) {
   # Prepare Data
   # listwise deletion of missing
-  data <- na.omit(data) 
+  data <- na.omit(data)
+  groups <- na.omit(groups)
   xval <- cbind(1:groupcount)-0.25
   xplotval <- cbind(1:groupcount)
   # ---------------------------------------------------------------
@@ -788,7 +789,6 @@ sjc.grpdisc <- function(data, groups, groupcount, showTotalCorrect=TRUE, printPl
   tmpdat <- NULL
   filldat <- NULL
   labeldat <- NULL
-  
   # data frame has flexible count of rows, depending on
   # the amount of groups in the lda
   for (i in 1:groupcount) {

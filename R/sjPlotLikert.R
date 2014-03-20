@@ -292,16 +292,12 @@ sjp.likert <- function(items,
       levels(items[,w]) <- c(paste(seq(1:length(legendLabels))))
     }
   }
-
-  
   # --------------------------------------------------------
   # reverse legend labels, if factor levels should be reversed
   # --------------------------------------------------------
   if (!is.null(legendLabels) && reverseOrder) {
     legendLabels <- rev(legendLabels)
   }
-  
-  
   # --------------------------------------------------------
   # Drop factor levels, if requested
   # --------------------------------------------------------
@@ -327,8 +323,6 @@ sjp.likert <- function(items,
       }
     }
   }
-
-    
   # --------------------------------------------------------
   # Check whether N of each item should be included into
   # axis labels
@@ -338,8 +332,6 @@ sjp.likert <- function(items,
       axisLabels.y[i] <- paste(axisLabels.y[i], sprintf(" (n=%i)", length(na.omit(items[,i]))), sep="")
     }
   }
-  
-  
   # ---------------------------------------------------------------------------------------------
   # The following part which does the transformation of factor levels into negative and positive
   # answers was taken from
@@ -370,8 +362,6 @@ sjp.likert <- function(items,
   # --------------------------------------------------------
   negatives <- all_levels[1:floor(n/2)]
   positives <- setdiff(all_levels, c(negatives, neutral))
-
-  
   # --------------------------------------------------------
   # remove neutral, summarize as proportion
   # --------------------------------------------------------
@@ -392,23 +382,17 @@ sjp.likert <- function(items,
     out
   })
   dfall <- do.call(rbind, listall)
-
-  
   # --------------------------------------------------------
   # split by positive/negative, and check whether factor
   # levels should be reversed
   # --------------------------------------------------------
   pos <- dfall[dfall$Response %in% positives,]
   neg <- dfall[dfall$Response %in% negatives,]
-
-  
   # --------------------------------------------------------
   # add half of Percentage values as new y-position for stacked bars
   # --------------------------------------------------------
   pos = ddply(pos, "Question", transform, ypos = cumsum(Freq) - 0.5*Freq)
   neg = ddply(neg, "Question", transform, ypos = rev(cumsum(rev(Freq)) - 0.5*rev(Freq)))
-
-  
   # --------------------------------------------------------
   # Negate the frequencies of negative responses, reverse order
   # --------------------------------------------------------
@@ -473,19 +457,16 @@ sjp.likert <- function(items,
     neg$Freq <- neg$Freq[orderGroupedItems]
     pos$ypos <- pos$ypos[orderGroupedItems]
     neg$ypos <- neg$ypos[orderGroupedItems]
-    
     # since "orderGroupedItems" has numbers from 1 to (items * legendLabels/2) - i.e. 1 to 15
     # in this example -, we need to know, which "group" belongs to which item. we do
     # this by dividing these numbers by "amount of positive / negative legendLabels",
     # i.e. "orderGroupedItems" will be divided by (length of legendLabels / 2).
     orderRelatedItems <- c(ceiling(orderGroupedItems/(length(legendLabels)/2)))
-    
     # now we have the in "orderUniqueItems" the items assigned to each row of the data frame
     # pos resp. neg:
     # [1] 4 4 4 1 1 1 3 3 3 2 2 2 5 5 5
     # Next, we just need each item number once, so extract the unique values
     orderUniqueItems <- c(unique(orderRelatedItems))
-    
     # now we have in "oderUniqueNumbers" the items with the lowest frequencies
     # to highest frequencies, with each number pointing the question position, beginng
     # from the end.
@@ -535,8 +516,6 @@ sjp.likert <- function(items,
   if (!is.null(axisLabels.y)) {
     axisLabels.y <- sju.wordwrap(axisLabels.y, breakLabelsAt)
   }
-  
-  
   # --------------------------------------------------------
   # define vertical position for labels
   # --------------------------------------------------------
@@ -554,8 +533,6 @@ sjp.likert <- function(items,
   if (!barOutline) {
     outlineColor <- waiver()
   }
-
-  
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours
   # might be adjusted later

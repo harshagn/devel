@@ -231,12 +231,6 @@ sjp.aov1 <- function(depVar,
     # append "intercept" string, to mark the reference category
     axisLabels.y[1] <- paste(axisLabels.y[1], stringIntercept)
   }
-  
-
-  # --------------------------------------------------------
-  # Parameter check
-  # --------------------------------------------------------
-  
   # --------------------------------------------------------
   # Check if grpVar is factor. If not, convert to factor
   # --------------------------------------------------------
@@ -289,8 +283,6 @@ sjp.aov1 <- function(depVar,
   if (!barOutline) {
     outlineColor <- waiver()
   }  
-  
-  
   # check length of diagram title and split longer string at into new lines
   # every 50 chars
   if (!is.null(title)) {
@@ -306,8 +298,6 @@ sjp.aov1 <- function(depVar,
   if (!is.null(axisLabels.y)) {
     axisLabels.y <- sju.wordwrap(axisLabels.y, breakLabelsAt)
   }
-  
-  
   # ----------------------------
   # Calculate one-way-anova. Since we have
   # only one group variable, Type of SS does
@@ -322,8 +312,6 @@ sjp.aov1 <- function(depVar,
   means.lci <- confint(fit)[,1]
   # upper confidence intervals of coefficients (group mean)
   means.uci <- confint(fit)[,2]
-  
-  
   # ----------------------------
   # Check whether true group means should be reported
   # or the differences of group means in relation to the
@@ -336,8 +324,6 @@ sjp.aov1 <- function(depVar,
       means.uci[i] <- means.uci[i]+means[1]
     }
   }
-
-  
   # ----------------------------
   # create expression with model summarys. used
   # for plotting in the diagram later
@@ -374,8 +360,6 @@ sjp.aov1 <- function(depVar,
                       f=sprintf("%.2f", fstat),
                       panval=pan))))
   }
-  
-  
   # ----------------------------
   # print coefficients and p-values in plot
   # ----------------------------
@@ -386,8 +370,6 @@ sjp.aov1 <- function(depVar,
   if (!showValueLabels) {
     ps <- rep(c(""), length(ps))
   }
-
-  
   # --------------------------------------------------------
   # copy p-values into data column
   # --------------------------------------------------------
@@ -406,8 +388,6 @@ sjp.aov1 <- function(depVar,
       }
     }  
   }
-  
-  
   # --------------------------------------------------------
   # check whether order of category items should be reversed
   # or not
@@ -432,8 +412,6 @@ sjp.aov1 <- function(depVar,
     means.p,
     ps,
     catorder))
-  
-                    
   # --------------------------------------------------------
   # check if user defined labels have been supplied
   # if not, use variable names from data frame
@@ -443,8 +421,6 @@ sjp.aov1 <- function(depVar,
   }
   # order labels
   axisLabels.y <- axisLabels.y[catorder]
-
-  
   # give columns names
   names(df) <- c("means", "lower", "upper", "p", "pv", "xv")
   df$means <- as.numeric(as.character(df$means))
@@ -458,8 +434,6 @@ sjp.aov1 <- function(depVar,
               geocol=ifelse(df$means>=0, geomcols[1], geomcols[2]), 
               labcol=ifelse(df$p<0.05, valueLabelColor, valueLabelColorNS),
               errcol=ifelse(df$means>=0, errorBarColors[1], errorBarColors[2]))
-  
-  
   # --------------------------------------------------------
   # Calculate axis limits. The range is from lowest lower-CI
   # to highest upper-CI, or a user-defined range (if "axisLimits"
@@ -505,17 +479,11 @@ sjp.aov1 <- function(depVar,
   }
   # determine gridbreaks
   if (is.null(gridBreaksAt)) {
-#     gridBreaksAt <- 1
-#     while ((upper_lim-lower_lim) > (10*gridBreaksAt)) {
-#       gridBreaksAt <- gridBreaksAt*10
-#     }
     ticks <- pretty(c(lower_lim, upper_lim))
   }
   else {
     ticks <- c(seq(lower_lim, upper_lim, by=gridBreaksAt))
   }
-  
-  
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours
   # might be adjusted later
@@ -540,8 +508,6 @@ sjp.aov1 <- function(depVar,
     minorGridColor <- c("white")
     showTickMarks <-FALSE
   }
-  
-  
   # --------------------------------------------------------
   # Set up grid colours
   # --------------------------------------------------------
@@ -554,8 +520,6 @@ sjp.aov1 <- function(depVar,
     minorgrid <- element_line(colour=minorGridColor)
   }
   hidegrid <- element_line(colour=hideGridColor)
-  
-  
   # --------------------------------------------------------
   # Set up visibility of tick marks
   # --------------------------------------------------------
@@ -565,8 +529,6 @@ sjp.aov1 <- function(depVar,
   if (!showAxisLabels.y) {
     axisLabels.y <- c("")
   }
-  
-  
   # --------------------------------------------------------
   # Set up plot padding (margins inside diagram). In case of
   # bars, we don't want margins.
@@ -577,8 +539,6 @@ sjp.aov1 <- function(depVar,
   else {
     scaley <- scale_y_continuous(limits=c(lower_lim,upper_lim), breaks=ticks, labels=ticks)    
   }
-  
-  
   # --------------------------------------------------------
   # Start plot here!
   # --------------------------------------------------------
