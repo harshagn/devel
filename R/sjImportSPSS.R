@@ -113,30 +113,43 @@ getValLabels <- function(x){
 sji.setValueLabels <- function(var, labels) {
   # check for null
   if (!is.null(labels)) {
-    # retrieve values
-    minval <- min(var, na.rm=TRUE)
-    maxval <- max(var, na.rm=TRUE)
-    # check for unlisting
-    if (is.list(labels)) {
-      labels <- as.vector(unlist(labels))
-    }
-    lablen <- length(labels)
-    valrange <- maxval-minval+1
-    if (is.infinite(valrange)) {
-      cat("Can't set value labels. Infinite value range.\n")
-    }
-    # check for valid length of labels
-    else if (valrange<lablen) {
-      cat(sprintf("More labels than values of \"var\". Using first %i labels.\n", valrange))
-      attr(var, "value.labels") <- c(as.character(c(minval:maxval)))
-      names(attr(var, "value.labels")) <- rev(labels[1:valrange])
-    }
-    else if (valrange>lablen) {
-      cat("Can't set value labels. Value range of \"var\" is longer than length of \"labels\".\n")
+    if (is.character(var) || is.null(var)) {
+      cat("Can't attach labels to string or NULL vectors.\n")
     }
     else {
-      attr(var, "value.labels") <- c(as.character(c(minval:maxval)))
-      names(attr(var, "value.labels")) <- rev(labels)
+      # checl if var ist a factor
+      if (is.factor(var)) {
+        # retrieve levels
+        minval <- 1
+        maxval <- length(levels(var))
+      }
+      else {
+        # retrieve values
+        minval <- min(var, na.rm=TRUE)
+        maxval <- max(var, na.rm=TRUE)
+      }
+      # check for unlisting
+      if (is.list(labels)) {
+        labels <- as.vector(unlist(labels))
+      }
+      lablen <- length(labels)
+      valrange <- maxval-minval+1
+      if (is.infinite(valrange)) {
+        cat("Can't set value labels. Infinite value range.\n")
+      }
+      # check for valid length of labels
+      else if (valrange<lablen) {
+        cat(sprintf("More labels than values of \"var\". Using first %i labels.\n", valrange))
+        attr(var, "value.labels") <- c(as.character(c(minval:maxval)))
+        names(attr(var, "value.labels")) <- rev(labels[1:valrange])
+      }
+      else if (valrange>lablen) {
+        cat("Can't set value labels. Value range of \"var\" is longer than length of \"labels\".\n")
+      }
+      else {
+        attr(var, "value.labels") <- c(as.character(c(minval:maxval)))
+        names(attr(var, "value.labels")) <- rev(labels)
+      }
     }
   }
   return (var)
