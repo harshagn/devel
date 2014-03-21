@@ -19,6 +19,7 @@ Version 1.3
 * Function "sji.SPSS" can now automatically attach variable labels to each variable of an imported SPSS dataset.
 * Function "sjc.grpdisc" now (invisibly) returns the ggplot-object and a vector with accuracy values.
 * Changed return value of function "sjc.qclus". Parameter "classification" now contains the group classification, including missing values, so this vector can be appended to the original data frame (because it has the same row length now).
+* Changed return value of function "sjc.cluster". The group classification now includes missing values, so this vector can be appended to the original data frame (because it has the same row length now).
 * Renamed parameter "showN" in function "sjt.stackfrq" to "showTotalN".
 * Renamed parameter "omitNA" in functions "sjp.frq" and "sjp.grpfrq" to "na.rm".
 * Added parameter "hist.skipZeros" to function "sjp.frq", to drop zero-counts and missings when drawing histograms. With this parameter, the default geom_histogram-behaviour can be replicated.

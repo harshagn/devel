@@ -290,8 +290,9 @@ sjc.qclus <- function(data,
     grp <- sjc.cluster(data, groupcount, method, distance, agglomeration, iter.max, algorithm)
   }
   else {
-    grp <- na.omit(groups)
+    grp <- groups
   }
+  names(grp) <- c(1:length(grp))
   # ---------------------------------------------
   # check whether groupcount was matrix or not
   # ---------------------------------------------
@@ -529,9 +530,19 @@ sjc.qclus <- function(data,
   # create data frame with cluster group classification,
   # including missings
   # -----------------------------------
-  dummy.grp.class <- rep(NA, times=nrow(data.origin))
-  dummy.grp.class.index <- as.numeric(names(grp))
-  dummy.grp.class[dummy.grp.class.index] <- grp
+  if (length(grp)<nrow(data.origin)) {
+    dummy.grp.class <- rep(NA, times=nrow(data.origin))
+    dummy.grp.class.index <- as.numeric(names(grp))
+    if(!any(is.na(dummy.grp.class.index))) {
+      dummy.grp.class[dummy.grp.class.index] <- grp
+    }
+    else {
+      dummy.grp.class <- grp
+    }
+  }
+  else {
+    dummy.grp.class <- grp
+  }
   # --------------------------------------------------------
   # return values
   # --------------------------------------------------------
@@ -584,6 +595,8 @@ sjc.qclus <- function(data,
 #' @return The group classification for each observation as vector. This group
 #'           classification can be used for \code{\link{sjc.grpdisc}}-function to
 #'           check the goodness of classification.
+#'           The returned vector includes missing values, so it can be appended 
+#'           to the original data frame \code{data}.
 #' 
 #' @note To get similar results as in SPSS Quick Cluster function, following points
 #'        have to be considered:
@@ -617,6 +630,10 @@ sjc.cluster <- function(data,
   # --------------------------------------------------------
   if (method=="kmeans") method <- "k"
   if (method=="hclust") method <- "h"
+  # --------------------------------------------------------
+  # save original data frame
+  # --------------------------------------------------------
+  data.origin <- data
   # Prepare Data
   # listwise deletion of missing
   data <- na.omit(data) 
@@ -636,8 +653,25 @@ sjc.cluster <- function(data,
     # return cluster assignment
     groups <- km$cluster
   }
+  # -----------------------------------
+  # create vector with cluster group classification,
+  # including missings
+  # -----------------------------------
+  if (length(groups)<nrow(data.origin)) {
+    dummy.grp.class <- rep(NA, times=nrow(data.origin))
+    dummy.grp.class.index <- as.numeric(names(groups))
+    if(!any(is.na(dummy.grp.class.index))) {
+      dummy.grp.class[dummy.grp.class.index] <- groups
+    }
+    else {
+      dummy.grp.class <- groups
+    }
+  }
+  else {
+    dummy.grp.class <- groups
+  }
   # return group assignment
-  return(groups)
+  return(dummy.grp.class)
 }
 
 
