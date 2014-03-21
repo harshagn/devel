@@ -287,12 +287,13 @@ sjc.qclus <- function(data,
   # run cluster analysis with claculated group count
   # ---------------------------------------------
   if (is.null(groups)) {
-    grp <- sjc.cluster(data, groupcount, method, distance, agglomeration, iter.max, algorithm)
+    grp.class <- grp <- sjc.cluster(data.origin, groupcount, method, distance, agglomeration, iter.max, algorithm)
   }
   else {
-    grp <- groups
+    grp.class <- grp <- groups
   }
-  names(grp) <- c(1:length(grp))
+  # remove missings
+  grp <- na.omit(grp)
   # ---------------------------------------------
   # check whether groupcount was matrix or not
   # ---------------------------------------------
@@ -526,30 +527,13 @@ sjc.qclus <- function(data,
   # plot
   # --------------------------------------------------------
   if (printPlot) plot(gp)
-  # -----------------------------------
-  # create data frame with cluster group classification,
-  # including missings
-  # -----------------------------------
-  if (length(grp)<nrow(data.origin)) {
-    dummy.grp.class <- rep(NA, times=nrow(data.origin))
-    dummy.grp.class.index <- as.numeric(names(grp))
-    if(!any(is.na(dummy.grp.class.index))) {
-      dummy.grp.class[dummy.grp.class.index] <- grp
-    }
-    else {
-      dummy.grp.class <- grp
-    }
-  }
-  else {
-    dummy.grp.class <- grp
-  }
   # --------------------------------------------------------
   # return values
   # --------------------------------------------------------
   invisible (structure(class = "sjcqclus",
                        list(data = df,
                             groupcount = groupcount,
-                            classification = dummy.grp.class,
+                            classification = grp.class,
                             accuracy=grp.accuracy$accuracy,
                             plot = gp)))
 }
@@ -634,9 +618,15 @@ sjc.cluster <- function(data,
   # save original data frame
   # --------------------------------------------------------
   data.origin <- data
+  # create id with index numbers for rows
+  data.origin$sj.grp.id <- c(1:nrow(data.origin))
+  # create NA-vector of same length as data frame
+  complete.groups <- rep(NA, times=nrow(data.origin))
   # Prepare Data
   # listwise deletion of missing
   data <- na.omit(data) 
+  # remove missings
+  data.origin <- na.omit(data.origin)
   # --------------------------------------------------
   # Ward Hierarchical Clustering
   # --------------------------------------------------
@@ -657,21 +647,10 @@ sjc.cluster <- function(data,
   # create vector with cluster group classification,
   # including missings
   # -----------------------------------
-  if (length(groups)<nrow(data.origin)) {
-    dummy.grp.class <- rep(NA, times=nrow(data.origin))
-    dummy.grp.class.index <- as.numeric(names(groups))
-    if(!any(is.na(dummy.grp.class.index))) {
-      dummy.grp.class[dummy.grp.class.index] <- groups
-    }
-    else {
-      dummy.grp.class <- groups
-    }
-  }
-  else {
-    dummy.grp.class <- groups
-  }
+  # assign valid group values
+  complete.groups[data.origin$sj.grp.id] <- groups
   # return group assignment
-  return(dummy.grp.class)
+  return(complete.groups)
 }
 
 
