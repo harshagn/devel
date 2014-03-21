@@ -28,6 +28,11 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'          \code{method} is \code{"hclust"}, you have to specify a groupcount. Use the \code{\link{sjc.elbow}}-function 
 #'          to determine the group-count depending on the elbow-criterion. Use \code{\link{sjc.grpdisc}}-function 
 #'          to inspect the goodness of grouping.
+#' @param groups By default, this parameter is \code{NULL} and will be ignored. However, if you just want to plot
+#'          an already existing cluster solution without computing a new cluster analysis, specifiy \code{groupcount}
+#'          and \code{group}. \code{group} is a vector of same length as \code{nrow(data)} and indicates the group
+#'          classification of the cluster analysis. The group classification can be computed with the
+#'          \code{\link{sjc.cluster}} function.
 #' @param method The method for computing the cluster analysis. By default (\code{"kmeans"}), a
 #'          kmeans cluster analysis will be computed. Use \code{"hclust"} to compute a hierarchical
 #'          cluster analysis. You can specify the initial letters only.
@@ -164,6 +169,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #' @export
 sjc.qclus <- function(data,
                       groupcount=NULL,
+                      groups=NULL,
                       method="k",
                       distance="euclidean", 
                       agglomeration="ward",
@@ -280,7 +286,12 @@ sjc.qclus <- function(data,
   # ---------------------------------------------
   # run cluster analysis with claculated group count
   # ---------------------------------------------
-  grp <- sjc.cluster(data, groupcount, method, distance, agglomeration, iter.max, algorithm)
+  if (is.null(groups)) {
+    grp <- sjc.cluster(data, groupcount, method, distance, agglomeration, iter.max, algorithm)
+  }
+  else {
+    grp <- na.omit(groups)
+  }
   # ---------------------------------------------
   # check whether groupcount was matrix or not
   # ---------------------------------------------
@@ -571,7 +582,7 @@ sjc.qclus <- function(data,
 #'          is \code{"kmeans"}. May be one of \code{"Hartigan-Wong"} (default), \code{"Lloyd"} (used by SPSS),
 #'          or \code{"MacQueen"}. See \code{\link{kmeans}} for details on this parameter.
 #' @return The group classification for each observation as vector. This group
-#'           classification is needed for \code{\link{sjc.grpdisc}}-function to
+#'           classification can be used for \code{\link{sjc.grpdisc}}-function to
 #'           check the goodness of classification.
 #' 
 #' @note To get similar results as in SPSS Quick Cluster function, following points

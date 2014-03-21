@@ -60,7 +60,7 @@ sjc.cluster(data, groupcount, method = "h", distance = "euclidean",
 }
 \value{
 The group classification for each observation as vector.
-This group classification is needed for
+This group classification can be used for
 \code{\link{sjc.grpdisc}}-function to check the goodness of
 classification.
 }

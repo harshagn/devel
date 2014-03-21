@@ -2,11 +2,11 @@
 \alias{sjc.qclus}
 \title{Compute quick cluster analysis}
 \usage{
-sjc.qclus(data, groupcount = NULL, method = "k", distance = "euclidean",
-  agglomeration = "ward", iter.max = 20, algorithm = "Hartigan-Wong",
-  showAccuracy = FALSE, title = NULL, titleSize = 1.3,
-  titleColor = "black", axisLabels.x = NULL, axisLabelAngle.x = 0,
-  axisLabelSize = 1.1, axisLabelColor = "gray30",
+sjc.qclus(data, groupcount = NULL, groups = NULL, method = "k",
+  distance = "euclidean", agglomeration = "ward", iter.max = 20,
+  algorithm = "Hartigan-Wong", showAccuracy = FALSE, title = NULL,
+  titleSize = 1.3, titleColor = "black", axisLabels.x = NULL,
+  axisLabelAngle.x = 0, axisLabelSize = 1.1, axisLabelColor = "gray30",
   axisTitle.x = "Cluster group characteristics",
   axisTitle.y = "Mean of z-scores", axisTitleColor = "black",
   axisTitleSize = 1.3, breakTitleAt = 40, breakLabelsAt = 12,
@@ -39,6 +39,15 @@ sjc.qclus(data, groupcount = NULL, method = "k", distance = "euclidean",
   group-count depending on the elbow-criterion. Use
   \code{\link{sjc.grpdisc}}-function to inspect the
   goodness of grouping.}
+
+  \item{groups}{By default, this parameter is \code{NULL}
+  and will be ignored. However, if you just want to plot an
+  already existing cluster solution without computing a new
+  cluster analysis, specifiy \code{groupcount} and
+  \code{group}. \code{group} is a vector of same length as
+  \code{nrow(data)} and indicates the group classification
+  of the cluster analysis. The group classification can be
+  computed with the \code{\link{sjc.cluster}} function.}
 
   \item{method}{The method for computing the cluster
   analysis. By default (\code{"kmeans"}), a kmeans cluster
