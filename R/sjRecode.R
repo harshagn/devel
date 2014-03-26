@@ -341,10 +341,14 @@ sju.wordwrap <- function(labels, wrap, linesep=NULL) {
   # default line separator is \n
   if (is.null(linesep)) {
     linesep <- '\\1\n'
+    lsub <- 0
+    ori.linesep <- '\n'
   }
   else {
     # however, for html-function we can use "<br>"
     # as parameter
+    lsub <- length(linesep)-1
+    ori.linesep <- linesep
     linesep <- sprintf("\\1%s", linesep)
   }
   # create regex pattern for line break
@@ -360,11 +364,11 @@ sju.wordwrap <- function(labels, wrap, linesep=NULL) {
     # get length of label
     l <- nchar(labels[n])
     # get last char
-    lc <- substr(labels[n], l, l)
+    lc <- substr(labels[n], l-lsub, l)
     # check if line breaj
-    if (lc=='\n') {
+    if (lc==ori.linesep) {
       # if yes, remove it
-      labels[n] <- substr(labels[n], 0, l-1)
+      labels[n] <- substr(labels[n], 0, l-(lsub+1))
     }
   }
   return(labels)
