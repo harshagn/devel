@@ -347,7 +347,7 @@ sju.wordwrap <- function(labels, wrap, linesep=NULL) {
   else {
     # however, for html-function we can use "<br>"
     # as parameter
-    lsub <- length(linesep)-1
+    lsub <- nchar(linesep)-1
     ori.linesep <- linesep
     linesep <- sprintf("\\1%s", linesep)
   }
