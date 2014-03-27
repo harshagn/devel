@@ -35,7 +35,7 @@ sjPlot - data visualization for statistics in social science
   \itemize{
     \item have difficulties using and/or understanding all possibilities that ggplot offers to create plots, simply by providing intuitive function parameters, which allow for manipulating the appearance of plots;
     \item don’t want to set up complex ggplot-object each time from the scratch;
-    \item like quick inspections of (basic) statistics via (html-)tables that are shown in the GUI viewer pane or default browser; or
+    \item like quick inspections of (basic) statistics via (html-)tables that are shown in the IDE's viewer pane or default browser; or
     \item want easily create beautiful table outputs that can be imported in office applications.
   }
   

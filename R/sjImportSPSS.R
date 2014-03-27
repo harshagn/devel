@@ -192,7 +192,7 @@ sji.getVariableLabels <- function(dat) {
 #' @description This function sets variable labels to a single variable or to
 #'                a set of variables in a data frame. To each variable, the
 #'                attribute \code{"variable.label"} with the related variable
-#'                name is attached. Most of this package's function can automatically
+#'                name is attached. Most of this package's functions can automatically
 #'                retrieve the variable name to use it as axis labels or plot title.
 #' 
 #' @seealso \link{sji.getValueLabels} \cr

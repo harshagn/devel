@@ -12,7 +12,7 @@
 #'          \code{\link{sjt.xtab}}
 #' 
 #' @param data The variables which frequencies should be printed as table. Either use a single variable
-#'          (vector) or a data frame where each column represents a variable (see examples.
+#'          (vector) or a data frame where each column represents a variable (see examples).
 #' @param file The destination file, which will be in html-format. If no filepath is specified,
 #'          the file will be saved as temporary file and openend either in the RStudio View pane or
 #'          in the default web browser.
