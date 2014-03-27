@@ -203,19 +203,32 @@ sjt.xtab <- function (var.row,
   # try to automatically set labels is not passed as parameter
   # --------------------------------------------------------
   if (is.null(valueLabels)) {
+    valueLabels <- list()
+    # --------------------------------------------------------
+    # row value labels
+    # --------------------------------------------------------
     vl <- autoSetValueLabels(var.row)
-    if (!is.null(vl)) {
-      valueLabels <- vl
-      vl <- autoSetValueLabels(var.col)
-      if (!is.null(vl)) {
-        valueLabels <- list(valueLabels, vl)
-        if (!is.null(var.grp)) {
-          vl <- autoSetValueLabels(var.grp)
-          if (!is.null(vl)) {
-            valueLabels <- c(valueLabels, list(vl))
-          }
-        }
+    if (is.null(vl)) {
+      vl <- sort(unique(na.omit(var.row)))
+    }
+    valueLabels[[1]] <- vl
+    # --------------------------------------------------------
+    # column value labels
+    # --------------------------------------------------------
+    vl <- autoSetValueLabels(var.col)
+    if (is.null(vl)) {
+      vl <- sort(unique(na.omit(var.col)))
+    }
+    valueLabels[[2]] <- vl
+    # --------------------------------------------------------
+    # group value labels
+    # --------------------------------------------------------
+    if (!is.null(var.grp)) {
+      vl <- autoSetValueLabels(var.grp)
+      if (is.null(vl)) {
+        vl <- sort(unique(na.omit(var.grp)))
       }
+      valueLabels[[3]] <- vl
     }
   }
   # -------------------------------------
@@ -337,52 +350,31 @@ sjt.xtab <- function (var.row,
   # init value labels
   # -------------------------------------
   labels.var.row <- labels.var.grp <- labels.var.col <- NULL
-  if (is.null(valueLabels)) {
-    # -------------------------------------
-    # if we don't have value labels, retrieve labels
-    # from the table attribute
-    # -------------------------------------
-    # retrieve row variable and label attributes
-    vn <- attr(tab, "row.vars")
-    # set default names for row value labels
-    labels.var.row <- vn[[1]]
-    # check whether we have group value labels as well
-    if (length(vn)>1) {
-      # set default names for group value labels
-      labels.var.grp <- vn[[2]]
-    }
-    # retrieve row variable and label attributes
-    vn <- attr(tab, "col.vars")
-    # set default names for col value labels
-    labels.var.col <- vn[[1]]
+  # -------------------------------------
+  # check how many value labels have been supplied
+  # and set value labels
+  # -------------------------------------
+  if (length(valueLabels)>0) {
+    labels.var.row <- valueLabels[[1]]
   }
   else {
-    # -------------------------------------
-    # check how many value labels have been supplied
-    # and set value labels
-    # -------------------------------------
-    if (length(valueLabels)>0) {
-      labels.var.row <- valueLabels[[1]]
+    labels.var.row <- seq_along(unique(na.omit(var.row)))
+  }
+  if (length(valueLabels)>1) {
+    labels.var.col <- valueLabels[[2]]
+  }
+  else {
+    labels.var.col <- seq_along(unique(na.omit(var.col)))
+  }
+  if (length(valueLabels)>2) {
+    labels.var.grp <- valueLabels[[3]]
+  }
+  else {
+    if (is.null(var.grp)) {
+      labels.var.grp <- NULL
     }
     else {
-      labels.var.row <- seq_along(unique(na.omit(var.row)))
-    }
-    if (length(valueLabels)>1) {
-      labels.var.col <- valueLabels[[2]]
-    }
-    else {
-      labels.var.col <- seq_along(unique(na.omit(var.col)))
-    }
-    if (length(valueLabels)>2) {
-      labels.var.grp <- valueLabels[[3]]
-    }
-    else {
-      if (is.null(var.grp)) {
-        labels.var.grp <- NULL
-      }
-      else {
-        labels.var.grp <- seq_along(unique(na.omit(var.grp)))
-      }
+      labels.var.grp <- seq_along(unique(na.omit(var.grp)))
     }
   }
   # ------------------------------------------
@@ -513,7 +505,7 @@ sjt.xtab <- function (var.row,
     group.var.rows <- NULL
   }
   else {
-    group.var.rows <- seq(1,nrow(tab), by=length(labels.var.grp))
+    group.var.rows <- seq(1,nrow(tab), by=length(labels.var.row))
   }
   # -------------------------------------
   # if we have group vars, we need a repeating counter vor row value labels
