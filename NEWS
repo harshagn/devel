@@ -1,3 +1,8 @@
+Version 1.4
+------------------------------------------------------------------------------
+Parameter changes:
+*  Added parameter "hideProgressBar" to functions "sjt.df" and "sji.viewSPSS" to hide progressbar if needed.
+
 Version 1.3
 ------------------------------------------------------------------------------
 New functions:

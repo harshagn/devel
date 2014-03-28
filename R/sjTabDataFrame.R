@@ -40,6 +40,8 @@
 #'          the table. Use \code{commentString} to specify the comment.
 #' @param commentString A string that will be added to the end / below the table. Only
 #'          applies, if \code{showCommentRow} is \code{TRUE}.
+#' @param hideProgressBar If \code{TRUE}, the progress bar that is displayed when creating the
+#'          table is hidden. Default in \code{FALSE}, hence the bar is visible.
 #' @param encoding The charset encoding used for variable and value labels. Default is \code{"UTF-8"}. Change
 #'          encoding if specific chars are not properly displayed (e.g.) German umlauts).
 #' @param CSS A \code{\link{list}} with user-defined style-sheet-definitions, according to the official CSS syntax (see
@@ -122,6 +124,7 @@ sjt.df <- function (df,
                     showType=FALSE,
                     showCommentRow=FALSE,
                     commentString="No comment...",
+                    hideProgressBar=FALSE,
                     encoding="UTF-8",
                     CSS=NULL,
                     useViewer=TRUE,
@@ -261,7 +264,7 @@ sjt.df <- function (df,
   # -------------------------------------
   # create progress bar
   # -------------------------------------
-  pb <- txtProgressBar(min=0, max=rowcnt, style=3)
+  if (!hideProgressBar) pb <- txtProgressBar(min=0, max=rowcnt, style=3)
   # -------------------------------------
   # subsequent rows
   # -------------------------------------
@@ -278,11 +281,11 @@ sjt.df <- function (df,
       page.content <- paste0(page.content, sprintf("    <td class=\"tdata centertalign%s\">%s</td>\n", arcstring, df[rcnt,ccnt]))
     }
     # update progress bar
-    setTxtProgressBar(pb, rcnt)
+    if (!hideProgressBar) setTxtProgressBar(pb, rcnt)
     # close row tag
     page.content <- paste0(page.content, "</tr>\n")
   }
-  close(pb)
+  if (!hideProgressBar) close(pb)
   # -------------------------------------
   # repeat header row?
   # -------------------------------------

@@ -27,6 +27,8 @@
 #' @param breakVariableNamesAt Wordwrap for lomg variable names. Determines how many chars of
 #'          a variable name are displayed in one line and when a line break is inserted.
 #'          Default value is 50, use \code{NULL} to turn off word wrap.
+#' @param hideProgressBar If \code{TRUE}, the progress bar that is displayed when creating the
+#'          table is hidden. Default in \code{FALSE}, hence the bar is visible.
 #' @param encoding The charset encoding used for variable and value labels. Default is \code{"UTF-8"}. Change
 #'          encoding if specific chars are not properly displayed (e.g.) German umlauts).
 #' @param CSS A \code{\link{list}} with user-defined style-sheet-definitions, according to the official CSS syntax (see
@@ -92,6 +94,7 @@ sji.viewSPSS <- function (df,
                           orderByName=FALSE,
                           breakVariableNamesAt=50,
                           encoding="UTF-8",
+                          hideProgressBar=FALSE,
                           CSS=NULL,
                           useViewer=TRUE,
                           no.output=FALSE) {
@@ -165,7 +168,7 @@ sji.viewSPSS <- function (df,
   # -------------------------------------
   # create progress bar
   # -------------------------------------
-  pb <- txtProgressBar(min=0, max=rowcnt, style=3)
+  if (!hideProgressBar) pb <- txtProgressBar(min=0, max=rowcnt, style=3)
   # -------------------------------------
   # subsequent rows
   # -------------------------------------
@@ -231,11 +234,11 @@ sji.viewSPSS <- function (df,
       page.content <- paste0(page.content, sprintf("    <td class=\"tdata%s\">%s</td>\n", arcstring, valstring))
     }
     # update progress bar
-    setTxtProgressBar(pb, rcnt)
+    if (!hideProgressBar) setTxtProgressBar(pb, rcnt)
     # close row tag
     page.content <- paste0(page.content, "  </tr>\n")
   }
-  close(pb)
+  if (!hideProgressBar) close(pb)
   # -------------------------------------
   # finish html page
   # -------------------------------------

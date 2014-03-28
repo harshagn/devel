@@ -16,7 +16,7 @@ sjt.frq(data, file = NULL, weightBy = NULL, variableLabels = NULL,
   \item{data}{The variables which frequencies should be
   printed as table. Either use a single variable (vector)
   or a data frame where each column represents a variable
-  (see examples.}
+  (see examples).}
 
   \item{file}{The destination file, which will be in
   html-format. If no filepath is specified, the file will

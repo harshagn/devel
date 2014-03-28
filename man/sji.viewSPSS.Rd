@@ -4,7 +4,8 @@
 \usage{
 sji.viewSPSS(df, file = NULL, alternateRowColors = TRUE, showType = FALSE,
   showValues = TRUE, orderByName = FALSE, breakVariableNamesAt = 50,
-  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
+  encoding = "UTF-8", hideProgressBar = FALSE, CSS = NULL,
+  useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{df}{An imported data frame, imported by
@@ -37,6 +38,10 @@ sji.viewSPSS(df, file = NULL, alternateRowColors = TRUE, showType = FALSE,
   displayed in one line and when a line break is inserted.
   Default value is 50, use \code{NULL} to turn off word
   wrap.}
+
+  \item{hideProgressBar}{If \code{TRUE}, the progress bar
+  that is displayed when creating the table is hidden.
+  Default in \code{FALSE}, hence the bar is visible.}
 
   \item{encoding}{The charset encoding used for variable
   and value labels. Default is \code{"UTF-8"}. Change

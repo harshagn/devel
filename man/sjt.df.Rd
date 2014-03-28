@@ -6,7 +6,8 @@ sjt.df(df, describe = TRUE, file = NULL, alternateRowColors = FALSE,
   orderColumn = NULL, orderAscending = TRUE, title = NULL,
   repeatHeader = FALSE, stringVariable = "Variable", showType = FALSE,
   showCommentRow = FALSE, commentString = "No comment...",
-  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
+  hideProgressBar = FALSE, encoding = "UTF-8", CSS = NULL,
+  useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{df}{A data frame that should be printed.}
@@ -60,6 +61,10 @@ sjt.df(df, describe = TRUE, file = NULL, alternateRowColors = FALSE,
   \item{commentString}{A string that will be added to the
   end / below the table. Only applies, if
   \code{showCommentRow} is \code{TRUE}.}
+
+  \item{hideProgressBar}{If \code{TRUE}, the progress bar
+  that is displayed when creating the table is hidden.
+  Default in \code{FALSE}, hence the bar is visible.}
 
   \item{encoding}{The charset encoding used for variable
   and value labels. Default is \code{"UTF-8"}. Change
