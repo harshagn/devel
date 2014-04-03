@@ -2,10 +2,10 @@
 \alias{sjt.itemanalysis}
 \title{Show item analysis of an item scale as HTML table}
 \usage{
-sjt.itemanalysis(df, factor.groups = NULL, scaleItems = FALSE,
-  alternateRowColors = TRUE, orderColumn = NULL, orderAscending = TRUE,
-  showComponentCorrelationMatrix = TRUE, file = NULL, encoding = "UTF-8",
-  CSS = NULL, useViewer = TRUE, no.output = FALSE)
+sjt.itemanalysis(df, factor.groups = NULL, factor.groups.titles = "auto",
+  scaleItems = FALSE, alternateRowColors = TRUE, orderColumn = NULL,
+  orderAscending = TRUE, showCompCorrMat = TRUE, file = NULL,
+  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{df}{A data frame with items (from a scale)}
@@ -17,6 +17,14 @@ sjt.itemanalysis(df, factor.groups = NULL, scaleItems = FALSE,
   each item in this vector represents the group number of
   the related columns of \code{df}. See examples for more
   details.}
+
+  \item{factor.groups.titles}{Titles for each factor group
+  that will be used as table caption for each
+  component-table. Must be a character vector of same
+  length as \code{factor.groups}. Default is \code{"auto"},
+  which means that each table has a standard caption
+  \emph{Component x}. Use \code{NULL} to suppress table
+  captions.}
 
   \item{scaleItems}{If \code{TRUE}, the data frame's
   vectors will be scaled when calculating the Cronbach's
@@ -41,12 +49,12 @@ sjt.itemanalysis(df, factor.groups = NULL, scaleItems = FALSE,
   order.  Use \code{FALSE} to apply descending order. See
   examples in \code{\link{sjt.df}} for further details.}
 
-  \item{showComponentCorrelationMatrix}{If \code{TRUE}
-  (default), a correlation matrix of each component's index
-  score is shown. Only applies if \code{factor.groups} is
-  not \code{NULL} and \code{df} has more than one group.
-  First, for each case (df's row), the sum of all variables
-  (df's columns) is scaled (using the
+  \item{showCompCorrMat}{If \code{TRUE} (default), a
+  correlation matrix of each component's index score is
+  shown. Only applies if \code{factor.groups} is not
+  \code{NULL} and \code{df} has more than one group. First,
+  for each case (df's row), the sum of all variables (df's
+  columns) is scaled (using the
   \code{\link{scale}}-function) and represents a "total
   score" for each component (a component is represented by
   each group of \code{factor.groups}).  Then, each case

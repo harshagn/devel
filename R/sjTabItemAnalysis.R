@@ -30,6 +30,10 @@
 #'          where the item analysis is carried out for each of these groups. Must be a vector of same 
 #'          length as \code{ncol(df)}, where each item in this vector represents the group number of
 #'          the related columns of \code{df}. See examples for more details.
+#' @param factor.groups.titles Titles for each factor group that will be used as table caption for each
+#'          component-table. Must be a character vector of same length as \code{factor.groups}. Default
+#'          is \code{"auto"}, which means that each table has a standard caption \emph{Component x}. Use
+#'          \code{NULL} to suppress table captions.
 #' @param scaleItems If \code{TRUE}, the data frame's vectors will be scaled when calculating the
 #'          Cronbach's Alpha value (see \code{\link{sju.reliability}}). Recommended, when 
 #'          the variables have different measures / scales.
@@ -144,6 +148,7 @@
 #' @export
 sjt.itemanalysis <- function(df,
                              factor.groups=NULL,
+                             factor.groups.titles="auto",
                              scaleItems=FALSE,
                              alternateRowColors=TRUE,
                              orderColumn=NULL,
@@ -179,16 +184,26 @@ sjt.itemanalysis <- function(df,
   if (is.null(factor.groups)) {
     factor.groups <- rep(1, length.out=ncol(df))
   }
+  # data frame with data from item-analysis-output-table
   df.ia <- list()
+  # component's correlation matrix
   df.comcor <- list()
   diff.ideal.list <- list()
   index.scores <- list()
+  # cronbach's alpha values
   cronbach.total <- list()
+  # mean inter-item-correlation values
   mic.total <- list()
   # -----------------------------------
   # retrieve unique factor / group index values
   # -----------------------------------
   findex <- sort(unique(factor.groups))
+  # -----------------------------------
+  # set titles
+  # -----------------------------------
+  if (!is.null(factor.groups.titles) && (factor.groups.titles[1]=="auto" || length(factor.groups.titles)!=length(findex))) {
+    factor.groups.titles <- sprintf("Component %i", seq_along(findex))
+  }
   # -----------------------------------
   # prepare data frame for index-scores, used
   # later
@@ -310,7 +325,11 @@ sjt.itemanalysis <- function(df,
   # iterate all data frames etc.
   # -----------------------------------
   for (i in 1:length(df.ia)) {
-    html <- sjt.df(df.ia[[i]], describe=FALSE, no.output=TRUE, orderAscending=orderAscending, orderColumn=orderColumn, alternateRowColors=alternateRowColors, CSS=CSS, encoding=encoding, showCommentRow=TRUE, commentString=sprintf("Mean inter-item-correlation=%.3f &middot; Cronbach's &alpha;=%.3f", mic.total[[i]], cronbach.total[[i]]))
+    # check if we have titles for each component-table
+    if (!is.null(factor.groups.titles)) dftitle <- factor.groups.titles[i]
+    # get html-table from data frame
+    html <- sjt.df(df.ia[[i]], describe=FALSE, no.output=TRUE, title=dftitle, orderAscending=orderAscending, orderColumn=orderColumn, alternateRowColors=alternateRowColors, CSS=CSS, encoding=encoding, showCommentRow=TRUE, commentString=sprintf("Mean inter-item-correlation=%.3f &middot; Cronbach's &alpha;=%.3f", mic.total[[i]], cronbach.total[[i]]))
+    # add to complete html-page
     complete.page <- paste0(complete.page, html$knitr)
     complete.page <- paste0(complete.page, "<p style=\"margin:2em;\">&nbsp;</p>")
     knitr.list[[length(knitr.list)+1]] <- html$knitr

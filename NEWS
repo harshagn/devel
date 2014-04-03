@@ -5,11 +5,12 @@ New functions:
 
 Changes to functions:
 * "sjt.itemanalysis" now also computes the mean inter-item-correlation for each scale.
-* "sjt.itemanalysis" now also computes the component-correlation-matrix (see parameter "showComponentCorrelationMatrix").
+* "sjt.itemanalysis" now also computes the component-correlation-matrix (see parameter "showCompCorrMat").
 
 Parameter changes:
 * Added parameter "hideProgressBar" to functions "sjt.df" and "sji.viewSPSS" to hide progressbar if needed.
-* Added parameter "showComponentCorrelationMatrix" to function "sjt.itemanalysis" to compute the component-correlation-matrix.
+* Added parameter "showCompCorrMat" to function "sjt.itemanalysis" to compute the component-correlation-matrix.
+* Added parameter "factor.groups.titles" to function "sjt.itemanalysis", which can be used for table captions.
 
 Bug fixes:
 * "sjt.corr" did not work when parameter "data" was a cor-object. Fixed, "data" can now also be a cor-object.
