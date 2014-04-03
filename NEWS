@@ -1,7 +1,19 @@
 Version 1.4
 ------------------------------------------------------------------------------
+New functions:
+* "sjt.mic" to compute mean inter-item-correlation.
+
+Changes to functions:
+* "sjt.itemanalysis" now also computes the mean inter-item-correlation for each scale.
+* "sjt.itemanalysis" now also computes the component-correlation-matrix (see parameter "showComponentCorrelationMatrix").
+
 Parameter changes:
-*  Added parameter "hideProgressBar" to functions "sjt.df" and "sji.viewSPSS" to hide progressbar if needed.
+* Added parameter "hideProgressBar" to functions "sjt.df" and "sji.viewSPSS" to hide progressbar if needed.
+* Added parameter "showComponentCorrelationMatrix" to function "sjt.itemanalysis" to compute the component-correlation-matrix.
+
+Bug fixes:
+* "sjt.corr" did not work when parameter "data" was a cor-object. Fixed, "data" can now also be a cor-object.
+
 
 Version 1.3
 ------------------------------------------------------------------------------

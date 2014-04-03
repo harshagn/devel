@@ -247,10 +247,10 @@ sjt.corr <- function (data,
   tag.centeralign <- "centeralign"
   tag.firsttablecol <- "firsttablecol"
   css.table <- "border-collapse:collapse; border:none;"
-  css.thead <- "border-top:double black; padding:0.2cm;"
+  css.thead <- "font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;"
   css.tdata <- "padding:0.2cm;"
   css.centeralign <- "text-align:center;"
-  css.firsttablecol <- "font-weight:bold;"
+  css.firsttablecol <- "font-style:italic;"
   css.notsig <- "color:#999999;"
   css.summary <- "border-bottom:double black; border-top:1px solid black; font-style:italic; font-size:0.9em; text-align:right;"
   css.pval <- "vertical-align:super;font-size:0.8em;"
@@ -323,7 +323,7 @@ sjt.corr <- function (data,
         # --------------------------------------------------------
         # print table-cell-data (cor-value)
         # --------------------------------------------------------
-        cellval <- round(corr[i,j],digits)
+        cellval <- sprintf("%.*f", digits, corr[i,j])
         # --------------------------------------------------------
         # check whether we want to show P-Values
         # --------------------------------------------------------
@@ -348,7 +348,7 @@ sjt.corr <- function (data,
         # --------------------------------------------------------
         # check whether not significant values should be blurred
         # --------------------------------------------------------
-        if (fadeNS) {
+        if (fadeNS && !is.null(cpv)) {
           # set css-class-attribute
           if (cpv[i,j] >=0.05) notsig <- " notsig"
         }

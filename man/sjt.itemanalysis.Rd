@@ -4,8 +4,8 @@
 \usage{
 sjt.itemanalysis(df, factor.groups = NULL, scaleItems = FALSE,
   alternateRowColors = TRUE, orderColumn = NULL, orderAscending = TRUE,
-  file = NULL, encoding = "UTF-8", CSS = NULL, useViewer = TRUE,
-  no.output = FALSE)
+  showComponentCorrelationMatrix = TRUE, file = NULL, encoding = "UTF-8",
+  CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{df}{A data frame with items (from a scale)}
@@ -40,6 +40,20 @@ sjt.itemanalysis(df, factor.groups = NULL, scaleItems = FALSE,
   ordered according to the specified column in an ascending
   order.  Use \code{FALSE} to apply descending order. See
   examples in \code{\link{sjt.df}} for further details.}
+
+  \item{showComponentCorrelationMatrix}{If \code{TRUE}
+  (default), a correlation matrix of each component's index
+  score is shown. Only applies if \code{factor.groups} is
+  not \code{NULL} and \code{df} has more than one group.
+  First, for each case (df's row), the sum of all variables
+  (df's columns) is scaled (using the
+  \code{\link{scale}}-function) and represents a "total
+  score" for each component (a component is represented by
+  each group of \code{factor.groups}).  Then, each case
+  (df's row) has a scales sum score for each component,
+  which are stored in the columns (thus, each column
+  represent one component). Finally, a correlation of this
+  matrix is computed.}
 
   \item{file}{The destination file, which will be in
   html-format. If no filepath is specified (default), the
@@ -127,11 +141,16 @@ example for retrieving factor groups for a scale and see
 examples for more details).
 }
 \note{
-\itemize{ \item Item difficulty should range between 0.2
-and 0.8. Ideal value is \code{p+(1-p)/2} (which mostly is
-between 0.5 and 0.8).  \item For item discrimination,
-acceptable values are 0.20 or higher; the closer to 1.00
-the better }
+\itemize{ \item \emph{Item difficulty} should range between
+0.2 and 0.8. Ideal value is \code{p+(1-p)/2} (which mostly
+is between 0.5 and 0.8).  \item For \emph{item
+discrimination}, acceptable values are 0.20 or higher; the
+closer to 1.00 the better.  \item In case the total
+\emph{Cronbach's Alpha} value is below the acceptable
+cut-off of 0.7 (mostly if an index has few items), the
+\emph{mean inter-item-correlation} is an alternative
+measure to indicate acceptability. Satisfactory range lies
+between 0.2 and 0.4.  }
 }
 \examples{
 # -------------------------------
@@ -169,9 +188,24 @@ sjt.itemanalysis(efc[,c(start:end)])}
 factor.groups <- sjt.pca(df, no.output=TRUE)$factor.index
 sjt.itemanalysis(df, factor.groups)}
 }
+\references{
+\itemize{ \item Jorion N, Self B, James K, Schroeder L,
+DiBello L, Pellegrino J (2013) Classical Test Theory
+Analysis of the Dynamics Concept Inventory.
+(\url{https://www.academia.edu/4104752/Classical_Test_Theory_Analysis_of_the_Dynamics_Concept_Inventory})
+\item Briggs SR, Cheek JM (1986) The role of factor
+analysis in the development and evaluation of personality
+scales. Journal of Personality, 54(1), 106-148
+(\url{http://onlinelibrary.wiley.com/doi/10.1111/j.1467-6494.1986.tb00391.x/abstract})
+\item McLean S et al. (2013) Stigmatizing attitudes and
+beliefs about bulimia nervosa: Gender, age, education and
+income variability in a community sample. International
+Journal of Eating Disorders, doi: 10.1002/eat.22227.  }
+}
 \seealso{
 \code{\link{sju.cronbach}} \cr
-\code{\link{sju.reliability}} \cr \code{\link{sjp.pca}} \cr
-\code{\link{sjt.pca}} \cr \code{\link{sjt.df}}
+\code{\link{sju.reliability}} \cr \code{\link{sju.mic}} \cr
+\code{\link{sjp.pca}} \cr \code{\link{sjt.pca}} \cr
+\code{\link{sjt.df}}
 }
 

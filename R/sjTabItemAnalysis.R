@@ -20,6 +20,7 @@
 #'
 #' @seealso \code{\link{sju.cronbach}} \cr
 #'          \code{\link{sju.reliability}} \cr
+#'          \code{\link{sju.mic}} \cr
 #'          \code{\link{sjp.pca}} \cr
 #'          \code{\link{sjt.pca}} \cr
 #'          \code{\link{sjt.df}}
@@ -43,6 +44,14 @@
 #'          data frame is ordered according to the specified column in an ascending order.
 #'          Use \code{FALSE} to apply descending order. See examples in \code{\link{sjt.df}} 
 #'          for further details.
+#' @param showComponentCorrelationMatrix If \code{TRUE} (default), a correlation matrix of each component's
+#'          index score is shown. Only applies if \code{factor.groups} is not \code{NULL} and \code{df} has
+#'          more than one group. First, for each case (df's row), the sum of all variables (df's columns) is
+#'          scaled (using the \code{\link{scale}}-function) and represents a "total score" for
+#'          each component (a component is represented by each group of \code{factor.groups}).
+#'          Then, each case (df's row) has a scales sum score for each component, which are
+#'          stored in the columns (thus, each column represent one component). Finally, a correlation
+#'          of this matrix is computed.
 #' @param file The destination file, which will be in html-format. If no filepath is specified (default),
 #'          the file will be saved as temporary file and openend either in the RStudio View pane or
 #'          in the default web browser.
@@ -84,10 +93,17 @@
 #'          is a vector of group-index-values, the lists contain elements for each sub-group.
 #' 
 #' @note \itemize{
-#'          \item Item difficulty should range between 0.2 and 0.8. Ideal value is \code{p+(1-p)/2} (which mostly is between 0.5 and 0.8).
-#'          \item For item discrimination, acceptable values are 0.20 or higher; the closer to 1.00 the better
+#'          \item \emph{Item difficulty} should range between 0.2 and 0.8. Ideal value is \code{p+(1-p)/2} (which mostly is between 0.5 and 0.8).
+#'          \item For \emph{item discrimination}, acceptable values are 0.20 or higher; the closer to 1.00 the better.
+#'          \item In case the total \emph{Cronbach's Alpha} value is below the acceptable cut-off of 0.7 (mostly if an index has few items), the \emph{mean inter-item-correlation} is an alternative measure to indicate acceptability. Satisfactory range lies between 0.2 and 0.4.
 #'        }
-#'         
+#' 
+#' @references \itemize{
+#'              \item Jorion N, Self B, James K, Schroeder L, DiBello L, Pellegrino J (2013) Classical Test Theory Analysis of the Dynamics Concept Inventory. (\url{https://www.academia.edu/4104752/Classical_Test_Theory_Analysis_of_the_Dynamics_Concept_Inventory})
+#'              \item Briggs SR, Cheek JM (1986) The role of factor analysis in the development and evaluation of personality scales. Journal of Personality, 54(1), 106-148 (\url{http://onlinelibrary.wiley.com/doi/10.1111/j.1467-6494.1986.tb00391.x/abstract})
+#'              \item McLean S et al. (2013) Stigmatizing attitudes and beliefs about bulimia nervosa: Gender, age, education and income variability in a community sample. International Journal of Eating Disorders, doi: 10.1002/eat.22227.
+#'             }
+#' 
 #' @examples
 #' # -------------------------------
 #' # Data from the EUROFAMCARE sample dataset
@@ -132,6 +148,7 @@ sjt.itemanalysis <- function(df,
                              alternateRowColors=TRUE,
                              orderColumn=NULL,
                              orderAscending=TRUE,
+                             showComponentCorrelationMatrix=TRUE,
                              file=NULL,
                              encoding="UTF-8",
                              CSS=NULL,
@@ -163,9 +180,11 @@ sjt.itemanalysis <- function(df,
     factor.groups <- rep(1, length.out=ncol(df))
   }
   df.ia <- list()
+  df.comcor <- list()
   diff.ideal.list <- list()
   index.scores <- list()
   cronbach.total <- list()
+  mic.total <- list()
   # -----------------------------------
   # retrieve unique factor / group index values
   # -----------------------------------
@@ -233,6 +252,12 @@ sjt.itemanalysis <- function(df,
     # -----------------------------------
     item.score <- apply(df.sub, 1, mean)
     # -----------------------------------
+    # store scaled values of each item's total score
+    # to compute correlation coefficients between identified components
+    # -----------------------------------
+    df.subcc <- subset(na.omit(df), select=which(factor.groups==findex[i]))
+    comcor <- scale(apply(df.subcc, 1, sum), center=TRUE, scale=TRUE)
+    # -----------------------------------
     # check if we have valid return values from reliability test.
     # In case df had less than 3 columns, NULL is returned
     # -----------------------------------
@@ -260,6 +285,11 @@ sjt.itemanalysis <- function(df,
     diff.ideal.list[[length(diff.ideal.list)+1]] <- diff.ideal
     index.scores[[length(index.scores)+1]] <- item.score
     cronbach.total[[length(cronbach.total)+1]] <- sju.cronbach(df.sub)
+    df.comcor[[length(df.comcor)+1]] <- comcor
+    # -----------------------------------
+    # Mean-interitem-corelation
+    # -----------------------------------
+    mic.total[[length(mic.total)+1]] <- sju.mic(df.sub)
   }
   # -----------------------------------
   # create data frame with index scores,
@@ -280,10 +310,27 @@ sjt.itemanalysis <- function(df,
   # iterate all data frames etc.
   # -----------------------------------
   for (i in 1:length(df.ia)) {
-    html <- sjt.df(df.ia[[i]], describe=FALSE, no.output=TRUE, orderAscending=orderAscending, orderColumn=orderColumn, alternateRowColors=alternateRowColors, CSS=CSS, encoding=encoding, showCommentRow=TRUE, commentString=sprintf("Cronbach's &alpha;=%.2f", cronbach.total[[i]]))
+    html <- sjt.df(df.ia[[i]], describe=FALSE, no.output=TRUE, orderAscending=orderAscending, orderColumn=orderColumn, alternateRowColors=alternateRowColors, CSS=CSS, encoding=encoding, showCommentRow=TRUE, commentString=sprintf("Mean inter-item-correlation=%.3f &middot; Cronbach's &alpha;=%.3f", mic.total[[i]], cronbach.total[[i]]))
     complete.page <- paste0(complete.page, html$knitr)
     complete.page <- paste0(complete.page, "<p style=\"margin:2em;\">&nbsp;</p>")
     knitr.list[[length(knitr.list)+1]] <- html$knitr
+  }
+  # -------------------------------------
+  # show component correlation table
+  # -------------------------------------
+  if (showComponentCorrelationMatrix) {
+    # check if we have enough components
+    if (length(df.comcor)>1) {
+      # copy all component correlation values to a data frame
+      df.cc <- data.frame(matrix(unlist(df.comcor), nrow=nrow(na.omit(df)), byrow=TRUE))
+      # give proper columm names
+      colnames(df.cc) <- sprintf("Component %i", c(1:ncol(df.cc)))
+      # compute correlation table, store html result
+      html <- sjt.corr(df.cc, missingDeletion="listwise", pvaluesAsNumbers=TRUE, encoding=encoding, no.output=TRUE)
+      # add to html that is printed
+      complete.page <- paste0(complete.page, html$knitr)
+      knitr.list[[length(knitr.list)+1]] <- html$knitr
+    }
   }
   # -------------------------------------
   # wrap html-tags
