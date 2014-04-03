@@ -44,7 +44,7 @@
 #'          data frame is ordered according to the specified column in an ascending order.
 #'          Use \code{FALSE} to apply descending order. See examples in \code{\link{sjt.df}} 
 #'          for further details.
-#' @param showComponentCorrelationMatrix If \code{TRUE} (default), a correlation matrix of each component's
+#' @param showCompCorrMat If \code{TRUE} (default), a correlation matrix of each component's
 #'          index score is shown. Only applies if \code{factor.groups} is not \code{NULL} and \code{df} has
 #'          more than one group. First, for each case (df's row), the sum of all variables (df's columns) is
 #'          scaled (using the \code{\link{scale}}-function) and represents a "total score" for
@@ -148,7 +148,7 @@ sjt.itemanalysis <- function(df,
                              alternateRowColors=TRUE,
                              orderColumn=NULL,
                              orderAscending=TRUE,
-                             showComponentCorrelationMatrix=TRUE,
+                             showCompCorrMat=TRUE,
                              file=NULL,
                              encoding="UTF-8",
                              CSS=NULL,
@@ -318,7 +318,7 @@ sjt.itemanalysis <- function(df,
   # -------------------------------------
   # show component correlation table
   # -------------------------------------
-  if (showComponentCorrelationMatrix) {
+  if (showCompCorrMat) {
     # check if we have enough components
     if (length(df.comcor)>1) {
       # copy all component correlation values to a data frame
