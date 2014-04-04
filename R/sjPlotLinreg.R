@@ -185,8 +185,6 @@ sjp.lm <- function(fit,
   if (!is.null(axisLabels.y) && is.list(axisLabels.y)) {
     axisLabels.y <- unlistlabels(axisLabels.y)
   }
-
-  
   # check length of diagram title and split longer string at into new lines
   # every 50 chars
   if (!is.null(title)) {
@@ -202,8 +200,6 @@ sjp.lm <- function(fit,
   if (!is.null(axisLabels.y)) {
     axisLabels.y <- sju.wordwrap(axisLabels.y, breakLabelsAt)
   }
-  
-  
   # ----------------------------
   # create expression with model summarys. used
   # for plotting in the diagram later
@@ -211,8 +207,6 @@ sjp.lm <- function(fit,
   if (showModelSummary) {
     modsum <- sju.modsum.lm(fit)
   }
-  
-
   # ----------------------------
   # print beta- and p-values in bar charts
   # ----------------------------
@@ -236,7 +230,6 @@ sjp.lm <- function(fit,
     ps <- rep(c(""), length(ps))
     pstdbv <- rep(c(""), length(pstdbv))
   }
-  
   # --------------------------------------------------------
   # copy p-values into data column
   # --------------------------------------------------------
@@ -255,7 +248,6 @@ sjp.lm <- function(fit,
       }
     }  
   }
-  
   # --------------------------------------------------------
   # create new data.frame, since ggplot requires data.frame as parameter
   # The data frame contains betas, CI and p-values
@@ -286,7 +278,6 @@ sjp.lm <- function(fit,
   # finally, we need the p-values of the coefficients, because the value
   # labels may have different colours according to their significance level
   betas <- cbind(tmp, c(ps), sju.betaCoef(fit), c(pstdbv), pv)
-  
   # --------------------------------------------------------
   # check if user defined labels have been supplied
   # if not, use variable names from data frame
@@ -294,13 +285,10 @@ sjp.lm <- function(fit,
   if (is.null(axisLabels.y)) {
     axisLabels.y <- row.names(betas)
   }
-  
   # --------------------------------------------------------
-  # define sorting critaria. the values on the x-axis are being sorted
+  # define sorting criteria. the values on the x-axis are being sorted
   # either by beta-values (sort="beta") or by standardized
   # beta values (sort = anything else)
-  # --------------------------------------------------------
-  
   # --------------------------------------------------------
   # sort labels descending in order of (std.) beta values
   # --------------------------------------------------------
@@ -310,7 +298,6 @@ sjp.lm <- function(fit,
   else {
     axisLabels.y <- axisLabels.y[order(stdbv)]
   }
-  
   # --------------------------------------------------------
   # sort rows of data frame descending in order of (std.) beta values
   # --------------------------------------------------------
@@ -344,8 +331,6 @@ sjp.lm <- function(fit,
   else {
     ticks <- c(seq(lower_lim, upper_lim, by=gridBreaksAt))
   }
-  
-  
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours
   # might be adjusted later
@@ -370,8 +355,6 @@ sjp.lm <- function(fit,
     minorGridColor <- c("white")
     showTickMarks <-FALSE
   }
-  
-  
   # --------------------------------------------------------
   # Set up grid colours
   # --------------------------------------------------------
@@ -384,8 +367,6 @@ sjp.lm <- function(fit,
     minorgrid <- element_line(colour=minorGridColor)
   }
   hidegrid <- element_line(colour=hideGridColor)
-  
-  
   # --------------------------------------------------------
   # Set up visibility of tick marks
   # --------------------------------------------------------
@@ -395,8 +376,6 @@ sjp.lm <- function(fit,
   if (!showAxisLabels.y) {
     axisLabels.y <- c("")
   }
-  
-  
   # --------------------------------------------------------
   # Start plot here!
   # --------------------------------------------------------
@@ -852,7 +831,7 @@ sjp.lm.ma <- function(linreg, showOriginalModelOnly=TRUE, completeDiagnostic=FAL
 #' @name sjp.lm1
 #' 
 #' @description Plot a regression line with confidence interval for a fitted model with only
-#'                one predictor (i.e. \code{lm(y~y)}).
+#'                one predictor (i.e. \code{lm(y~x)}).
 #'                This function may plot two lines: The resulting linear regression line
 #'                including confidence interval (in blue) by default, and a loess-smoothed line without
 #'                confidence interval (in red) if parameter \code{showLoess} is \code{TRUE}.
