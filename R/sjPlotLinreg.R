@@ -260,12 +260,26 @@ sjp.lm <- function(fit,
   # create new data.frame, since ggplot requires data.frame as parameter
   # The data frame contains betas, CI and p-values
   # --------------------------------------------------------
-  tmp<-data.frame(cbind(
-    # Append beta coefficients, [-1] means that the first
-    # row (Intercept) will be removed / ignored
-    coefficients(fit)[-1],
-    # append CI
-    confint(fit, level=0.95)[-1,]))
+  # if we have only one independent variable, cbind does not
+  # work, since it duplicates the coefficients. so we simply
+  # concatenate here
+  if (1==length(coefficients(fit)[-1])) {
+    tmp <- data.frame(
+      # Append beta coefficients, [-1] means that the first
+      # row (Intercept) will be removed / ignored
+      coefficients(fit)[-1],
+      # append CI
+      confint(fit, level=0.95)[-1,1],
+      confint(fit, level=0.95)[-1,2])
+  }
+  else {
+    tmp <- data.frame(cbind(
+      # Append beta coefficients, [-1] means that the first
+      # row (Intercept) will be removed / ignored
+      coefficients(fit)[-1],
+      # append CI
+      confint(fit, level=0.95)[-1,]))
+  }
   # append p-values and standardized beta coefficients
   # further more, we take the stand. beta as string, because in
   # case no values are drawn, we simply use an empty string.
