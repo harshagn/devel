@@ -969,8 +969,14 @@ sju.mic <- function(data,
   for (j in 1:(ncol(corr)-1)) {
     # first correlation is always "1" (self-correlation)
     for (i in (j+1):nrow(corr)) {
-      # add up all subsequent values
-      mic <- c(mic, corr[i,j])
+      # check four valid bound
+      if (i<=nrow(corr) && j<=ncol(corr)) {
+        # add up all subsequent values
+        mic <- c(mic, corr[i,j])
+      }
+      else {
+        mic <- c(mic, "NA")
+      }
     }
   }
   return (mean(mic))
