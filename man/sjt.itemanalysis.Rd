@@ -150,12 +150,14 @@ are computed for each item of a data frame: \itemize{ \item
 percentage of missing values \item mean value \item
 standard deviation \item skew \item item difficulty \item
 item discrimination \item Cronbach's Alpha if item was
-removed from scale } If \code{factor.groups} is not
-\code{NULL}, the data frame \code{df} will be splitted into
-groups, assuming that \code{factor.groups} indicate those
-columns of the data frame that belong to a certain factor
-(see return value of function \code{\link{sjt.pca}} as
-example for retrieving factor groups for a scale and see
+removed from scale } Optional, following statistics can be
+computed as well: \itemize{ \item kurstosis \item
+Shapiro-Wilk Normality Test } If \code{factor.groups} is
+not \code{NULL}, the data frame \code{df} will be splitted
+into groups, assuming that \code{factor.groups} indicate
+those columns of the data frame that belong to a certain
+factor (see return value of function \code{\link{sjt.pca}}
+as example for retrieving factor groups for a scale and see
 examples for more details).
 }
 \note{
