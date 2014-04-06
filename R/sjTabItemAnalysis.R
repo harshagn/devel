@@ -48,6 +48,10 @@
 #'          data frame is ordered according to the specified column in an ascending order.
 #'          Use \code{FALSE} to apply descending order. See examples in \code{\link{sjt.df}} 
 #'          for further details.
+#' @param showShapiro If \code{TRUE}, a Shapiro-Wilk normality test is computed for each item.
+#'          See \code{\link{shapiro.test}} for details.
+#' @param showKurtosis If \code{TRUE}, the kurtosis for each item will also be shown (see \code{\link{kurtosi}}
+#'          and \code{\link{describe}} in the \code{psych}-package for more details.
 #' @param showCompCorrMat If \code{TRUE} (default), a correlation matrix of each component's
 #'          index score is shown. Only applies if \code{factor.groups} is not \code{NULL} and \code{df} has
 #'          more than one group. First, for each case (df's row), the sum of all variables (df's columns) is
@@ -97,6 +101,7 @@
 #'          is a vector of group-index-values, the lists contain elements for each sub-group.
 #' 
 #' @note \itemize{
+#'          \item The \emph{Shapiro-Wilk Normality Test} (see column \code{W(p)}) tests if an item has a distribution that is significantly different from normal.
 #'          \item \emph{Item difficulty} should range between 0.2 and 0.8. Ideal value is \code{p+(1-p)/2} (which mostly is between 0.5 and 0.8).
 #'          \item For \emph{item discrimination}, acceptable values are 0.20 or higher; the closer to 1.00 the better.
 #'          \item In case the total \emph{Cronbach's Alpha} value is below the acceptable cut-off of 0.7 (mostly if an index has few items), the \emph{mean inter-item-correlation} is an alternative measure to indicate acceptability. Satisfactory range lies between 0.2 and 0.4.
@@ -153,6 +158,8 @@ sjt.itemanalysis <- function(df,
                              alternateRowColors=TRUE,
                              orderColumn=NULL,
                              orderAscending=TRUE,
+                             showShapiro=FALSE,
+                             showKurtosis=FALSE,
                              showCompCorrMat=TRUE,
                              file=NULL,
                              encoding="UTF-8",
@@ -287,11 +294,30 @@ sjt.itemanalysis <- function(df,
     # -----------------------------------
     # create dummy data frame
     # -----------------------------------
-    df.dummy <- data.frame(cbind(sprintf("%.2f %%", missings.prz), round(dstat$mean,2), round(dstat$sd,2), round(dstat$skew,2), difficulty, itemdis, alpha))
+    df.dummy <- data.frame(cbind(sprintf("%.2f %%", missings.prz), round(dstat$mean,2), round(dstat$sd,2), round(dstat$skew,2)))
+    df.colnames <- c("Missings", "Mean", "SD", "Skew")
+    # -----------------------------------
+    # include kurtosis statistics
+    # -----------------------------------
+    if (showKurtosis) {
+      df.dummy <- data.frame(cbind(df.dummy, round(dstat$kurtosis,2)))
+      df.colnames <- c(df.colnames, "Kurtosis")
+    }
+    # -----------------------------------
+    # include shapiro-wilk normality test
+    # -----------------------------------
+    if (showShapiro) {
+      shaptest.w <- apply(df.sub, 2, function(x) shapiro.test(x)$statistic)
+      shaptest.p <- apply(df.sub, 2, function(x) shapiro.test(x)$p.value)
+      df.dummy <- data.frame(cbind(df.dummy, sprintf("%.2f (%.3f)", shaptest.w, shaptest.p)))
+      df.colnames <- c(df.colnames, "W(p)")
+    }
+    df.dummy <- data.frame(cbind(df.dummy, difficulty, itemdis, alpha))
+    df.colnames <- c(df.colnames, "Item Difficulty", "Item Discrimination", "&alpha; if deleted")
     # -----------------------------------
     # set names of data frame
     # -----------------------------------
-    colnames(df.dummy) <- c("Missings", "Mean", "SD", "Skew", "Item Difficulty", "Item Discrimination", "&alpha; if deleted")
+    colnames(df.dummy) <- df.colnames
     rownames(df.dummy) <- df.names    
     # -----------------------------------
     # add results to return list

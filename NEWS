@@ -6,6 +6,7 @@ New functions:
 Changes to functions:
 * "sjt.itemanalysis" now also computes the mean inter-item-correlation for each scale.
 * "sjt.itemanalysis" now also computes the component-correlation-matrix (see parameter "showCompCorrMat").
+* "sjt.itemanalysis" now also includes kurtosis statistics and Shapiro-Wilk-Nromality-Test.
 
 Parameter changes:
 * Added parameter "hideProgressBar" to functions "sjt.df" and "sji.viewSPSS" to hide progressbar if needed.
