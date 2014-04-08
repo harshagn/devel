@@ -138,7 +138,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'          or category labels. Default is 1.3.
 #' @param hist.skipZeros If \code{TRUE}, zero counts (categories with no answer) in \code{varCout} are omitted
 #'          when drawing histrograms, and the mapping is changed to \code{\link{stat_bin}}. Only applies to 
-#'          histograms (see \code{tye}). Use this parameter to get identical results to the default
+#'          histograms (see \code{type}). Use this parameter to get identical results to the default
 #'          \code{\link{qplot}} or \code{\link{geom_histogram}} histogram plots of ggplot. You may need
 #'          to adjust the \code{barWidth} parameter for better visual results (which, by ggplot-default, is
 #'          1/30 of the x-axis-range).

@@ -50,7 +50,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #' @param upperYlim Uses a pre-defined upper limit for the y-axis. Overrides the \code{maxYlim} parameter.
 #' @param useFacetGrid \code{TRUE} when bar charts should be plotted as facet grids instead of integrated single
 #'          bar charts. Ideal for larger amount of groups. This parameter wraps a single panel into 
-#'          \code{varGrpup} amount of panels, i.e. each group is represented within a new panel.
+#'          \code{varGroup} amount of panels, i.e. each group is represented within a new panel.
 #' @param title Title of the diagram, plotted above the whole diagram panel.
 #'          Use \code{"auto"} to automatically detect variable names that will be used as title
 #'          (see \code{\link{sji.setVariableLabels}}) for details).

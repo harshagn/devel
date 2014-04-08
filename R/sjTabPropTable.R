@@ -672,7 +672,7 @@ sjt.xtab <- function (var.row,
     }
     else {
       kook <- sprintf("&Phi;=%.3f", sju.phi(tab))
-      # if minimum expected values below 5, compute fisher's exact test
+      # if minimum expected values below 5 and df=1, compute fisher's exact test
       if(min(tab.expected)<5 || (min(tab.expected)<10 && chsq$parameter==1)) fish <- fisher.test(tab)
     }
     # create summary row

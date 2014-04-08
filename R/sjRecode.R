@@ -731,7 +731,7 @@ sju.mwu <- function(var, grp, alternative="two.sided") {
 #' @note This function is a convenient function for \code{\link{chisq.test}}, performing goodness-of-fit test.
 #' 
 #' @seealso \code{\link{sju.mwu}}, \code{\link{sju.aov1.levene}} and \code{\link{wilcox.test}}, \code{\link{ks.test}}, \code{\link{kruskal.test}}, 
-#'          \code{\link{t.test}}, \code{\link{chisq.test}}, \code{\link{fisher.test}}
+#'          \code{\link{t.test}}, \code{\link{chisq.test}}, \code{\link{fisher.test}}, \code{\link{ks.test}}
 #' 
 #' @examples
 #' data(efc)

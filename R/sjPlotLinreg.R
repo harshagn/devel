@@ -787,14 +787,14 @@ sjp.lm.ma <- function(linreg, showOriginalModelOnly=TRUE, completeDiagnostic=FAL
   print(ggplot(linreg, aes(x=.fitted, y=.resid)) +
           geom_hline(yintercept=0, alpha=0.7) +
           geom_point() +
-          geom_smooth(se=FALSE) +
+          geom_smooth(method="loess", se=FALSE) +
           ggtitle("Homoscedasticity (homogeneity of variance,\nrandomly distributed residuals, original model)\n(Amount and distance of points scattered above/below line is equal)"))
   
   if (modelOptmized) {
     print(ggplot(model, aes(x=.fitted, y=.resid)) +
             geom_hline(yintercept=0, alpha=0.7) +
             geom_point() +
-            geom_smooth(se=FALSE) +
+            geom_smooth(method="loess", se=FALSE) +
             ggtitle("Homoscedasticity (homogeneity of variance,\nrandomly distributed residuals, updated model)\n(Amount and distance of points scattered above/below line is equal)"))
   }
   # ---------------------------------
