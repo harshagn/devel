@@ -297,7 +297,10 @@ scaled and centered. The mean value of these z-scores
 within each cluster group is calculated to see how certain
 characteristics (variables) in a cluster group differ in
 relation to other cluster groups.  \item These results are
-shown in a graph.  }
+shown in a graph.  } This method can also be used to plot
+existing cluster solution as graph witouth computing a new
+cluster analysis. See parameter \code{groups} for more
+details.
 }
 \note{
 To get similar results as in SPSS Quick Cluster function,
@@ -324,6 +327,9 @@ sjc.qclus(airquality, groupcount=4, facetCluster=TRUE)
 }
 \seealso{
 \code{\link{sjc.cluster}} \cr \code{\link{sjc.kgap}} \cr
-\code{\link{sjc.elbow}} \cr \code{\link{sjc.grpdisc}}
+\code{\link{sjc.elbow}} \cr \code{\link{sjc.grpdisc}} \cr
+Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K
+(2014) cluster: Cluster Analysis Basics and Extensions. R
+package.
 }
 

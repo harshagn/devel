@@ -34,6 +34,10 @@
 #'          one line and when a line break is inserted. Default is 40.
 #' @param digits The amount of digits used the values inside table cells.
 #'          Default is 2.
+#' @param stringDiagonal a vector with string values of the same length as \code{ncol(data)} (number of
+#'          correlated items) that can be used to display content in the diagonal cells
+#'          where row and column item are identical (i.e. the "self-correlation"). By defauilt,
+#'          this parameter is \code{NULL} and the diagnal cells are empty.
 #' @param encoding The charset encoding used for variable and value labels. Default is \code{"UTF-8"}. Change
 #'          encoding if specific chars are not properly displayed (e.g.) German umlauts).
 #' @param CSS A \code{\link{list}} with user-defined style-sheet-definitions, according to the official CSS syntax (see
@@ -118,6 +122,7 @@ sjt.corr <- function (data,
                       varlabels=NULL,
                       breakLabelsAt=40,
                       digits=3,
+                      stringDiagonal=NULL,
                       encoding="UTF-8",
                       CSS=NULL,
                       useViewer=TRUE,
@@ -317,7 +322,12 @@ sjt.corr <- function (data,
       # leave out self-correlations
       # --------------------------------------------------------
       if (j==i) {
-        page.content <- paste0(page.content, "    <td class=\"tdata\">&nbsp;</td>\n")
+        if (is.null(stringDiagonal) || length(stringDiagonal)>ncol(corr)) {
+          page.content <- paste0(page.content, "    <td class=\"tdata centeralign\">&nbsp;</td>\n")
+        }
+        else {
+          page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign\">%s</td>\n", stringDiagonal[j]))
+        }
       }
       else {
         # --------------------------------------------------------

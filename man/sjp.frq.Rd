@@ -283,7 +283,7 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
   (categories with no answer) in \code{varCout} are omitted
   when drawing histrograms, and the mapping is changed to
   \code{\link{stat_bin}}. Only applies to histograms (see
-  \code{tye}). Use this parameter to get identical results
+  \code{type}). Use this parameter to get identical results
   to the default \code{\link{qplot}} or
   \code{\link{geom_histogram}} histogram plots of ggplot.
   You may need to adjust the \code{barWidth} parameter for

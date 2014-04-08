@@ -22,10 +22,10 @@ sjt.itemanalysis(df, factor.groups = NULL, factor.groups.titles = "auto",
   \item{factor.groups.titles}{Titles for each factor group
   that will be used as table caption for each
   component-table. Must be a character vector of same
-  length as \code{factor.groups}. Default is \code{"auto"},
-  which means that each table has a standard caption
-  \emph{Component x}. Use \code{NULL} to suppress table
-  captions.}
+  length as \code{length(unique(factor.groups))}.  Default
+  is \code{"auto"}, which means that each table has a
+  standard caption \emph{Component x}.  Use \code{NULL} to
+  suppress table captions.}
 
   \item{scaleItems}{If \code{TRUE}, the data frame's
   vectors will be scaled when calculating the Cronbach's
@@ -67,11 +67,10 @@ sjt.itemanalysis(df, factor.groups = NULL, factor.groups.titles = "auto",
   columns) is scaled (using the
   \code{\link{scale}}-function) and represents a "total
   score" for each component (a component is represented by
-  each group of \code{factor.groups}).  Then, each case
-  (df's row) has a scales sum score for each component,
-  which are stored in the columns (thus, each column
-  represent one component). Finally, a correlation of this
-  matrix is computed.}
+  each group of \code{factor.groups}).  After that, each
+  case (df's row) has a scales sum score for each
+  component.  Finally, a correlation of these "scale sum
+  scores" is computed.}
 
   \item{file}{The destination file, which will be in
   html-format. If no filepath is specified (default), the
@@ -150,8 +149,9 @@ are computed for each item of a data frame: \itemize{ \item
 percentage of missing values \item mean value \item
 standard deviation \item skew \item item difficulty \item
 item discrimination \item Cronbach's Alpha if item was
-removed from scale } Optional, following statistics can be
-computed as well: \itemize{ \item kurstosis \item
+removed from scale \item mean (or average)
+inter-item-correlation } Optional, following statistics can
+be computed as well: \itemize{ \item kurstosis \item
 Shapiro-Wilk Normality Test } If \code{factor.groups} is
 not \code{NULL}, the data frame \code{df} will be splitted
 into groups, assuming that \code{factor.groups} indicate
@@ -168,9 +168,10 @@ that is significantly different from normal.  \item
 Ideal value is \code{p+(1-p)/2} (which mostly is between
 0.5 and 0.8).  \item For \emph{item discrimination},
 acceptable values are 0.20 or higher; the closer to 1.00
-the better.  \item In case the total \emph{Cronbach's
-Alpha} value is below the acceptable cut-off of 0.7 (mostly
-if an index has few items), the \emph{mean
+the better. See \code{\link{sju.reliability}} for more
+details.  \item In case the total \emph{Cronbach's Alpha}
+value is below the acceptable cut-off of 0.7 (mostly if an
+index has few items), the \emph{mean
 inter-item-correlation} is an alternative measure to
 indicate acceptability. Satisfactory range lies between 0.2
 and 0.4.  }
@@ -223,7 +224,10 @@ scales. Journal of Personality, 54(1), 106-148
 \item McLean S et al. (2013) Stigmatizing attitudes and
 beliefs about bulimia nervosa: Gender, age, education and
 income variability in a community sample. International
-Journal of Eating Disorders, doi: 10.1002/eat.22227.  }
+Journal of Eating Disorders, doi: 10.1002/eat.22227.  \item
+Trochim WMK (2008) Types of Reliability.
+\url{http://www.socialresearchmethods.net/kb/reltypes.php}
+}
 }
 \seealso{
 \code{\link{sju.cronbach}} \cr

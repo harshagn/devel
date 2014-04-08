@@ -12,11 +12,14 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'                \item After that, all variables in \code{data} are scaled and centered. The mean value of these z-scores within each cluster group is calculated to see how certain characteristics (variables) in a cluster group differ in relation to other cluster groups.
 #'                \item These results are shown in a graph.
 #'                }
+#'                This method can also be used to plot existing cluster solution as graph witouth computing
+#'                a new cluster analysis. See parameter \code{groups} for more details.
 #'                
 #' @seealso \code{\link{sjc.cluster}} \cr
 #'          \code{\link{sjc.kgap}} \cr
 #'          \code{\link{sjc.elbow}} \cr
-#'          \code{\link{sjc.grpdisc}}
+#'          \code{\link{sjc.grpdisc}} \cr
+#'          Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.
 #'
 #' @param data The data frame containing all variables that should be used for the
 #'          cluster analysis.
@@ -543,11 +546,13 @@ sjc.qclus <- function(data,
 #' @name sjc.cluster
 #' @description Compute hierarchical or kmeans cluster analysis and returns the group
 #'                association for each observation as vector.
-#' @seealso \code{\link{sjc.dend}} \cr
+#' @seealso \code{\link{sjc.qclus}} \cr
+#'          \code{\link{sjc.dend}} \cr
 #'          \code{\link{sjc.grpdisc}} \cr
 #'          \code{\link{sjc.elbow}} \cr
 #'          \code{\link{kmeans}} \cr
-#'          \code{\link{hclust}}
+#'          \code{\link{hclust}} \cr
+#'          Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.
 #'
 #' @param data The data frame containing all variables that should be used for the
 #'          cluster analysis.

@@ -98,7 +98,7 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   \item{useFacetGrid}{\code{TRUE} when bar charts should be
   plotted as facet grids instead of integrated single bar
   charts. Ideal for larger amount of groups. This parameter
-  wraps a single panel into \code{varGrpup} amount of
+  wraps a single panel into \code{varGroup} amount of
   panels, i.e. each group is represented within a new
   panel.}
 

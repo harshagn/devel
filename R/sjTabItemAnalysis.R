@@ -12,6 +12,7 @@
 #'                  \item item difficulty
 #'                  \item item discrimination
 #'                  \item Cronbach's Alpha if item was removed from scale
+#'                  \item mean (or average) inter-item-correlation
 #'                }
 #'                Optional, following statistics can be computed as well:
 #'                \itemize{
@@ -36,9 +37,9 @@
 #'          length as \code{ncol(df)}, where each item in this vector represents the group number of
 #'          the related columns of \code{df}. See examples for more details.
 #' @param factor.groups.titles Titles for each factor group that will be used as table caption for each
-#'          component-table. Must be a character vector of same length as \code{factor.groups}. Default
-#'          is \code{"auto"}, which means that each table has a standard caption \emph{Component x}. Use
-#'          \code{NULL} to suppress table captions.
+#'          component-table. Must be a character vector of same length as \code{length(unique(factor.groups))}.
+#'          Default is \code{"auto"}, which means that each table has a standard caption \emph{Component x}.
+#'          Use \code{NULL} to suppress table captions.
 #' @param scaleItems If \code{TRUE}, the data frame's vectors will be scaled when calculating the
 #'          Cronbach's Alpha value (see \code{\link{sju.reliability}}). Recommended, when 
 #'          the variables have different measures / scales.
@@ -62,9 +63,8 @@
 #'          more than one group. First, for each case (df's row), the sum of all variables (df's columns) is
 #'          scaled (using the \code{\link{scale}}-function) and represents a "total score" for
 #'          each component (a component is represented by each group of \code{factor.groups}).
-#'          Then, each case (df's row) has a scales sum score for each component, which are
-#'          stored in the columns (thus, each column represent one component). Finally, a correlation
-#'          of this matrix is computed.
+#'          After that, each case (df's row) has a scales sum score for each component.
+#'          Finally, a correlation of these "scale sum scores" is computed.
 #' @param file The destination file, which will be in html-format. If no filepath is specified (default),
 #'          the file will be saved as temporary file and openend either in the RStudio View pane or
 #'          in the default web browser.
@@ -108,7 +108,7 @@
 #' @note \itemize{
 #'          \item The \emph{Shapiro-Wilk Normality Test} (see column \code{W(p)}) tests if an item has a distribution that is significantly different from normal.
 #'          \item \emph{Item difficulty} should range between 0.2 and 0.8. Ideal value is \code{p+(1-p)/2} (which mostly is between 0.5 and 0.8).
-#'          \item For \emph{item discrimination}, acceptable values are 0.20 or higher; the closer to 1.00 the better.
+#'          \item For \emph{item discrimination}, acceptable values are 0.20 or higher; the closer to 1.00 the better. See \code{\link{sju.reliability}} for more details.
 #'          \item In case the total \emph{Cronbach's Alpha} value is below the acceptable cut-off of 0.7 (mostly if an index has few items), the \emph{mean inter-item-correlation} is an alternative measure to indicate acceptability. Satisfactory range lies between 0.2 and 0.4.
 #'        }
 #' 
@@ -116,6 +116,7 @@
 #'              \item Jorion N, Self B, James K, Schroeder L, DiBello L, Pellegrino J (2013) Classical Test Theory Analysis of the Dynamics Concept Inventory. (\url{https://www.academia.edu/4104752/Classical_Test_Theory_Analysis_of_the_Dynamics_Concept_Inventory})
 #'              \item Briggs SR, Cheek JM (1986) The role of factor analysis in the development and evaluation of personality scales. Journal of Personality, 54(1), 106-148 (\url{http://onlinelibrary.wiley.com/doi/10.1111/j.1467-6494.1986.tb00391.x/abstract})
 #'              \item McLean S et al. (2013) Stigmatizing attitudes and beliefs about bulimia nervosa: Gender, age, education and income variability in a community sample. International Journal of Eating Disorders, doi: 10.1002/eat.22227.
+#'              \item Trochim WMK (2008) Types of Reliability. \url{http://www.socialresearchmethods.net/kb/reltypes.php}
 #'             }
 #' 
 #' @examples
@@ -376,7 +377,7 @@ sjt.itemanalysis <- function(df,
       # give proper columm names
       colnames(df.cc) <- sprintf("Component %i", c(1:ncol(df.cc)))
       # compute correlation table, store html result
-      html <- sjt.corr(df.cc, missingDeletion="listwise", pvaluesAsNumbers=TRUE, encoding=encoding, no.output=TRUE)
+      html <- sjt.corr(df.cc, missingDeletion="listwise", pvaluesAsNumbers=TRUE, stringDiagonal=sprintf("&alpha;=%.3f", unlist(cronbach.total)), encoding=encoding, no.output=TRUE)
       # add to html that is printed
       complete.page <- paste0(complete.page, html$knitr)
       knitr.list[[length(knitr.list)+1]] <- html$knitr

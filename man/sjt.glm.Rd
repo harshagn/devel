@@ -18,7 +18,7 @@ sjt.glm(..., file = NULL, labelPredictors = NULL,
   no.output = FALSE)
 }
 \arguments{
-  \item{...}{One or more fitted glm-objects.}
+  \item{...}{One or more fitted \code{\link{glm}}-objects.}
 
   \item{file}{The destination file, which will be in
   html-format. If no filepath is specified, the file will

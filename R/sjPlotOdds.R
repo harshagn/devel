@@ -11,13 +11,13 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("OR", "lower", "upper", "
 #'              \item \url{http://www.surefoss.org/dataanalysis/plotting-odds-ratios-aka-a-forrestplot-with-ggplot2/}
 #'              }
 #' 
-#' @description Plot odds ratios with confidence intervalls as bar chart or dot plot
+#' @description Plot odds ratios (exponentiated coefficients) with confidence intervalls as bar chart or dot plot
 #' @seealso \code{\link{sjp.glm.ma}}
 #' 
 #' @note Based on the script from surefoss:
 #' \url{http://www.surefoss.org/dataanalysis/plotting-odds-ratios-aka-a-forrestplot-with-ggplot2/}
 #'
-#' @param fit The fitted model of a logistic regression (glm-Object).
+#' @param fit The fitted model of a logistic regression (or any other \code{\link{glm}}-object).
 #' @param sortOdds If \code{TRUE} (default), the odds ratios are ordered according their OR value from highest first
 #'          to lowest last. Use \code{FALSE} if you don't want to change the order of the predictors.
 #' @param title Diagram's title as string.
@@ -651,7 +651,7 @@ sjp.glm <- function(fit,
 #' 
 #' @seealso \code{\link{sjp.glm}}
 
-#' @param logreg a fitted glm-model
+#' @param logreg a fitted \code{\link{glm}}-model
 #' @param showOriginalModelOnly if \code{TRUE} (default), only the model assumptions of the fitted model
 #'   \code{logreg} are plotted. if \code{FALSE}, the model assumptions of an updated model where outliers
 #'   are automatically excluded are also plotted.

@@ -17,7 +17,7 @@
 #' @seealso \code{\link{sjt.lm}} \cr
 #'          \code{\link{sjp.glm}}
 #' 
-#' @param ... One or more fitted glm-objects.
+#' @param ... One or more fitted \code{\link{glm}}-objects.
 #' @param file The destination file, which will be in html-format. If no filepath is specified,
 #'          the file will be saved as temporary file and openend either in the RStudio View pane or
 #'          in the default web browser.

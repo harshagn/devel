@@ -22,8 +22,8 @@ sjp.glm(fit, sortOdds = TRUE, title = NULL, titleSize = 1.3,
   printPlot = TRUE)
 }
 \arguments{
-  \item{fit}{The fitted model of a logistic regression
-  (glm-Object).}
+  \item{fit}{The fitted model of a logistic regression (or
+  any other \code{\link{glm}}-object).}
 
   \item{sortOdds}{If \code{TRUE} (default), the odds ratios
   are ordered according their OR value from highest first
@@ -244,8 +244,8 @@ plot (\code{plot}) as well as the data frame that was used
 for setting up the ggplot-object (\code{df}).
 }
 \description{
-Plot odds ratios with confidence intervalls as bar chart or
-dot plot
+Plot odds ratios (exponentiated coefficients) with
+confidence intervalls as bar chart or dot plot
 }
 \note{
 Based on the script from surefoss:

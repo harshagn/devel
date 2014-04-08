@@ -5,7 +5,8 @@
 sjt.corr(data, missingDeletion = "pairwise", corMethod = "spearman",
   showPValues = TRUE, pvaluesAsNumbers = FALSE, fadeNS = TRUE,
   file = NULL, varlabels = NULL, breakLabelsAt = 40, digits = 3,
-  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
+  stringDiagonal = NULL, encoding = "UTF-8", CSS = NULL,
+  useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{data}{A correlation object, built with the
@@ -53,6 +54,14 @@ sjt.corr(data, missingDeletion = "pairwise", corMethod = "spearman",
 
   \item{digits}{The amount of digits used the values inside
   table cells.  Default is 2.}
+
+  \item{stringDiagonal}{a vector with string values of the
+  same length as \code{ncol(data)} (number of correlated
+  items) that can be used to display content in the
+  diagonal cells where row and column item are identical
+  (i.e. the "self-correlation"). By defauilt, this
+  parameter is \code{NULL} and the diagnal cells are
+  empty.}
 
   \item{encoding}{The charset encoding used for variable
   and value labels. Default is \code{"UTF-8"}. Change
