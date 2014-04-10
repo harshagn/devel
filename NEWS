@@ -7,9 +7,13 @@ Changes to functions:
 * "sjt.itemanalysis" now also computes the mean inter-item-correlation for each scale.
 * "sjt.itemanalysis" now also computes the component-correlation-matrix (see parameter "showCompCorrMat"), including the Cronbach's alpha for each component to compare internal component consistency with inter-component-correlation.
 * "sjt.itemanalysis" now also includes kurtosis statistics and Shapiro-Wilk-Normality-Test.
+* Improved value label positioning for bar charts in function "sjp.frq" when "flipCoordinate" is TRUE.
+* "sjt.corr" can now display values only in the upper right or lower left triangle of the correlation table (see Parameter changes).
+* "sjt.xtab" table output now has double bottom border by default, even if table summary is hidden.
 
 Parameter changes:
 * Added parameter "stringDiagonal" to "sjt.corr" to print custom values into the diagnoal "self-correlation" cells (which are by default empty).
+* Added parameter "triangle" and "title" to function "sjt.corr".
 * Added parameter "hideProgressBar" to functions "sjt.df" and "sji.viewSPSS" to hide progressbar if needed.
 * Added parameter "showCompCorrMat" to function "sjt.itemanalysis" to compute the component-correlation-matrix.
 * Added parameter "factor.groups.titles" to function "sjt.itemanalysis", which can be used for table captions.

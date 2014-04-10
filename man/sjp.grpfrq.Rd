@@ -28,7 +28,8 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   axisTitleSize = 1.3, autoGroupAt = NULL, startAxisAt = "auto",
   theme = NULL, legendPos = "right", legendSize = 1,
   legendBorderColor = "white", legendBackColor = "white",
-  flipCoordinates = FALSE, na.rm = TRUE, printPlot = TRUE)
+  flipCoordinates = FALSE, labelPos = "outside", na.rm = TRUE,
+  printPlot = TRUE)
 }
 \arguments{
   \item{varCount}{The variable which frequencies should be
@@ -396,6 +397,13 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
 
   \item{flipCoordinates}{If \code{TRUE}, the x and y axis
   are swapped.}
+
+  \item{labelPos}{If \code{flipCoordinates} is \code{TRUE},
+  use this parameter to specify value label position.  Can
+  be either \code{"inside"} or \code{"outside"} (default).
+  You may specify initial letter only. If
+  \code{flipCoordinates} is \code{FALSE}, this parameter
+  will be ignored.}
 
   \item{na.rm}{If \code{TRUE}, missings are not included in
   the frequency calculation and diagram plot.}

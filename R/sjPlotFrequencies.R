@@ -162,6 +162,10 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'          \item \code{"none"} for no borders, grids and ticks.
 #'          }
 #' @param flipCoordinates If \code{TRUE}, the x and y axis are swapped. Default is \code{FALSE}.
+#' @param labelPos If \code{flipCoordinates} is \code{TRUE}, use this parameter to specify value label position.
+#'          Can be either \code{"inside"} or \code{"outside"} (default). You may specify
+#'          initial letter only. If \code{flipCoordinates} is \code{FALSE}, this parameter will
+#'          be ignored.
 #' @param na.rm If \code{TRUE}, missings are not included in the frequency calculation and diagram plot.
 #' @param printPlot If \code{TRUE} (default), plots the results as graph. Use \code{FALSE} if you don't
 #'          want to plot any graphs. In either case, the ggplot-object will be returned as value.
@@ -319,6 +323,7 @@ sjp.frq <- function(varCount,
                     autoGroupAt=NULL,
                     theme=NULL,
                     flipCoordinates=FALSE,
+                    labelPos="outside",
                     na.rm=TRUE,
                     printPlot=TRUE) {
   # --------------------------------------------------------
@@ -652,8 +657,13 @@ sjp.frq <- function(varCount,
   if (flipCoordinates) {
     # adjust vertical position for labels, based on whether percentage values
     # are shown or not
-    vert <- ifelse((showPercentageValues == TRUE && showCountValues == TRUE), 0.5, 0.1)
-    hort <- 1.5
+    vert <- waiver() # ifelse((showPercentageValues == TRUE && showCountValues == TRUE), 0.5, 0.1)
+    if (labelPos=="inside" || labelPos=="i") {
+      hort <- 1.1
+    }
+    else {
+      hort <- -0.1
+    }
   }
   else {
     # adjust vertical position for labels, based on whether percentage values
@@ -671,16 +681,25 @@ sjp.frq <- function(varCount,
   if (showValueLabels) {
     # here we have counts and percentages
     if (showPercentageValues && showCountValues) {
-      ggvaluelabels <-  geom_text(label=sprintf("%i\n(%.01f%%)", mydat$frq, mydat$prz),
-                                  size=valueLabelSize,
-                                  vjust=vert,
-                                  hjust = hort,
-                                  colour=valueLabelColor)
+      if (flipCoordinates) {
+        ggvaluelabels <-  geom_text(label=sprintf("%i (%.01f%%)", mydat$frq, mydat$prz),
+                                    hjust=hort,
+                                    size=valueLabelSize,
+                                    vjust=vert,
+                                    colour=valueLabelColor)
+      }
+      else {
+        ggvaluelabels <-  geom_text(label=sprintf("%i\n(%.01f%%)", mydat$frq, mydat$prz),
+                                    hjust=hort,
+                                    size=valueLabelSize,
+                                    vjust=vert,
+                                    colour=valueLabelColor)
+      }
     }
     else if (showCountValues) {
       # here we have counts, without percentages
       ggvaluelabels <-  geom_text(label=sprintf("%i", mydat$frq),
-                                  hjust = hort,
+                                  hjust=hort,
                                   size=valueLabelSize,
                                   vjust=vert,
                                   colour=valueLabelColor)
@@ -688,7 +707,7 @@ sjp.frq <- function(varCount,
     else if (showPercentageValues) {
       # here we have counts, without percentages
       ggvaluelabels <-  geom_text(label=sprintf("%.01f%%", mydat$prz),
-                                  hjust = hort,
+                                  hjust=hort,
                                   size=valueLabelSize,
                                   vjust=vert,
                                   colour=valueLabelColor)

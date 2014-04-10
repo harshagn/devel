@@ -3,10 +3,10 @@
 \title{Show correlations as HTML table}
 \usage{
 sjt.corr(data, missingDeletion = "pairwise", corMethod = "spearman",
-  showPValues = TRUE, pvaluesAsNumbers = FALSE, fadeNS = TRUE,
-  file = NULL, varlabels = NULL, breakLabelsAt = 40, digits = 3,
-  stringDiagonal = NULL, encoding = "UTF-8", CSS = NULL,
-  useViewer = TRUE, no.output = FALSE)
+  title = NULL, showPValues = TRUE, pvaluesAsNumbers = FALSE,
+  fadeNS = TRUE, file = NULL, varlabels = NULL, breakLabelsAt = 40,
+  digits = 3, triangle = "both", stringDiagonal = NULL,
+  encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{data}{A correlation object, built with the
@@ -20,6 +20,9 @@ sjt.corr(data, missingDeletion = "pairwise", corMethod = "spearman",
   \item{corMethod}{Indicates the correlation computation
   method. May be one of \code{"spearman"} (default),
   \code{"pearson"} or \code{"kendall"}.}
+
+  \item{title}{A table caption. By default, \code{title} is
+  \code{NULL}, hence no title will be used.}
 
   \item{showPValues}{Whether significance levels (p-values)
   of correlations should be printed or not.}
@@ -54,6 +57,12 @@ sjt.corr(data, missingDeletion = "pairwise", corMethod = "spearman",
 
   \item{digits}{The amount of digits used the values inside
   table cells.  Default is 2.}
+
+  \item{triangle}{Indicates whether only the upper right
+  (use \code{"upper"}), lower left (use \code{"lower"}) or
+  both (use \code{"both"}) triangles of the correlation
+  table is filled with values. Default is \code{"both"}.
+  You can specifiy the inital letter only.}
 
   \item{stringDiagonal}{a vector with string values of the
   same length as \code{ncol(data)} (number of correlated
@@ -147,11 +156,11 @@ colnames(df) <- varlabs[c(start:end)]
 sjt.corr(df, pvaluesAsNumbers=TRUE)}
 
 # -------------------------------
-# auto-detection of labels
+# auto-detection of labels, only lower triangle
 # -------------------------------
 efc <- sji.setVariableLabels(efc, varlabs)
 \dontrun{
-sjt.corr(efc[,c(start:end)])}
+sjt.corr(efc[,c(start:end)], triangle="lower")}
 }
 \references{
 \itemize{ \item

@@ -190,6 +190,10 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #' @param legendBorderColor Color of the legend's border. Default is \code{"white"}, so no visible border is drawn.
 #' @param legendBackColor Fill color of the legend's background. Default is \code{"white"}, so no visible background is drawn.
 #' @param flipCoordinates If \code{TRUE}, the x and y axis are swapped.
+#' @param labelPos If \code{flipCoordinates} is \code{TRUE}, use this parameter to specify value label position.
+#'          Can be either \code{"inside"} or \code{"outside"} (default). You may specify
+#'          initial letter only. If \code{flipCoordinates} is \code{FALSE}, this parameter will
+#'          be ignored.
 #' @param na.rm If \code{TRUE}, missings are not included in the frequency calculation and diagram plot.
 #' @param printPlot If \code{TRUE} (default), plots the results as graph. Use \code{FALSE} if you don't
 #'          want to plot any graphs. In either case, the ggplot-object will be returned as value.
@@ -339,6 +343,7 @@ sjp.grpfrq <- function(varCount,
                        legendBorderColor="white",
                        legendBackColor="white",
                        flipCoordinates=FALSE,
+                       labelPos="outside",
                        na.rm=TRUE,
                        printPlot=TRUE) {
   # --------------------------------------------------------
@@ -819,7 +824,12 @@ sjp.grpfrq <- function(varCount,
     # if we flip coordinates, we have to use other parameters
     # than for the default layout
     vert <- ifelse(type == "dots", 0.45, 0.35)
-    hort <- -0.2
+    if (labelPos=="inside" || labelPos=="i") {
+      hort <- 1.1
+    }
+    else {
+      hort <- -0.1
+    }
   }
   else {
     hort <- waiver()
