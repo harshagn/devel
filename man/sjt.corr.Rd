@@ -5,7 +5,7 @@
 sjt.corr(data, missingDeletion = "pairwise", corMethod = "spearman",
   title = NULL, showPValues = TRUE, pvaluesAsNumbers = FALSE,
   fadeNS = TRUE, file = NULL, varlabels = NULL, breakLabelsAt = 40,
-  digits = 3, triangle = "both", stringDiagonal = NULL,
+  digits = 3, triangle = "both", val.rm = NULL, stringDiagonal = NULL,
   encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
@@ -63,6 +63,20 @@ sjt.corr(data, missingDeletion = "pairwise", corMethod = "spearman",
   both (use \code{"both"}) triangles of the correlation
   table is filled with values. Default is \code{"both"}.
   You can specifiy the inital letter only.}
+
+  \item{val.rm}{Specify a number between 0 and 1 to
+  suppress the output of correlation values that are
+  smaller than \code{val.rm}. The absolute correlation
+  values are used, so a correlation value of -.5 would be
+  greater that \code{"val.rm=.4"} and thus not be omitted.
+  By default, this parameter is \code{NULL}, hence all
+  values are shown in the table.  If a correlation value is
+  below the specified value of \code{val.rm}, it is still
+  printed to the HTML table, but made "invisible" with
+  white foreground color. You can use the \code{CSS}
+  parameter (\code{"css.valueremove"}) to change color and
+  appearance of those correlation value that are smaller
+  than the limit specified by \code{val.rm}.}
 
   \item{stringDiagonal}{a vector with string values of the
   same length as \code{ncol(data)} (number of correlated
@@ -161,6 +175,25 @@ sjt.corr(df, pvaluesAsNumbers=TRUE)}
 efc <- sji.setVariableLabels(efc, varlabs)
 \dontrun{
 sjt.corr(efc[,c(start:end)], triangle="lower")}
+
+# -------------------------------
+# auto-detection of labels, only lower triangle,
+# all correlation values smaller than 0.3 are not
+# shown in the table
+# -------------------------------
+efc <- sji.setVariableLabels(efc, varlabs)
+\dontrun{
+sjt.corr(efc[,c(start:end)], triangle="lower", val.rm=0.3)}
+
+# -------------------------------
+# auto-detection of labels, only lower triangle,
+# all correlation values smaller than 0.3 are printed
+# in blue
+# -------------------------------
+efc <- sji.setVariableLabels(efc, varlabs)
+\dontrun{
+sjt.corr(efc[,c(start:end)], triangle="lower",
+         val.rm=0.3, CSS=list(css.valueremove='color:blue;'))}
 }
 \references{
 \itemize{ \item

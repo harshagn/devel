@@ -9,6 +9,7 @@ Changes to functions:
 * "sjt.itemanalysis" now also includes kurtosis statistics and Shapiro-Wilk-Normality-Test.
 * Improved value label positioning for bar charts in function "sjp.frq" when "flipCoordinate" is TRUE.
 * "sjt.corr" can now display values only in the upper right or lower left triangle of the correlation table (see Parameter changes).
+* "sjt.corr" can suppress correlation values below a specific limit (see parameter "val.rm").
 * "sjt.xtab" table output now has double bottom border by default, even if table summary is hidden.
 
 Parameter changes:

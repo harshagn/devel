@@ -38,6 +38,14 @@
 #' @param triangle Indicates whether only the upper right (use \code{"upper"}), lower left (use \code{"lower"})
 #'          or both (use \code{"both"}) triangles of the correlation table is filled with values. Default
 #'          is \code{"both"}. You can specifiy the inital letter only.
+#' @param val.rm Specify a number between 0 and 1 to suppress the output of correlation values 
+#'          that are smaller than \code{val.rm}. The absolute correlation values are used, so
+#'          a correlation value of -.5 would be greater that \code{"val.rm=.4"} and thus not be
+#'          omitted. By default, this parameter is \code{NULL}, hence all values are shown in the table.
+#'          If a correlation value is below the specified value of \code{val.rm}, it is still printed to
+#'          the HTML table, but made "invisible" with white foreground color. You can use the \code{CSS}
+#'          parameter (\code{"css.valueremove"}) to change color and appearance of those correlation value that are smaller than
+#'          the limit specified by \code{val.rm}. 
 #' @param stringDiagonal a vector with string values of the same length as \code{ncol(data)} (number of
 #'          correlated items) that can be used to display content in the diagonal cells
 #'          where row and column item are identical (i.e. the "self-correlation"). By defauilt,
@@ -115,6 +123,25 @@
 #' \dontrun{
 #' sjt.corr(efc[,c(start:end)], triangle="lower")}
 #' 
+#' # -------------------------------
+#' # auto-detection of labels, only lower triangle,
+#' # all correlation values smaller than 0.3 are not
+#' # shown in the table
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, varlabs)
+#' \dontrun{
+#' sjt.corr(efc[,c(start:end)], triangle="lower", val.rm=0.3)}
+#' 
+#' # -------------------------------
+#' # auto-detection of labels, only lower triangle,
+#' # all correlation values smaller than 0.3 are printed
+#' # in blue
+#' # -------------------------------
+#' efc <- sji.setVariableLabels(efc, varlabs)
+#' \dontrun{
+#' sjt.corr(efc[,c(start:end)], triangle="lower",
+#'          val.rm=0.3, CSS=list(css.valueremove='color:blue;'))}
+#' 
 #' @export
 sjt.corr <- function (data,
                       missingDeletion="pairwise",
@@ -128,6 +155,7 @@ sjt.corr <- function (data,
                       breakLabelsAt=40,
                       digits=3,
                       triangle="both",
+                      val.rm=NULL,
                       stringDiagonal=NULL,
                       encoding="UTF-8",
                       CSS=NULL,
@@ -268,6 +296,7 @@ sjt.corr <- function (data,
   tag.tdata <- "tdata"
   tag.notsig <- "notsig"
   tag.pval <- "pval"
+  tag.valueremove <- "valueremove"
   tag.summary <- "summary"
   tag.centeralign <- "centeralign"
   tag.firsttablecol <- "firsttablecol"
@@ -275,6 +304,7 @@ sjt.corr <- function (data,
   css.thead <- "font-style:italic; font-weight:normal; border-top:double black; border-bottom:1px solid black; padding:0.2cm;"
   css.tdata <- "padding:0.2cm;"
   css.caption <- "font-weight: bold; text-align:left;"
+  css.valueremove <- "color:white;"
   css.centeralign <- "text-align:center;"
   css.firsttablecol <- "font-style:italic;"
   css.notsig <- "color:#999999;"
@@ -292,20 +322,22 @@ sjt.corr <- function (data,
     if (!is.null(CSS[['css.summary']])) css.summary <- CSS[['css.summary']]
     if (!is.null(CSS[['css.notsig']])) css.notsig <- CSS[['css.notsig']]
     if (!is.null(CSS[['css.pval']])) css.pval <- CSS[['css.pval']]
+    if (!is.null(CSS[['css.valueremove']])) css.valueremove <- CSS[['css.valueremove']]
     if (!is.null(CSS[['css.centeralign']])) css.centeralign <- CSS[['css.centeralign']]
     if (!is.null(CSS[['css.firsttablecol']])) css.firsttablecol <- CSS[['css.firsttablecol']]
   }
   # ------------------------
   # set page style
   # ------------------------
-  page.style <-  sprintf("<style>%s { %s }\n%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n</style>",
+  page.style <-  sprintf("<style>%s { %s }\n%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n.%s { %s }\n</style>",
                          tag.table, css.table, tag.caption, css.caption,
                          tag.thead, css.thead, tag.tdata, css.tdata,
                          tag.firsttablecol, css.firsttablecol, 
                          tag.centeralign, css.centeralign,
                          tag.notsig, css.notsig,
                          tag.pval, css.pval,
-                         tag.summary, css.summary)
+                         tag.summary, css.summary,
+                         tag.valueremove, css.valueremove)
   # ------------------------
   # start content
   # ------------------------
@@ -388,13 +420,25 @@ sjt.corr <- function (data,
           # --------------------------------------------------------
           notsig <- ""
           # --------------------------------------------------------
-          # check whether not significant values should be blurred
+          # check whether non significant values should be blurred
           # --------------------------------------------------------
           if (fadeNS && !is.null(cpv)) {
             # set css-class-attribute
             if (cpv[i,j] >=0.05) notsig <- " notsig"
           }
-          page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign%s\">%s</td>\n", notsig, cellval))
+          # --------------------------------------------------------
+          # prepare css for values that shoould be removed due to low
+          # correlation value
+          # --------------------------------------------------------
+          value.remove <- ""
+          # --------------------------------------------------------
+          # check whether correlation value is too small and should
+          # be omitted
+          # --------------------------------------------------------
+          if (!is.null(val.rm) && abs(corr[i,j])<abs(val.rm)) {
+            value.remove <- " valueremove"            
+          }
+          page.content <- paste0(page.content, sprintf("    <td class=\"tdata centeralign%s%s\">%s</td>\n", notsig, value.remove, cellval))
         }
         else {
           page.content <- paste0(page.content, "    <td class=\"tdata centeralign\">&nbsp;</td>\n")
