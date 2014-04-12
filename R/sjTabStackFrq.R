@@ -253,6 +253,12 @@ sjt.stackfrq <- function (items,
   itemcount <- c()
   mat <- data.frame()
   mat.n <- data.frame()
+  # ----------------------------
+  # determine minimum value. if 0, add one, because
+  # vector indexing starts with 1
+  # ----------------------------
+  diff <- ifelse(min(items,na.rm=TRUE)==0, 1, 0)
+  # iterate item-list
   for (i in 1:ncol(items)) {
     # ----------------------------
     # if we don't have weights, create simple frequency table
@@ -292,12 +298,6 @@ sjt.stackfrq <- function (items,
     # ----------------------------
     fr <- rep(0, catcount)
     # ----------------------------
-    # determine difference from minimum value to 1
-    # we just want copy the category values (e.g. 3 to 5)
-    # to a vector, but vector indexing starts with 1, not 3.
-    # ----------------------------
-    diff <- minval-1
-    # ----------------------------
     # if we have missings, manually change table names
     # ----------------------------
     if (showNA) {
@@ -313,7 +313,7 @@ sjt.stackfrq <- function (items,
     # table name equals cateogory value,
     # table itself contains counts of each category
     # ----------------------------
-    fr[as.numeric(names(dummy))-diff] <- dummy
+    fr[as.numeric(names(dummy))+diff] <- dummy
     # ----------------------------
     # add proportional percentages to data frame row
     # ----------------------------

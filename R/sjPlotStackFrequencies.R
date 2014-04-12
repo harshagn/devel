@@ -282,6 +282,11 @@ sjp.stackfrq <- function(items,
   # passed as parameter
   #---------------------------------------------------
   mydat <- c()
+  # ----------------------------
+  # determine minimum value. if 0, add one, because
+  # vector indexing starts with 1
+  # ----------------------------
+  diff <- ifelse(min(items,na.rm=TRUE)==0, 1, 0)
   # iterate item-list
   for (i in 1:ncol(items)) {
     # get each single items
@@ -302,17 +307,12 @@ sjp.stackfrq <- function(items,
     }
     # give columns names
     names(df) <- c("var", "prc")
-
-		##	FRS:  I can't suss out why we convert to numeric but rather than
-		##		this I'm just going to number them:
-    ## convert to numeric
-    #df$var <- as.numeric(as.character(df$var))
-    ## if categories start with zero, fix this here
-    #if (min(df$var)==0) {
-    #  df$var <- df$var+1
-    #}
-		df$var <- 1:length(df$var)
-
+    # need to be numeric, so percentage values (see below) are
+    # correctly assigned, i.e. missing categories are considered
+    df$var <- as.numeric(as.character(df$var))+diff # if categories start with zero, fix this here
+#     if (min(df$var)==0) {
+#       df$var <- df$var+1
+#     }
     # Create a vector of zeros 
     prc <- rep(0,countlen)
     # Replace the values in prc for those indices which equal df$var

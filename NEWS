@@ -22,6 +22,7 @@ Parameter changes:
 Bug fixes:
 * "sjt.corr" did not work when parameter "data" was a cor-object. Fixed, "data" can now also be a cor-object.
 * "sjp.lm" did not work when fitted model only had one independent variable. Fixed.
+* "sjt.stackfrq" and "sjp.stackfrq" did not properly plot/print zero-categories. Fixed.
 
 Various:
 * Spell corrections and additions to documentation.
