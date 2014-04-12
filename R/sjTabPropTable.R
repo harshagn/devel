@@ -737,7 +737,7 @@ sjt.xtab <- function (var.row,
   knitr <- gsub(tag.td_c, sprintf("color:%s;",tdcol.cell), knitr)  
   knitr <- gsub(tag.td_n, sprintf("color:%s;",tdcol.n), knitr)  
   # -------------------------------------
-  # check if html-content should be outputted
+  # check if html-content should be printed
   # -------------------------------------
   if (!no.output) {
     # -------------------------------------

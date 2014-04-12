@@ -389,29 +389,34 @@ sjt.itemanalysis <- function(df,
   knitr <- complete.page
   complete.page <- sprintf("<html>\n<head>\n<meta http-equiv=\"Content-type\" content=\"text/html;charset=%s\">\n</head>\n<body>\n%s\n</body></html>", encoding, complete.page)
   # -------------------------------------
-  # check if we have filename specified
+  # check if html-content should be printed
   # -------------------------------------
-  if (!is.null(file)) {
-    # write file
-    write(knitr, file=file)
-  }
-  # -------------------------------------
-  # else open in viewer pane
-  # -------------------------------------
-  else {
-    # else create and browse temporary file
-    htmlFile <- tempfile(fileext=".html")
-    write(complete.page, file=htmlFile)
-    # check whether we have RStudio Viewer
-    viewer <- getOption("viewer")
-    if (useViewer && !is.null(viewer)) {
-      viewer(htmlFile)
+  if (!no.output) {
+    # -------------------------------------
+    # check if we have filename specified
+    # -------------------------------------
+    if (!is.null(file)) {
+      # write file
+      write(knitr, file=file)
     }
+    # -------------------------------------
+    # else open in viewer pane
+    # -------------------------------------
     else {
-      utils::browseURL(htmlFile)    
+      # else create and browse temporary file
+      htmlFile <- tempfile(fileext=".html")
+      write(complete.page, file=htmlFile)
+      # check whether we have RStudio Viewer
+      viewer <- getOption("viewer")
+      if (useViewer && !is.null(viewer)) {
+        viewer(htmlFile)
+      }
+      else {
+        utils::browseURL(htmlFile)    
+      }
+      # delete temp file
+      # unlink(htmlFile)
     }
-    # delete temp file
-    # unlink(htmlFile)
   }
   invisible (list(class="sjtitemanalysis",
                   df.list=df.ia,
