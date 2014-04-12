@@ -258,7 +258,7 @@ sjt.stackfrq <- function (items,
   # vector indexing starts with 1
   # ----------------------------
   if (any(apply(items, c(1,2), is.factor)) || any(apply(items, c(1,2), is.character))) {
-    diff <- 0
+    diff <- ifelse(min(apply(items, c(1,2), as.numeric),na.rm=TRUE)==0, 1, 0)
   }
   else {
     diff <- ifelse(min(items,na.rm=TRUE)==0, 1, 0)
