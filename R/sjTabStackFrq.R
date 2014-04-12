@@ -257,7 +257,12 @@ sjt.stackfrq <- function (items,
   # determine minimum value. if 0, add one, because
   # vector indexing starts with 1
   # ----------------------------
-  diff <- ifelse(min(items,na.rm=TRUE)==0, 1, 0)
+  if (any(apply(items, c(1,2), is.factor)) || any(apply(items, c(1,2), is.character))) {
+    diff <- 0
+  }
+  else {
+    diff <- ifelse(min(items,na.rm=TRUE)==0, 1, 0)
+  }
   # iterate item-list
   for (i in 1:ncol(items)) {
     # ----------------------------
