@@ -11,7 +11,7 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
   gridBreaksAt = NULL, barWidth = 0.6, dotSize = 4, barColor = NULL,
   barAlpha = 1, barOutline = FALSE, barOutlineSize = 0.2,
   innerBoxPlotWidth = 0.15, innerBoxPlotDotSize = 3, borderColor = NULL,
-  axisColor = NULL, outlineColor = "black", majorGridColor = NULL,
+  axisColor = NULL, barOutlineColor = "black", majorGridColor = NULL,
   minorGridColor = NULL, hideGrid.x = FALSE, hideGrid.y = FALSE,
   showValueLabels = TRUE, showCountValues = TRUE,
   showPercentageValues = TRUE, showAxisLabels.x = TRUE,
@@ -167,7 +167,7 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
   applies if \code{barOutline} is \code{TRUE}.  Default is
   0.2}
 
-  \item{outlineColor}{The color of the bar outline. Only
+  \item{barOutlineColor}{The color of the bar outline. Only
   applies, if \code{barOutline} is \code{TRUE}.}
 
   \item{majorGridColor}{Specifies the color of the major

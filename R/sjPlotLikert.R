@@ -85,7 +85,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Freq", "ypos", "Question
 #' @param barAlpha Specify the transparancy (alpha value) of bars.
 #' @param borderColor User defined color of whole diagram border (panel border).
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Default is \code{FALSE}.
-#' @param outlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
+#' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
 #' @param majorGridColor Specifies the color of the major grid lines of the diagram background.
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.
@@ -209,7 +209,7 @@ sjp.likert <- function(items,
                         borderColor=NULL, 
                         axisColor=NULL, 
                         barOutline=FALSE, 
-                        outlineColor="black", 
+                        barOutlineColor="black", 
                         majorGridColor=NULL,
                         minorGridColor=NULL,
                         hideGrid.x=FALSE,
@@ -531,7 +531,7 @@ sjp.likert <- function(items,
   # check whether bars should have an outline
   # --------------------------------------------------------
   if (!barOutline) {
-    outlineColor <- waiver()
+    barOutlineColor <- waiver()
   }
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours
@@ -671,8 +671,8 @@ sjp.likert <- function(items,
   # --------------------------------------------------------
   baseplot <- ggplot() +
     aes(Question, Freq, fill = Response, order = Response) + 
-    geom_bar(data = neg, stat = "identity", colour=outlineColor, width=barWidth, alpha=barAlpha) +
-    geom_bar(data = pos, stat = "identity", colour=outlineColor, width=barWidth, alpha=barAlpha) +
+    geom_bar(data = neg, stat = "identity", colour=barOutlineColor, width=barWidth, alpha=barAlpha) +
+    geom_bar(data = pos, stat = "identity", colour=barOutlineColor, width=barWidth, alpha=barAlpha) +
     geom_hline(yintercept=0, colour="white")
   # --------------------------------------------------------
   # check whether bars should be visually separated by an 

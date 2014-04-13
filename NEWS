@@ -11,6 +11,7 @@ Changes to functions:
 * "sjt.corr" can now display values only in the upper right or lower left triangle of the correlation table (see Parameter changes).
 * "sjt.corr" can suppress correlation values below a specific limit (see parameter "val.rm").
 * "sjt.xtab" table output now has double bottom border by default, even if table summary is hidden.
+* "sji.setValueLabels" can now apply value labels to a complete data frame at once.
 
 Parameter changes:
 * Added parameter "stringDiagonal" to "sjt.corr" to print custom values into the diagnoal "self-correlation" cells (which are by default empty).
@@ -18,6 +19,7 @@ Parameter changes:
 * Added parameter "hideProgressBar" to functions "sjt.df" and "sji.viewSPSS" to hide progressbar if needed.
 * Added parameter "showCompCorrMat" to function "sjt.itemanalysis" to compute the component-correlation-matrix.
 * Added parameter "factor.groups.titles" to function "sjt.itemanalysis", which can be used for table captions.
+* Changed parameter name "outlineColor" to "barOutlineColor" for those functions which plot bars. Changes made to harmonize this parameter with "barOutline", "barSize", "barOutlineSize", "barColor" etc.
 
 Bug fixes:
 * "sjt.corr" did not work when parameter "data" was a cor-object. Fixed, "data" can now also be a cor-object.

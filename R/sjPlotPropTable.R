@@ -91,7 +91,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "
 #' @param axisColor User defined color of axis border (y- and x-axis, in case the axes should have different colors than
 #'          the diagram border).
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Default is \code{FALSE}.
-#' @param outlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}
+#' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}
 #' @param majorGridColor specifies the color of the major grid lines of the diagram background
 #' @param minorGridColor specifies the color of the minor grid lines of the diagram background
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.
@@ -249,7 +249,7 @@ sjp.xtab <- function(y,
                     borderColor=NULL, 
                     axisColor=NULL, 
                     barOutline=FALSE, 
-                    outlineColor="black", 
+                    barOutlineColor="black", 
                     majorGridColor=NULL,
                     minorGridColor=NULL,
                     hideGrid.x=FALSE,
@@ -587,7 +587,7 @@ sjp.xtab <- function(y,
   # check whether bars should have an outline
   # --------------------------------------------------------
   if (!barOutline) {
-    outlineColor <- waiver()
+    barOutlineColor <- waiver()
   }
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours
@@ -727,10 +727,10 @@ sjp.xtab <- function(y,
   # ----------------------------------
   if (type=="bars") {
     if (barPosition=="dodge") {
-      geob <- geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=outlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, width=barWidth, alpha=barAlpha)
     }
     else {
-      geob <- geom_bar(stat="identity", position="stack", colour=outlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", position="stack", colour=barOutlineColor, width=barWidth, alpha=barAlpha)
     }
   }
   # check if we have lines

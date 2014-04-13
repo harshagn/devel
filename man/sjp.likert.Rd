@@ -13,7 +13,7 @@ sjp.likert(items, legendLabels = NULL, orderBy = NULL,
   gridBreaksAt = 0.2, diagramMargins = TRUE, barWidth = 0.5,
   barColor = NULL, colorPalette = "GnBu", barAlpha = 1,
   borderColor = NULL, axisColor = NULL, barOutline = FALSE,
-  outlineColor = "black", majorGridColor = NULL, minorGridColor = NULL,
+  barOutlineColor = "black", majorGridColor = NULL, minorGridColor = NULL,
   hideGrid.x = FALSE, hideGrid.y = FALSE, axisTitle.x = NULL,
   axisTitle.y = NULL, axisTitleColor = "black", axisTitleSize = 1.3,
   theme = NULL, showTickMarks = FALSE, showValueLabels = TRUE,
@@ -162,7 +162,7 @@ sjp.likert(items, legendLabels = NULL, orderBy = NULL,
   \item{barOutline}{If \code{TRUE}, each bar gets a colored
   outline. Default is \code{FALSE}.}
 
-  \item{outlineColor}{The color of the bar outline. Only
+  \item{barOutlineColor}{The color of the bar outline. Only
   applies, if \code{barOutline} is set to \code{TRUE}.}
 
   \item{majorGridColor}{Specifies the color of the major

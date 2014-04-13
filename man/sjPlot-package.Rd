@@ -58,7 +58,7 @@ sjPlot - data visualization for statistics in social science
 Package: \tab sjPlot\cr
 Type: \tab Package\cr
 Version: \tab 1.4\cr
-Date: \tab 2014-04-10\cr
+Date: \tab 2014-04-13\cr
 License: \tab GPL-3\cr
 }
 }
@@ -66,6 +66,7 @@ License: \tab GPL-3\cr
 Daniel Lüdecke \email{d.luedecke@uke.de}
 }
 \references{
+RPubs: \url{http://rpubs.com/sjPlot} \cr
 Weblog: \url{http://strengejacke.wordpress.com/sjplot-r-package/} \cr
 Github: \url{https://github.com/sjPlot/devel}
 }

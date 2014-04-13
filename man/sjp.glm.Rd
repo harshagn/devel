@@ -13,7 +13,7 @@ sjp.glm(fit, sortOdds = TRUE, title = NULL, titleSize = 1.3,
   colorPalette = "Paired", barColor = NULL, barWidth = 0.3,
   barAlpha = 1, valueLabelColor = "black", valueLabelSize = 4.5,
   valueLabelAlpha = 1, axisColor = NULL, borderColor = NULL,
-  barOutline = FALSE, outlineColor = "black", interceptLineType = 2,
+  barOutline = FALSE, barOutlineColor = "black", interceptLineType = 2,
   interceptLineColor = "grey70", majorGridColor = NULL,
   minorGridColor = NULL, hideGrid.x = FALSE, hideGrid.y = FALSE,
   theme = NULL, flipCoordinates = TRUE, showIntercept = FALSE,
@@ -168,7 +168,7 @@ sjp.glm(fit, sortOdds = TRUE, title = NULL, titleSize = 1.3,
   outline. only applies if parameter \code{type} is
   \code{bars}.  Default is \code{FALSE}.}
 
-  \item{outlineColor}{The color of the bar outline. Only
+  \item{barOutlineColor}{The color of the bar outline. Only
   applies, if \code{barOutline} is set to \code{TRUE}.
   Default is black.}
 

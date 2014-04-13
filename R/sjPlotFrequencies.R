@@ -85,7 +85,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Default is \code{FALSE}.
 #' @param barOutlineSize The size of the bar outlines. Only applies if \code{barOutline} is \code{TRUE}.
 #'          Default is 0.2
-#' @param outlineColor The color of the bar outline. Only applies, if \code{barOutline} is \code{TRUE}.
+#' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is \code{TRUE}.
 #' @param majorGridColor Specifies the color of the major grid lines of the diagram background.
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.
@@ -292,7 +292,7 @@ sjp.frq <- function(varCount,
                     innerBoxPlotDotSize=3,
                     borderColor=NULL, 
                     axisColor=NULL,
-                    outlineColor="black",
+                    barOutlineColor="black",
                     majorGridColor=NULL,
                     minorGridColor=NULL,
                     hideGrid.x=FALSE,
@@ -593,7 +593,7 @@ sjp.frq <- function(varCount,
   # check whether bars should have an outline
   # --------------------------------------------------------
   if (!barOutline) {
-    outlineColor <- waiver()
+    barOutlineColor <- waiver()
   }
   # --------------------------------------------------------
   # define bar colors
@@ -603,7 +603,7 @@ sjp.frq <- function(varCount,
     # set default color for histograms
     barColor <- c("#4080c0")
     if (type=="bars") {
-      geob <- geom_bar(stat="identity", colour=outlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", colour=barOutlineColor, width=barWidth, alpha=barAlpha)
     }
     else if (type=="dots") {
       geob <- geom_point(size=dotSize, alpha=barAlpha)
@@ -612,7 +612,7 @@ sjp.frq <- function(varCount,
   else {
     # continue here, if barcolor is defined.
     if (type=="bars") {
-      geob <- geom_bar(stat="identity", fill=barColor, colour=outlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", fill=barColor, colour=barOutlineColor, width=barWidth, alpha=barAlpha)
     }
     else if (type=="dots") {
       geob <- geom_point(colour=barColor, size=dotSize, alpha=barAlpha)
@@ -809,11 +809,11 @@ sjp.frq <- function(varCount,
       }
       if (type=="boxplots") {
         baseplot <- baseplot + 
-          geom_boxplot(colour=outlineColor, width=barWidth, alpha=barAlpha, fill=barColor)
+          geom_boxplot(colour=barOutlineColor, width=barWidth, alpha=barAlpha, fill=barColor)
       }
       else {
         baseplot <- baseplot + 
-          geom_violin(colour=outlineColor, width=barWidth, alpha=barAlpha, fill=barColor, trim=trimViolin) +
+          geom_violin(colour=barOutlineColor, width=barWidth, alpha=barAlpha, fill=barColor, trim=trimViolin) +
           # if we have a violin plot, add an additional boxplot inside to show
           # more information
           geom_boxplot(width=innerBoxPlotWidth, fill="white", outlier.colour=NA)
@@ -833,7 +833,7 @@ sjp.frq <- function(varCount,
     # Start density plot here
     # --------------------------------------------------
     else if (type=="dens") {
-      geoh <- geom_histogram(aes(y=..density..), fill=barColor, colour=outlineColor, size=barOutlineSize, alpha=barAlpha)
+      geoh <- geom_histogram(aes(y=..density..), fill=barColor, colour=barOutlineColor, size=barOutlineSize, alpha=barAlpha)
       x <- na.omit(varCount)
       densityDat <- data.frame(x)
       # First, plot histogram with density curve
@@ -876,11 +876,11 @@ sjp.frq <- function(varCount,
         if (barWidth<round(diff(range(x))/50)) cat("Using very small binwidth. Consider adjusting \"barWidth\"-parameter.\n")
         hist.dat <- data.frame(x)
         baseplot <- ggplot(mydat)
-        basehist <- geom_histogram(data=hist.dat, aes(x=x), fill=barColor, colour=outlineColor, size=barOutlineSize, alpha=barAlpha, binwidth=barWidth)
+        basehist <- geom_histogram(data=hist.dat, aes(x=x), fill=barColor, colour=barOutlineColor, size=barOutlineSize, alpha=barAlpha, binwidth=barWidth)
       }
       else {
         baseplot <- ggplot(mydat, aes(x=var, y=frq))
-        basehist <- geom_histogram(stat="identity", fill=barColor, colour=outlineColor, size=barOutlineSize, alpha=barAlpha, binwidth=barWidth)
+        basehist <- geom_histogram(stat="identity", fill=barColor, colour=barOutlineColor, size=barOutlineSize, alpha=barAlpha, binwidth=barWidth)
       }
       basehistline <- geom_area(fill=barColor, alpha=0.3)
       # check whether user wants line or bar histogram

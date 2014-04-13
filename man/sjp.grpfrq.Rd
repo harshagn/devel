@@ -15,7 +15,7 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   innerBoxPlotWidth = 0.15, innerBoxPlotDotSize = 3,
   colorPalette = "GnBu", lineType = 1, lineSize = 1, lineAlpha = 1,
   smoothLines = FALSE, borderColor = NULL, axisColor = NULL,
-  barOutline = FALSE, outlineColor = "black", majorGridColor = NULL,
+  barOutline = FALSE, barOutlineColor = "black", majorGridColor = NULL,
   minorGridColor = NULL, hideGrid.x = FALSE, hideGrid.y = FALSE,
   showValueLabels = TRUE, showCountValues = TRUE,
   showPercentageValues = TRUE, showAxisLabels.x = TRUE,
@@ -235,7 +235,7 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   \item{barOutline}{If \code{TRUE}, each bar gets a colored
   outline. Default is \code{FALSE}.}
 
-  \item{outlineColor}{The color of the bar outline. Only
+  \item{barOutlineColor}{The color of the bar outline. Only
   applies, if \code{barOutline} is set to \code{TRUE}.}
 
   \item{majorGridColor}{Specifies the color of the major

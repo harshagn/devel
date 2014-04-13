@@ -86,7 +86,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("OR", "lower", "upper", "
 #' @param borderColor User defined color of whole diagram border (panel border).
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. only applies if parameter \code{type} is \code{bars}.
 #'          Default is \code{FALSE}.
-#' @param outlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
+#' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
 #'          Default is black.
 #' @param interceptLineType The linetype of the intercept line (zero point). Default is \code{2} (dashed line).
 #' @param interceptLineColor The color of the intercept line. Default value is \code{"grey70"}.
@@ -204,7 +204,7 @@ sjp.glm <- function(fit,
                     axisColor=NULL, 
                     borderColor=NULL, 
                     barOutline=FALSE, 
-                    outlineColor="black", 
+                    barOutlineColor="black", 
                     interceptLineType=2,
                     interceptLineColor="grey70",
                     majorGridColor=NULL,
@@ -508,7 +508,7 @@ sjp.glm <- function(fit,
   # check whether bars should have an outline
   # --------------------------------------------------------
   if (!barOutline) {
-    outlineColor <- waiver()
+    barOutlineColor <- waiver()
   }
   # --------------------------------------------------------
   # Order odds according to beta-coefficients
@@ -560,7 +560,7 @@ sjp.glm <- function(fit,
       # stat-parameter indicates statistics
       # stat="bin": y-axis relates to count of variable
       # stat="identity": y-axis relates to value of variable
-      geom_bar(aes(fill=(OR>1)), stat="identity", position="identity", width=barWidth, colour=outlineColor, alpha=barAlpha) +
+      geom_bar(aes(fill=(OR>1)), stat="identity", position="identity", width=barWidth, colour=barOutlineColor, alpha=barAlpha) +
       # print value labels and p-values
       geom_text(aes(label=p, y=1), vjust=-1, hjust=odds$labhjust, colour=valueLabelColor, size=valueLabelSize, alpha=valueLabelAlpha)
     if (hideErrorBars==FALSE) {

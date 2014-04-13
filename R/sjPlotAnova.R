@@ -83,7 +83,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #' @param barAlpha The alpha value of the bars in bar charts. Only applies if parameter \code{type} is \code{"bars"}. Default is 1
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Only applies if parameter \code{type} is \code{bars}.
 #'          Default is \code{FALSE}.
-#' @param outlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
+#' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
 #'          Default is black.
 #' @param breakTitleAt Wordwrap for diagram title. Determines how many chars of the title are displayed in
 #'          one line and when a line break is inserted into the title
@@ -191,7 +191,7 @@ sjp.aov1 <- function(depVar,
                     barWidth=0.5,
                     barAlpha=1,
                     barOutline=FALSE,
-                    outlineColor="black",
+                    barOutlineColor="black",
                     breakTitleAt=50, 
                     breakLabelsAt=12, 
                     gridBreaksAt=NULL,
@@ -281,7 +281,7 @@ sjp.aov1 <- function(depVar,
   # check whether bars should have an outline
   # --------------------------------------------------------
   if (!barOutline) {
-    outlineColor <- waiver()
+    barOutlineColor <- waiver()
   }  
   # check length of diagram title and split longer string at into new lines
   # every 50 chars
@@ -562,7 +562,7 @@ sjp.aov1 <- function(depVar,
       # stat-parameter indicates statistics
       # stat="bin": y-axis relates to count of variable
       # stat="identity": y-axis relates to value of variable
-      geom_bar(fill=df$geocol, stat="identity", position="identity", width=barWidth, colour=outlineColor, alpha=barAlpha) +
+      geom_bar(fill=df$geocol, stat="identity", position="identity", width=barWidth, colour=barOutlineColor, alpha=barAlpha) +
       # print value labels and p-values
       geom_text(aes(label=pv, y=means), colour=df$labcol, vjust=ifelse(df$means>=0, -1, 1), hjust=hlabj, size=valueLabelSize, alpha=valueLabelAlpha, show_guide=FALSE)
     if (hideErrorBars==FALSE) {

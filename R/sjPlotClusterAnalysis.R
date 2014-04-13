@@ -102,7 +102,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #' @param barSpace Spacing between bars. Default value is 0.1. If 0 is used, the grouped bars are sticked together and have no space
 #'          in between. Recommended values for this parameter are from 0 to 0.5
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Default is \code{FALSE}.
-#' @param outlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
+#' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
 #' @param theme Specifies the diagram's background theme. Default (parameter \code{NULL}) is a gray 
 #'          background with white grids.
 #'          \itemize{
@@ -201,7 +201,7 @@ sjc.qclus <- function(data,
                       barWidth=0.5,
                       barSpace=0.1,
                       barOutline=FALSE, 
-                      outlineColor="black", 
+                      barOutlineColor="black", 
                       theme=NULL,
                       borderColor=NULL, 
                       axisColor=NULL, 
@@ -384,7 +384,7 @@ sjc.qclus <- function(data,
   # check whether bars should have an outline
   # --------------------------------------------------------
   if (!barOutline) {
-    outlineColor <- waiver()
+    barOutlineColor <- waiver()
   }
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours
@@ -436,7 +436,7 @@ sjc.qclus <- function(data,
   # --------------------------------------------------------
   gp <- 
     ggplot(df, aes(x=x, y=y, fill=group)) +
-      geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=outlineColor, width=barWidth, alpha=barAlpha) +
+      geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, width=barWidth, alpha=barAlpha) +
       scale_x_discrete(breaks=c(1:colnr), limits=c(1:colnr), labels=axisLabels.x) +
       labs(title=title, x=axisTitle.x, y=axisTitle.y, fill=legendTitle)
   # --------------------------------------------------------

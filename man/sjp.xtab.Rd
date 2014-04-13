@@ -15,7 +15,7 @@ sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
   barColor = NULL, colorPalette = "GnBu", barAlpha = 1, lineType = 1,
   lineSize = 1, lineAlpha = 1, lineDotSize = 3, smoothLines = FALSE,
   borderColor = NULL, axisColor = NULL, barOutline = FALSE,
-  outlineColor = "black", majorGridColor = NULL, minorGridColor = NULL,
+  barOutlineColor = "black", majorGridColor = NULL, minorGridColor = NULL,
   hideGrid.x = FALSE, hideGrid.y = FALSE, showValueLabels = TRUE,
   jitterValueLabels = FALSE, showCategoryLabels = TRUE,
   showTickMarks = TRUE, showTableSummary = TRUE, tableSummaryPos = "r",
@@ -190,7 +190,7 @@ sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
   \item{barOutline}{If \code{TRUE}, each bar gets a colored
   outline. Default is \code{FALSE}.}
 
-  \item{outlineColor}{The color of the bar outline. Only
+  \item{barOutlineColor}{The color of the bar outline. Only
   applies, if \code{barOutline} is set to \code{TRUE}}
 
   \item{majorGridColor}{specifies the color of the major

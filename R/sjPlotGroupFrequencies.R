@@ -116,7 +116,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #' @param axisColor User defined color of axis border (y- and x-axis, in case the axes should have different colors than
 #'          the diagram border).
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Default is \code{FALSE}.
-#' @param outlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
+#' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
 #' @param majorGridColor Specifies the color of the major grid lines of the diagram background.
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default is \code{FALSE}.
@@ -311,7 +311,7 @@ sjp.grpfrq <- function(varCount,
                        borderColor=NULL, 
                        axisColor=NULL, 
                        barOutline=FALSE, 
-                       outlineColor="black", 
+                       barOutlineColor="black", 
                        majorGridColor=NULL,
                        minorGridColor=NULL,
                        hideGrid.x=FALSE,
@@ -851,7 +851,7 @@ sjp.grpfrq <- function(varCount,
   # check whether bars should have an outline
   # --------------------------------------------------------
   if (!barOutline) {
-    outlineColor <- waiver()
+    barOutlineColor <- waiver()
   }
   # init shaded rectangles for plot
   ganno <- NULL
@@ -868,10 +868,10 @@ sjp.grpfrq <- function(varCount,
   }
   else if (type=="bars") {
     if (barPosition=="dodge") {
-      geob <- geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=outlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, width=barWidth, alpha=barAlpha)
     }
     else {
-      geob <- geom_bar(stat="identity", position="stack", colour=outlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", position="stack", colour=barOutlineColor, width=barWidth, alpha=barAlpha)
     }
   }
   else if (type=="lines") {
@@ -883,10 +883,10 @@ sjp.grpfrq <- function(varCount,
     }
   }
   else if (type=="boxplots") {
-    geob <- geom_boxplot(colour=outlineColor, width=barWidth, alpha=barAlpha)
+    geob <- geom_boxplot(colour=barOutlineColor, width=barWidth, alpha=barAlpha)
   }
   else if (type=="violin") {
-    geob <- geom_violin(colour=outlineColor, width=barWidth, alpha=barAlpha, trim=trimViolin)
+    geob <- geom_violin(colour=barOutlineColor, width=barWidth, alpha=barAlpha, trim=trimViolin)
   }
   else {
     geob <- geom_histogram(stat="identity", binwidth=barWidth, position=barPosition, alpha=barAlpha)

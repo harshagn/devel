@@ -12,7 +12,7 @@ sjc.qclus(data, groupcount = NULL, groups = NULL, method = "k",
   axisTitleSize = 1.3, breakTitleAt = 40, breakLabelsAt = 12,
   breakLegendTitleAt = 20, breakLegendLabelsAt = 20, facetCluster = FALSE,
   barColor = NULL, barAlpha = 1, colorPalette = "GnBu", barWidth = 0.5,
-  barSpace = 0.1, barOutline = FALSE, outlineColor = "black",
+  barSpace = 0.1, barOutline = FALSE, barOutlineColor = "black",
   theme = NULL, borderColor = NULL, axisColor = NULL,
   hideLegend = FALSE, showTickMarks = TRUE, showAxisLabels.x = TRUE,
   showAxisLabels.y = TRUE, showGroupCount = TRUE,
@@ -185,7 +185,7 @@ sjc.qclus(data, groupcount = NULL, groups = NULL, method = "k",
   \item{barOutline}{If \code{TRUE}, each bar gets a colored
   outline. Default is \code{FALSE}.}
 
-  \item{outlineColor}{The color of the bar outline. Only
+  \item{barOutlineColor}{The color of the bar outline. Only
   applies, if \code{barOutline} is set to \code{TRUE}.}
 
   \item{theme}{Specifies the diagram's background theme.
