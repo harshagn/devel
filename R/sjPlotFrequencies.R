@@ -6,8 +6,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #' @title Plot frequencies of (count) variables
 #' @name sjp.frq
 #' @references \itemize{
+#'              \item \url{http://rpubs.com/sjPlot/sjpfrq}
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
-#'              \item \url{http://strengejacke.wordpress.com/2013/02/25/simplify-frequency-plots-with-ggplot-in-r-rstats/}
 #'              }
 #' 
 #' @seealso \code{\link{sjt.frq}}
@@ -73,7 +73,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #' @param dotSize The size of dots in case of dot-plots (\code{type="dots"}).
 #' @param innerBoxPlotWidth The width of the inner box plot that is plotted inside of violin plots. Only applies 
 #'          if \code{type} is \code{"violin"}. Default value is 0.15
-#' @param innerBoxPlotDotSize Size of mean dot insie a violin plot. Applies only when \code{type} is set to \code{"violin"}.
+#' @param innerBoxPlotDotSize Size of mean dot insie a violin plot. Applies only when \code{type} is set to \code{"violin"} or \code{"box"}.
 #' @param barColor User defined color for bars. If not specified, a default blue
 #'          color palette will be used for the bar charts.
 #' @param barAlpha Specify the transparancy (alpha value) of bars.
