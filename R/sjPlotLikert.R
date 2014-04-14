@@ -67,7 +67,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Freq", "ypos", "Question
 #'          range from 0 (0 percent) to 1 (100 percent).
 #' @param gridBreaksAt Sets the breaks on the y axis, i.e. at every n'th position a major
 #'          grid is being printed. Valid values range from 0 to 1.
-#' @param diagramMargins If \code{TRUE} (default), the diagram has margins, i.e. the y-axis is not exceeded
+#' @param expand.grid If \code{TRUE} (default), the diagram has margins, i.e. the y-axis is not exceeded
 #'          to the diagram's boundaries.
 #' @param barWidth Width of bars. Recommended values for this parameter are from 0.4 to 1.5
 #' @param barColor User defined color for bars.
@@ -201,7 +201,7 @@ sjp.likert <- function(items,
                         breakLegendLabelsAt=28,
                         gridRange=1,
                         gridBreaksAt=0.2,
-                        diagramMargins=TRUE,
+                        expand.grid=TRUE,
                         barWidth=0.5, 
                         barColor=NULL,
                         colorPalette="GnBu",
@@ -560,7 +560,7 @@ sjp.likert <- function(items,
   # --------------------------------------------------------
   # set diagram margins
   # --------------------------------------------------------
-  if (diagramMargins) {
+  if (expand.grid) {
     expgrid <- waiver()
   }
   else {

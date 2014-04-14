@@ -38,11 +38,13 @@
 #'            \item the class-names with \code{"css."}-prefix as parameter name and
 #'            \item each style-definition must end with a semicolon
 #'          } 
-#'          Examples:
+#'          You can add style information to the default styles by using a + (plus-sign) as
+#'          initial letter for the parameter attributes. Examples:
 #'          \itemize{
 #'            \item \code{css.table='border:2px solid red;'} for a solid 2-pixel table border in red.
 #'            \item \code{css.summary='font-weight:bold;'} for a bold fontweight in the summary row.
 #'            \item \code{css.arc='color:blue;'} for a blue text color each 2nd row.
+#'            \item \code{css.summary='+color:blue;'} to add blue font color style to the summary row.
 #'          }
 #'          See further examples below.
 #' @param useViewer If \code{TRUE}, the function tries to show the HTML table in the IDE's viewer pane. If
@@ -139,10 +141,10 @@ sji.viewSPSS <- function (df,
   # check user defined style sheets
   # ------------------------
   if (!is.null(CSS)) {
-    if (!is.null(CSS[['css.table']])) css.table <- CSS[['css.table']]
-    if (!is.null(CSS[['css.thead']])) css.thead <- CSS[['css.thead']]
-    if (!is.null(CSS[['css.tdata']])) css.tdata <- CSS[['css.tdata']]
-    if (!is.null(CSS[['css.arc']])) css.arc <- CSS[['css.arc']]
+    if (!is.null(CSS[['css.table']])) css.table <- ifelse(substring(CSS[['css.table']],1,1)=='+', paste0(css.table, substring(CSS[['css.table']],2)), CSS[['css.table']])
+    if (!is.null(CSS[['css.thead']])) css.thead <- ifelse(substring(CSS[['css.thead']],1,1)=='+', paste0(css.thead, substring(CSS[['css.thead']],2)), CSS[['css.thead']])
+    if (!is.null(CSS[['css.tdata']])) css.tdata <- ifelse(substring(CSS[['css.tdata']],1,1)=='+', paste0(css.tdata, substring(CSS[['css.tdata']],2)), CSS[['css.tdata']])
+    if (!is.null(CSS[['css.arc']])) css.arc <- ifelse(substring(CSS[['css.arc']],1,1)=='+', paste0(css.arc, substring(CSS[['css.arc']],2)), CSS[['css.arc']])
   }
   # -------------------------------------
   # set style sheet

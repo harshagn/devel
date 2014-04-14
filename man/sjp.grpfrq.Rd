@@ -17,7 +17,7 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   smoothLines = FALSE, borderColor = NULL, axisColor = NULL,
   barOutline = FALSE, barOutlineColor = "black", majorGridColor = NULL,
   minorGridColor = NULL, hideGrid.x = FALSE, hideGrid.y = FALSE,
-  showValueLabels = TRUE, showCountValues = TRUE,
+  expand.grid = FALSE, showValueLabels = TRUE, showCountValues = TRUE,
   showPercentageValues = TRUE, showAxisLabels.x = TRUE,
   showAxisLabels.y = TRUE, showTickMarks = TRUE,
   showPlotAnnotation = TRUE, showMeanIntercept = FALSE,
@@ -249,6 +249,10 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
 
   \item{hideGrid.y}{If \code{TRUE}, the y-axis-gridlines
   are hidden. Default is \code{FALSE}.}
+
+  \item{expand.grid}{If \code{TRUE}, the plot grid is
+  expanded, i.e. there is a small margin between axes and
+  plotting region. Default is \code{FALSE}.}
 
   \item{showValueLabels}{Whether counts and percentage
   values should be plotted to each bar. Default is

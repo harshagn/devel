@@ -90,6 +90,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.
 #' @param hideGrid.y If \code{TRUE}, the y-axis-gridlines are hidden. Default if \code{FALSE}.
+#' @param expand.grid If \code{TRUE}, the plot grid is expanded, i.e. there is a small margin between
+#'          axes and plotting region. Default is \code{FALSE}.
 #' @param showValueLabels Whether counts and percentage values should be plotted to each bar. Default
 #'          is \code{TRUE}.
 #' @param showCountValues If \code{TRUE} (default), count values are be plotted to each bar. If \code{FALSE},
@@ -297,6 +299,7 @@ sjp.frq <- function(varCount,
                     minorGridColor=NULL,
                     hideGrid.x=FALSE,
                     hideGrid.y=FALSE,
+                    expand.grid=FALSE,
                     showValueLabels=TRUE,
                     showCountValues=TRUE,
                     showPercentageValues=TRUE,
@@ -363,6 +366,12 @@ sjp.frq <- function(varCount,
   }
   if (type=="v") {
     type <- c("violin")
+  }
+  if (expand.grid==TRUE) {
+    expand.grid <- waiver()
+  }
+  else {
+    expand.grid <- c(0,0)
   }
   #---------------------------------------------------
   # weight variable
@@ -752,10 +761,10 @@ sjp.frq <- function(varCount,
   # It either corresponds to the maximum amount of cases in the data set
   # (length of var) or to the highest count of var's categories.
   if (showAxisLabels.y) {
-    yscale <- scale_y_continuous(limits=c(lower_lim, upper_lim), expand=c(0,0), breaks=gridbreaks)
+    yscale <- scale_y_continuous(limits=c(lower_lim, upper_lim), expand=expand.grid, breaks=gridbreaks)
   }
   else {
-    yscale <- scale_y_continuous(limits=c(lower_lim, upper_lim), expand=c(0,0), breaks=gridbreaks, labels=NULL)
+    yscale <- scale_y_continuous(limits=c(lower_lim, upper_lim), expand=expand.grid, breaks=gridbreaks, labels=NULL)
   }
   # ----------------------------------
   # Print plot
@@ -842,7 +851,7 @@ sjp.frq <- function(varCount,
         # transparent density curve above bars
         geom_density(aes(y=..density..), fill="cornsilk", alpha=0.3) +
         # remove margins from left and right diagram side
-        scale_x_continuous(expand=c(0,0), breaks=histgridbreaks)
+        scale_x_continuous(expand=expand.grid, breaks=histgridbreaks)
       # check whether user wants to overlay the histogram
       # with a normal curve
       if (showNormalCurve) {
@@ -945,7 +954,7 @@ sjp.frq <- function(varCount,
       }
       baseplot <- baseplot +
         # remove margins from left and right diagram side
-        scale_x_continuous(limits=c(catmin,maxx), expand=c(0,0), breaks=histgridbreaks) +
+        scale_x_continuous(limits=c(catmin,maxx), expand=expand.grid, breaks=histgridbreaks) +
         yscale
     }
   }

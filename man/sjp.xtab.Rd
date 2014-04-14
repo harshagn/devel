@@ -16,12 +16,13 @@ sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
   lineSize = 1, lineAlpha = 1, lineDotSize = 3, smoothLines = FALSE,
   borderColor = NULL, axisColor = NULL, barOutline = FALSE,
   barOutlineColor = "black", majorGridColor = NULL, minorGridColor = NULL,
-  hideGrid.x = FALSE, hideGrid.y = FALSE, showValueLabels = TRUE,
-  jitterValueLabels = FALSE, showCategoryLabels = TRUE,
-  showTickMarks = TRUE, showTableSummary = TRUE, tableSummaryPos = "r",
-  showTotalColumn = TRUE, hideLegend = FALSE, axisTitle.x = NULL,
-  axisTitle.y = NULL, axisTitleColor = "black", axisTitleSize = 1.3,
-  theme = NULL, flipCoordinates = FALSE, printPlot = TRUE)
+  hideGrid.x = FALSE, hideGrid.y = FALSE, expand.grid = FALSE,
+  showValueLabels = TRUE, jitterValueLabels = FALSE,
+  showCategoryLabels = TRUE, showTickMarks = TRUE,
+  showTableSummary = TRUE, tableSummaryPos = "r", showTotalColumn = TRUE,
+  hideLegend = FALSE, axisTitle.x = NULL, axisTitle.y = NULL,
+  axisTitleColor = "black", axisTitleSize = 1.3, theme = NULL,
+  flipCoordinates = FALSE, printPlot = TRUE)
 }
 \arguments{
   \item{y}{The variable which proportions (percentage
@@ -204,6 +205,10 @@ sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
 
   \item{hideGrid.y}{If \code{TRUE}, the y-axis-gridlines
   are hidden. Default if \code{FALSE}.}
+
+  \item{expand.grid}{If \code{TRUE}, the plot grid is
+  expanded, i.e. there is a small margin between axes and
+  plotting region. Default is \code{FALSE}.}
 
   \item{showValueLabels}{Whether counts and percentage
   values should be plotted to each bar}

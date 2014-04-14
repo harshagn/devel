@@ -106,6 +106,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.
 #' @param hideGrid.y If \code{TRUE}, the y-axis-gridlines are hidden. Default if \code{FALSE}.
+#' @param expand.grid If \code{TRUE}, the plot grid is expanded, i.e. there is a small margin between
+#'          axes and plotting region. Default is \code{FALSE}.
 #' @param showTickMarks Whether tick marks of axes should be shown or not
 #' @param showValueLabels Whether the value labels (mean differences) should be plotted 
 #'          to each dot or not.
@@ -202,6 +204,7 @@ sjp.aov1 <- function(depVar,
                     minorGridColor=NULL,
                     hideGrid.x=FALSE,
                     hideGrid.y=FALSE,
+                    expand.grid=FALSE,
                     showTickMarks=TRUE,
                     showValueLabels=TRUE, 
                     labelDigits=2,
@@ -245,6 +248,12 @@ sjp.aov1 <- function(depVar,
   }
   if (type=="bar" || type=="b") {
     type <- "bars"
+  }
+  if (expand.grid==TRUE) {
+    expand.grid <- waiver()
+  }
+  else {
+    expand.grid <- c(0,0)
   }
   # --------------------------------------------------------
   # set geom colors
@@ -534,7 +543,7 @@ sjp.aov1 <- function(depVar,
   # bars, we don't want margins.
   # --------------------------------------------------------
   if (type=="bars") {
-    scaley <- scale_y_continuous(limits=c(lower_lim,upper_lim), expand=c(0,0), breaks=ticks, labels=ticks)    
+    scaley <- scale_y_continuous(limits=c(lower_lim,upper_lim), expand=expand.grid, breaks=ticks, labels=ticks)    
   }
   else {
     scaley <- scale_y_continuous(limits=c(lower_lim,upper_lim), breaks=ticks, labels=ticks)    

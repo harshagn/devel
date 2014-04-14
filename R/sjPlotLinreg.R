@@ -308,9 +308,9 @@ sjp.lm <- function(fit,
     betas <- betas[order(stdbv),]
   }
   betas <- cbind(c(seq(1:nrow(betas))), betas)
-  betas$p <- as.character(betas$p)
   # give columns names
   names(betas)<-c("xv", "Beta", "lower", "upper", "p", "stdbeta", "pstdbv", "pv")
+  betas$p <- as.character(betas$p)
   # --------------------------------------------------------
   # Calculate axis limits. The range is from lowest lower-CI
   # to highest upper-CI, or a user-defined range (if "axisLimits"

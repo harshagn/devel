@@ -56,12 +56,17 @@ sji.viewSPSS(df, file = NULL, alternateRowColors = TRUE, showType = FALSE,
   Parameters for this list need: \enumerate{ \item the
   class-names with \code{"css."}-prefix as parameter name
   and \item each style-definition must end with a semicolon
-  } Examples: \itemize{ \item \code{css.table='border:2px
-  solid red;'} for a solid 2-pixel table border in red.
-  \item \code{css.summary='font-weight:bold;'} for a bold
+  } You can add style information to the default styles by
+  using a + (plus-sign) as initial letter for the parameter
+  attributes. Examples: \itemize{ \item
+  \code{css.table='border:2px solid red;'} for a solid
+  2-pixel table border in red.  \item
+  \code{css.summary='font-weight:bold;'} for a bold
   fontweight in the summary row.  \item
   \code{css.arc='color:blue;'} for a blue text color each
-  2nd row.  } See further examples below.}
+  2nd row.  \item \code{css.summary='+color:blue;'} to add
+  blue font color style to the summary row.  } See further
+  examples below.}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If

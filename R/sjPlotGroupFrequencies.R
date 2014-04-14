@@ -121,6 +121,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default is \code{FALSE}.
 #' @param hideGrid.y If \code{TRUE}, the y-axis-gridlines are hidden. Default is \code{FALSE}.
+#' @param expand.grid If \code{TRUE}, the plot grid is expanded, i.e. there is a small margin between
+#'          axes and plotting region. Default is \code{FALSE}.
 #' @param showValueLabels Whether counts and percentage values should be plotted to each bar. Default
 #'          is \code{TRUE}.
 #' @param showCountValues If \code{TRUE} (default), count values are be plotted to each bar. If \code{FALSE},
@@ -201,10 +203,6 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #'           was used for setting up the ggplot-object (\code{df}).
 #' 
 #' @examples
-#' # histogram plot
-#' sjp.grpfrq(discoveries, sample(1:3, length(discoveries), replace=TRUE), type="hist",
-#'            showValueLabels=FALSE, showMeanIntercept=TRUE)
-#' 
 #' # histrogram with EUROFAMCARE sample dataset
 #' data(efc)
 #' efc.val <- sji.getValueLabels(efc)
@@ -214,18 +212,14 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #'            title=efc.var['e17age'],
 #'            legendTitle=efc.var['e16sex'],
 #'            type="hist",
-#'            showValueLabels=FALSE)
+#'            showValueLabels=FALSE,
+#'            showMeanIntercept=TRUE)
 #' 
 #' # boxplot
-#' sjp.grpfrq(ChickWeight$weight, as.numeric(ChickWeight$Diet), type="box")
+#' sjp.grpfrq(efc$e17age, efc$e42dep, type="box")
 #' 
 #' # violin plot
-#' sjp.grpfrq(sample(1:4, length(PlantGrowth$group), replace=TRUE), 
-#'            PlantGrowth$group, type="v")
-#' 
-#' # grouped bars
-#' sjp.grpfrq(sample(1:2, length(PlantGrowth$group), replace=TRUE), 
-#'            PlantGrowth$group, barSpace=0.2)
+#' sjp.grpfrq(efc$e17age, efc$e42dep, type="v")
 #' 
 #' # grouped bars with EUROFAMCARE sample dataset
 #' # dataset was importet from an SPSS-file, using:
@@ -316,6 +310,7 @@ sjp.grpfrq <- function(varCount,
                        minorGridColor=NULL,
                        hideGrid.x=FALSE,
                        hideGrid.y=FALSE,
+                       expand.grid=FALSE,
                        showValueLabels=TRUE,
                        showCountValues=TRUE,
                        showPercentageValues=TRUE,
@@ -347,9 +342,47 @@ sjp.grpfrq <- function(varCount,
                        na.rm=TRUE,
                        printPlot=TRUE) {
   # --------------------------------------------------------
+  # We have several options to name the diagram type
+  # Here we will reduce it to a unique value
+  # --------------------------------------------------------
+  if (type=="b" || type=="bar") {
+    type <- c("bars")
+  }
+  if (type=="l" || type=="line") {
+    type <- c("lines")
+  }
+  if (type=="d" || type=="dot") {
+    type <- c("dots")
+  }
+  if (type=="h" || type=="hist") {
+    type <- c("histogram")
+    # no table summary and no group count for
+    # ctageory labels (to avoid overlapping)
+    showTableSummary <- FALSE
+    showGroupCount <- FALSE
+  }
+  if (type=="box" || type=="boxplot") {
+    type <- c("boxplots")
+  }
+  if (type=="v") {
+    type <- c("violin")
+  }
+  if (expand.grid==TRUE) {
+    expand.grid <- waiver()
+  }
+  else {
+    expand.grid <- c(0,0)
+  }
+  # --------------------------------------------------------
   # try to automatically set labels is not passed as parameter
   # --------------------------------------------------------
-  if (is.null(axisLabels.x)) axisLabels.x <- autoSetValueLabels(varCount)
+  if (is.null(axisLabels.x)) {
+    axisLabels.x <- autoSetValueLabels(varCount)
+    # if we have box or violin plots, but no axis labels on x axis (NULL),
+    # we need to hide x-axis, because automatically retrieved labels are
+    # equal to unique values of varCount, and not varGroup.
+    if (type=="boxplots" || type=="violin") showAxisLabels.x <- FALSE
+  }
   if (is.null(legendLabels)) legendLabels <- autoSetValueLabels(varGroup)
   if (is.null(interactionVarLabels) && !is.null(interactionVar)) interactionVarLabels <- autoSetValueLabels(interactionVar)
   if (!is.null(axisTitle.x) && axisTitle.x=="auto") axisTitle.x <- autoSetVariableLabels(varCount)
@@ -377,32 +410,6 @@ sjp.grpfrq <- function(varCount,
     agcnt <- ifelse (autoGroupAt<30, autoGroupAt, 30)
     axisLabels.x <- sju.groupVarLabels(varCount, groupsize="auto", autoGroupCount=agcnt)
     varCount <- sju.groupVar(varCount, groupsize="auto", asNumeric=TRUE, autoGroupCount=agcnt)
-  }
-  # --------------------------------------------------------
-  # We have several options to name the diagram type
-  # Here we will reduce it to a unique value
-  # --------------------------------------------------------
-  if (type=="b" || type=="bar") {
-    type <- c("bars")
-  }
-  if (type=="l" || type=="line") {
-    type <- c("lines")
-  }
-  if (type=="d" || type=="dot") {
-    type <- c("dots")
-  }
-  if (type=="h" || type=="hist") {
-    type <- c("histogram")
-    # no table summary and no group count for
-    # ctageory labels (to avoid overlapping)
-    showTableSummary <- FALSE
-    showGroupCount <- FALSE
-  }
-  if (type=="box" || type=="boxplot") {
-    type <- c("boxplots")
-  }
-  if (type=="v") {
-    type <- c("violin")
   }
   # --------------------------------------------------------
   # unlist labels
@@ -1197,10 +1204,10 @@ sjp.grpfrq <- function(varCount,
   # show or hide y-axis-labels
   # ------------------------------
   if (showAxisLabels.y) {
-    y_scale <- scale_y_continuous(breaks=gridbreaks, limits=c(lower_lim, upper_lim), expand=c(0,0))
+    y_scale <- scale_y_continuous(breaks=gridbreaks, limits=c(lower_lim, upper_lim), expand=expand.grid)
   }
   else {
-    y_scale <- scale_y_continuous(breaks=gridbreaks, limits=c(lower_lim, upper_lim), expand=c(0,0), labels=NULL)
+    y_scale <- scale_y_continuous(breaks=gridbreaks, limits=c(lower_lim, upper_lim), expand=expand.grid, labels=NULL)
   }
   # ------------------------------
   # continue with plot objects...

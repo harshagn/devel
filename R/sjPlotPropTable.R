@@ -96,6 +96,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "
 #' @param minorGridColor specifies the color of the minor grid lines of the diagram background
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.
 #' @param hideGrid.y If \code{TRUE}, the y-axis-gridlines are hidden. Default if \code{FALSE}.
+#' @param expand.grid If \code{TRUE}, the plot grid is expanded, i.e. there is a small margin between
+#'          axes and plotting region. Default is \code{FALSE}.
 #' @param showValueLabels Whether counts and percentage values should be plotted to each bar
 #' @param jitterValueLabels If \code{TRUE}, the value labels on the bars will be "jittered", i.e. they have
 #'          alternating vertical positions to avoid overlapping of labels in case bars are
@@ -254,6 +256,7 @@ sjp.xtab <- function(y,
                     minorGridColor=NULL,
                     hideGrid.x=FALSE,
                     hideGrid.y=FALSE,
+                    expand.grid=FALSE,
                     showValueLabels=TRUE,
                     jitterValueLabels=FALSE,
                     showCategoryLabels=TRUE,
@@ -303,6 +306,12 @@ sjp.xtab <- function(y,
   }
   if (type=="l" || type=="line") {
     type <- c("lines")
+  }
+  if (expand.grid==TRUE) {
+    expand.grid <- waiver()
+  }
+  else {
+    expand.grid <- c(0,0)
   }
   # --------------------------------------------------------
   # unlist labels
@@ -803,7 +812,7 @@ sjp.xtab <- function(y,
     # set Y-axis, depending on the calculated upper y-range.
     # It either corresponds to the maximum amount of cases in the data set
     # (length of var) or to the highest count of var's categories.
-    scale_y_continuous(breaks=gridbreaks, limits=c(0, upper_lim), expand=c(0,0), labels=percent) +
+    scale_y_continuous(breaks=gridbreaks, limits=c(0, upper_lim), expand=expand.grid, labels=percent) +
     scalecolors +
     ggtheme
   # when we have lines, we additionally need to apply "scale_colour"...

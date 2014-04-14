@@ -786,7 +786,7 @@ sju.cronbach <- function(df) { # df must be matrix or data.frame with more than 
 #'
 #' @seealso \code{\link{sju.cronbach}} \cr
 #'          \code{\link{sjt.itemanalysis}} \cr
-#'          \code{\link{sjt.mic}} \cr
+#'          \code{\link{sju.mic}} \cr
 #'          \code{\link{sjp.pca}} \cr
 #'          \code{\link{sjt.pca}} \cr
 #'          \code{\link{sjt.df}}
@@ -948,7 +948,7 @@ sju.reliability <- function(df, scaleItems=FALSE, digits=3) {
 #' # create data frame with COPE-index scale
 #' df <- as.data.frame(efc[,c(start:end)])
 #' 
-#' sjt.mic(df)
+#' sju.mic(df)
 #' @export
 sju.mic <- function(data,
                     corMethod="pearson") {

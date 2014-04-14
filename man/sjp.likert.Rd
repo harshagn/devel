@@ -10,7 +10,7 @@ sjp.likert(items, legendLabels = NULL, orderBy = NULL,
   axisLabelAngle.x = 0, axisLabelColor = "gray30", valueLabelSize = 4,
   valueLabelColor = "black", breakTitleAt = 50, breakLabelsAt = 30,
   breakLegendTitleAt = 30, breakLegendLabelsAt = 28, gridRange = 1,
-  gridBreaksAt = 0.2, diagramMargins = TRUE, barWidth = 0.5,
+  gridBreaksAt = 0.2, expand.grid = TRUE, barWidth = 0.5,
   barColor = NULL, colorPalette = "GnBu", barAlpha = 1,
   borderColor = NULL, axisColor = NULL, barOutline = FALSE,
   barOutlineColor = "black", majorGridColor = NULL, minorGridColor = NULL,
@@ -126,9 +126,9 @@ sjp.likert(items, legendLabels = NULL, orderBy = NULL,
   at every n'th position a major grid is being printed.
   Valid values range from 0 to 1.}
 
-  \item{diagramMargins}{If \code{TRUE} (default), the
-  diagram has margins, i.e. the y-axis is not exceeded to
-  the diagram's boundaries.}
+  \item{expand.grid}{If \code{TRUE} (default), the diagram
+  has margins, i.e. the y-axis is not exceeded to the
+  diagram's boundaries.}
 
   \item{barWidth}{Width of bars. Recommended values for
   this parameter are from 0.4 to 1.5}

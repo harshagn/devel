@@ -17,9 +17,9 @@ sjp.aov1(depVar, grpVar, meansums = FALSE, type = "dots",
   barOutlineColor = "black", breakTitleAt = 50, breakLabelsAt = 12,
   gridBreaksAt = NULL, borderColor = NULL, axisColor = NULL,
   theme = NULL, majorGridColor = NULL, minorGridColor = NULL,
-  hideGrid.x = FALSE, hideGrid.y = FALSE, showTickMarks = TRUE,
-  showValueLabels = TRUE, labelDigits = 2, showPValueLabels = TRUE,
-  showModelSummary = TRUE, printPlot = TRUE)
+  hideGrid.x = FALSE, hideGrid.y = FALSE, expand.grid = FALSE,
+  showTickMarks = TRUE, showValueLabels = TRUE, labelDigits = 2,
+  showPValueLabels = TRUE, showModelSummary = TRUE, printPlot = TRUE)
 }
 \arguments{
   \item{depVar}{The dependent variable. Will be used with
@@ -223,6 +223,10 @@ sjp.aov1(depVar, grpVar, meansums = FALSE, type = "dots",
 
   \item{hideGrid.y}{If \code{TRUE}, the y-axis-gridlines
   are hidden. Default if \code{FALSE}.}
+
+  \item{expand.grid}{If \code{TRUE}, the plot grid is
+  expanded, i.e. there is a small margin between axes and
+  plotting region. Default is \code{FALSE}.}
 
   \item{showTickMarks}{Whether tick marks of axes should be
   shown or not}

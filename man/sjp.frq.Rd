@@ -13,7 +13,7 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
   innerBoxPlotWidth = 0.15, innerBoxPlotDotSize = 3, borderColor = NULL,
   axisColor = NULL, barOutlineColor = "black", majorGridColor = NULL,
   minorGridColor = NULL, hideGrid.x = FALSE, hideGrid.y = FALSE,
-  showValueLabels = TRUE, showCountValues = TRUE,
+  expand.grid = FALSE, showValueLabels = TRUE, showCountValues = TRUE,
   showPercentageValues = TRUE, showAxisLabels.x = TRUE,
   showAxisLabels.y = TRUE, showTickMarks = TRUE,
   showMeanIntercept = FALSE, showMeanValue = TRUE,
@@ -140,7 +140,7 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
 
   \item{innerBoxPlotDotSize}{Size of mean dot insie a
   violin plot. Applies only when \code{type} is set to
-  \code{"violin"}.}
+  \code{"violin"} or \code{"box"}.}
 
   \item{barColor}{User defined color for bars. If not
   specified, a default blue color palette will be used for
@@ -181,6 +181,10 @@ sjp.frq(varCount, title = NULL, titleSize = 1.3, titleColor = "black",
 
   \item{hideGrid.y}{If \code{TRUE}, the y-axis-gridlines
   are hidden. Default if \code{FALSE}.}
+
+  \item{expand.grid}{If \code{TRUE}, the plot grid is
+  expanded, i.e. there is a small margin between axes and
+  plotting region. Default is \code{FALSE}.}
 
   \item{showValueLabels}{Whether counts and percentage
   values should be plotted to each bar. Default is
@@ -436,11 +440,8 @@ sjp.frq(efc$neg_c_7, axisTitle.x="auto")
 sjp.frq(efc$c160age, type="h", hist.skipZeros=TRUE, barWidth=1)
 }
 \references{
-\itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/}
-\item
-\url{http://strengejacke.wordpress.com/2013/02/25/simplify-frequency-plots-with-ggplot-in-r-rstats/}
-}
+\itemize{ \item \url{http://rpubs.com/sjPlot/sjpfrq} \item
+\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
 }
 \seealso{
 \code{\link{sjt.frq}}

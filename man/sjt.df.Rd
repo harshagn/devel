@@ -84,7 +84,11 @@ sjt.df(df, describe = TRUE, file = NULL, alternateRowColors = FALSE,
   \item \code{css.summary='font-weight:bold;'} for a bold
   fontweight in the summary row.  \item
   \code{css.arc='color:blue;'} for a blue text color each
-  2nd row.  } See further examples below.}
+  2nd row.  \item \code{css.caption='+color:red;'} to add
+  red font-color to the default table caption style.  } You
+  can add style information to the default styles by using
+  a + (plus-sign) as initial letter for the parameter
+  attributes. Examples:}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If
