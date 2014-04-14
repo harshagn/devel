@@ -77,11 +77,13 @@
 #'            \item the class-names with \code{"css."}-prefix as parameter name and
 #'            \item each style-definition must end with a semicolon
 #'          } 
-#'          Examples:
+#'          You can add style information to the default styles by using a + (plus-sign) as
+#'          initial character for the parameter attributes. Examples:
 #'          \itemize{
 #'            \item \code{css.table='border:2px solid red;'} for a solid 2-pixel table border in red.
 #'            \item \code{css.summary='font-weight:bold;'} for a bold fontweight in the summary row.
 #'            \item \code{css.arc='color:blue;'} for a blue text color each 2nd row.
+#'            \item \code{css.arc='+font-style:italic;'} to add italic formatting to each 2nd row.
 #'          }
 #'          See \code{\link{sjt.df}} for further examples.
 #' @param useViewer If \code{TRUE}, the function tries to show the HTML table in the IDE's viewer pane. If

@@ -51,7 +51,8 @@
 #'            \item the class-names with \code{"css."}-prefix as parameter name and
 #'            \item each style-definition must end with a semicolon
 #'          } 
-#'          Examples:
+#'          You can add style information to the default styles by using a + (plus-sign) as
+#'          initial character for the parameter attributes. Examples:
 #'          \itemize{
 #'            \item \code{css.table='border:2px solid red;'} for a solid 2-pixel table border in red.
 #'            \item \code{css.summary='font-weight:bold;'} for a bold fontweight in the summary row.

@@ -72,7 +72,7 @@
 #'            \item each style-definition must end with a semicolon
 #'          } 
 #'          You can add style information to the default styles by using a + (plus-sign) as
-#'          initial letter for the parameter attributes. Examples:
+#'          initial character for the parameter attributes. Examples:
 #'          \itemize{
 #'            \item \code{css.table='border:2px solid red;'} for a solid 2-pixel table border in red.
 #'            \item \code{css.summary='font-weight:bold;'} for a bold fontweight in the summary row.
