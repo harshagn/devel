@@ -427,10 +427,6 @@ Plot grouped or stacked frequencies of variables as bar/dor
 graphs, box or violin plots, histograms etc.  using ggplot.
 }
 \examples{
-# histogram plot
-sjp.grpfrq(discoveries, sample(1:3, length(discoveries), replace=TRUE), type="hist",
-           showValueLabels=FALSE, showMeanIntercept=TRUE)
-
 # histrogram with EUROFAMCARE sample dataset
 data(efc)
 efc.val <- sji.getValueLabels(efc)
@@ -440,18 +436,14 @@ sjp.grpfrq(efc$e17age,
            title=efc.var['e17age'],
            legendTitle=efc.var['e16sex'],
            type="hist",
-           showValueLabels=FALSE)
+           showValueLabels=FALSE,
+           showMeanIntercept=TRUE)
 
 # boxplot
-sjp.grpfrq(ChickWeight$weight, as.numeric(ChickWeight$Diet), type="box")
+sjp.grpfrq(efc$e17age, efc$e42dep, type="box")
 
 # violin plot
-sjp.grpfrq(sample(1:4, length(PlantGrowth$group), replace=TRUE),
-           PlantGrowth$group, type="v")
-
-# grouped bars
-sjp.grpfrq(sample(1:2, length(PlantGrowth$group), replace=TRUE),
-           PlantGrowth$group, barSpace=0.2)
+sjp.grpfrq(efc$e17age, efc$e42dep, type="v")
 
 # grouped bars with EUROFAMCARE sample dataset
 # dataset was importet from an SPSS-file, using:

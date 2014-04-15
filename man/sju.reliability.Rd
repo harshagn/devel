@@ -78,7 +78,7 @@ for (i in 1:length(findex)) {
 }
 \seealso{
 \code{\link{sju.cronbach}} \cr
-\code{\link{sjt.itemanalysis}} \cr \code{\link{sjt.mic}}
+\code{\link{sjt.itemanalysis}} \cr \code{\link{sju.mic}}
 \cr \code{\link{sjp.pca}} \cr \code{\link{sjt.pca}} \cr
 \code{\link{sjt.df}}
 }

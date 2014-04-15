@@ -36,7 +36,7 @@ end <- which(colnames(efc)=="c90cop9")
 # create data frame with COPE-index scale
 df <- as.data.frame(efc[,c(start:end)])
 
-sjt.mic(df)
+sju.mic(df)
 }
 \seealso{
 \code{\link{sju.cronbach}} \cr

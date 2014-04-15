@@ -79,9 +79,12 @@ sjt.df(df, describe = TRUE, file = NULL, alternateRowColors = FALSE,
   Parameters for this list need: \enumerate{ \item the
   class-names with \code{"css."}-prefix as parameter name
   and \item each style-definition must end with a semicolon
-  } Examples: \itemize{ \item \code{css.table='border:2px
-  solid red;'} for a solid 2-pixel table border in red.
-  \item \code{css.summary='font-weight:bold;'} for a bold
+  } You can add style information to the default styles by
+  using a + (plus-sign) as initial character for the
+  parameter attributes. Examples: \itemize{ \item
+  \code{css.table='border:2px solid red;'} for a solid
+  2-pixel table border in red.  \item
+  \code{css.summary='font-weight:bold;'} for a bold
   fontweight in the summary row.  \item
   \code{css.arc='color:blue;'} for a blue text color each
   2nd row.  \item \code{css.caption='+color:red;'} to add
