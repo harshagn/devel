@@ -894,10 +894,10 @@ sjp.grpfrq <- function(varCount,
   }
   else if (type=="lines") {
     if (smoothLines) {
-      geob <- geom_line(data=mydat, aes(x=as.numeric(count), y=frq, colour=group), linetype=lineType, alpha=lineAlpha, size=lineSize, stat="smooth")
+      geob <- geom_line(linetype=lineType, alpha=lineAlpha, size=lineSize, stat="smooth")
     }
     else {
-      geob <- geom_line(data=mydat, aes(x=as.numeric(count), y=frq, colour=group), linetype=lineType, alpha=lineAlpha, size=lineSize)
+      geob <- geom_line(linetype=lineType, alpha=lineAlpha, size=lineSize)
     }
   }
   else if (type=="boxplots") {
@@ -1114,7 +1114,7 @@ sjp.grpfrq <- function(varCount,
   # ----------------------------------
   # construct final plot, base constructor
   # ----------------------------------
-  if (type=="histogram") {
+  if (type=="histogram" || type=="dots") {
     mydat$count <- as.numeric(as.character(mydat$count))
     baseplot <- ggplot(mydat, aes(x=count, y=frq, fill=group))
     scalex <- scale_x_continuous(limits=c(catmin, catcount))
@@ -1128,6 +1128,10 @@ sjp.grpfrq <- function(varCount,
       baseplot <- ggplot(mydat, aes(x=interaction(ia, group), y=frq, fill=group, weight=wb))
       scalex <- scale_x_discrete(labels=interactionVarLabels)
     }
+  }
+  else if (type=="lines") {
+    baseplot <- ggplot(mydat, aes(x=as.numeric(count), y=frq, colour=group))
+    scalex <- scale_x_continuous(limits=c(catmin, catcount))
   }
   else {
     baseplot <- ggplot(mydat, aes(x=factor(count), y=frq, fill=group))
@@ -1149,10 +1153,10 @@ sjp.grpfrq <- function(varCount,
     # plot bar chart
     geob
   # if we have line diagram, print lines here
-  if (type=="lines") {
-    baseplot <- baseplot + 
-      geom_point(size=dotSize, alpha=lineAlpha, shape=21, show_guide=FALSE)
-  }
+#   if (type=="lines") {
+#     baseplot <- baseplot + 
+#       geom_point(size=dotSize, alpha=lineAlpha, shape=21, show_guide=FALSE)
+#   }
   # if we have a histogram, add mean-lines
   if (type=="histogram" && showMeanIntercept) {
     baseplot <- baseplot + 
