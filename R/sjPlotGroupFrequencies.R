@@ -788,11 +788,17 @@ sjp.grpfrq <- function(varCount,
       }
     }
     else {
-      sums <- colSums(ftab)
+      sums <- unname(rowSums(ftab))
       # iterate category labels
       for (i in 1:length(sums)) {
         # add group count to each cat. label
         axisLabels.x[i] <- paste(axisLabels.x[i], " (n=", sums[i], ")", sep="")
+      }
+      sums <- unname(colSums(ftab))
+      # iterate category labels
+      for (i in 1:length(sums)) {
+        # add group count to each cat. label
+        legendLabels[i] <- paste(legendLabels[i], " (n=", sums[i], ")", sep="")
       }
     }
   }

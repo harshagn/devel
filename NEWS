@@ -32,6 +32,7 @@ Bug fixes:
 * "sjp.grpfrq" used wrong x-axis-labels when auto-detecting value labels.
 * Parameter "no.output" did not work for "sjt.itemanalysis".
 * Parameter "barOutlineSize" did not work properly for bar charts in function "sjp.frq".
+* Parameter "showGroupCount" in function "sjp.grpfrq" did not work properly.
 
 Various:
 * Spell corrections and additions to documentation.
