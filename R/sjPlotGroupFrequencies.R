@@ -148,6 +148,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #'          the Fisher's excact test (see \code{\link{fisher.test}}) is computed instead of Chi-square test. 
 #'          If the table's matrix is larger than 2x2, Fisher's excact test with Monte Carlo simulation is computed.
 #'          Only applies to bar-charts or dot-plots, i.e. when parameter \code{type} is either \code{"bars"} or \code{"dots"}.
+#' @param summaryLabelColor The color of the table summary labels.
 #' @param showGroupCount if \code{TRUE}, the count within each group is added to the category labels (e.g. \code{"Cat 1 (n=87)"}).
 #'          Default value is \code{FALSE}.
 #' @param tableSummaryPos Position of the model summary which is printed when \code{showTableSummary} is \code{TRUE}. Default is
@@ -325,6 +326,7 @@ sjp.grpfrq <- function(varCount,
                        showMeanValue=TRUE,
                        showStandardDeviation=FALSE,
                        showTableSummary=TRUE,
+                       summaryLabelColor="black",
                        showGroupCount=FALSE,
                        tableSummaryPos="r",
                        meanInterceptLineType=2,
@@ -1195,10 +1197,10 @@ sjp.grpfrq <- function(varCount,
       # add annotations with table summary
       # here we print out total N of cases, chi-square and significance of the table
       if (tableSummaryPos=="r") {
-        baseplot <- baseplot + annotate("text", label=modsum, parse=TRUE, x=Inf, y=Inf, colour=valueLabelColor, size=valueLabelSize, vjust=1.6, hjust=1.1)
+        baseplot <- baseplot + annotate("text", label=modsum, parse=TRUE, x=Inf, y=Inf, colour=summaryLabelColor, size=valueLabelSize, vjust=1.6, hjust=1.1)
       }
       else {
-        baseplot <- baseplot + annotate("text", label=modsum, parse=TRUE, x=-Inf, y=Inf, colour=valueLabelColor, size=valueLabelSize, vjust=1.6, hjust=-0.1)
+        baseplot <- baseplot + annotate("text", label=modsum, parse=TRUE, x=-Inf, y=Inf, colour=summaryLabelColor, size=valueLabelSize, vjust=1.6, hjust=-0.1)
       }
     }
   }

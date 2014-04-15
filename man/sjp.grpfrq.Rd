@@ -22,7 +22,8 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   showAxisLabels.x = TRUE, showAxisLabels.y = TRUE, showTickMarks = TRUE,
   showPlotAnnotation = TRUE, showMeanIntercept = FALSE,
   showMeanValue = TRUE, showStandardDeviation = FALSE,
-  showTableSummary = TRUE, showGroupCount = FALSE, tableSummaryPos = "r",
+  showTableSummary = TRUE, summaryLabelColor = "black",
+  showGroupCount = FALSE, tableSummaryPos = "r",
   meanInterceptLineType = 2, meanInterceptLineSize = 0.5,
   axisTitle.x = NULL, axisTitle.y = NULL, axisTitleColor = "black",
   axisTitleSize = 1.3, autoGroupAt = NULL, startAxisAt = "auto",
@@ -311,6 +312,9 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   computed.  Only applies to bar-charts or dot-plots, i.e.
   when parameter \code{type} is either \code{"bars"} or
   \code{"dots"}.}
+
+  \item{summaryLabelColor}{The color of the table summary
+  labels.}
 
   \item{showGroupCount}{if \code{TRUE}, the count within
   each group is added to the category labels (e.g.
