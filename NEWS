@@ -16,13 +16,14 @@ Changes to functions:
 
 Parameter changes:
 * Added parameter "expand.grid" to "sjp.frq", "sjp.grpfrq", "sjp.stackfrq", "sjp.xtab" and "sjp.aov1", so plotting region can have margins to axes (ggplot-default-behaviour). 
-* Remamed parameter "diagramMargins" in "sjp.likert" to "expand.grid".
 * Added parameter "stringDiagonal" to "sjt.corr" to print custom values into the diagnoal "self-correlation" cells (which are by default empty).
+* Added parameter "barOutlineSize" to functions "sjp.grpfrq", "sjc.qclus" and "sjp.xtab".
 * Added parameter "triangle" and "title" to function "sjt.corr".
 * Added parameter "hideProgressBar" to functions "sjt.df" and "sji.viewSPSS" to hide progressbar if needed.
 * Added parameter "showCompCorrMat" to function "sjt.itemanalysis" to compute the component-correlation-matrix.
 * Added parameter "factor.groups.titles" to function "sjt.itemanalysis", which can be used for table captions.
 * Changed parameter name "outlineColor" to "barOutlineColor" for those functions which plot bars. Changes made to harmonize this parameter with "barOutline", "barSize", "barOutlineSize", "barColor" etc.
+* Remamed parameter "diagramMargins" in "sjp.likert" and "sjp.stackfrq" to "expand.grid".
 
 Bug fixes:
 * "sjt.corr" did not work when parameter "data" was a cor-object. Fixed, "data" can now also be a cor-object.
@@ -30,6 +31,7 @@ Bug fixes:
 * "sjt.stackfrq" and "sjp.stackfrq" did not properly plot/print zero-categories.
 * "sjp.grpfrq" used wrong x-axis-labels when auto-detecting value labels.
 * Parameter "no.output" did not work for "sjt.itemanalysis".
+* Parameter "barOutlineSize" did not work properly for bar charts in function "sjp.frq".
 
 Various:
 * Spell corrections and additions to documentation.

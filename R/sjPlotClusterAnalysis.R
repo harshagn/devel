@@ -103,6 +103,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'          in between. Recommended values for this parameter are from 0 to 0.5
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Default is \code{FALSE}.
 #' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
+#' @param barOutlineSize The size of the bar outlines. Only applies if \code{barOutline} is \code{TRUE}.
+#'          Default is 0.2
 #' @param theme Specifies the diagram's background theme. Default (parameter \code{NULL}) is a gray 
 #'          background with white grids.
 #'          \itemize{
@@ -201,6 +203,7 @@ sjc.qclus <- function(data,
                       barWidth=0.5,
                       barSpace=0.1,
                       barOutline=FALSE, 
+                      barOutlineSize=0.2,
                       barOutlineColor="black", 
                       theme=NULL,
                       borderColor=NULL, 
@@ -436,7 +439,7 @@ sjc.qclus <- function(data,
   # --------------------------------------------------------
   gp <- 
     ggplot(df, aes(x=x, y=y, fill=group)) +
-      geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, width=barWidth, alpha=barAlpha) +
+      geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha) +
       scale_x_discrete(breaks=c(1:colnr), limits=c(1:colnr), labels=axisLabels.x) +
       labs(title=title, x=axisTitle.x, y=axisTitle.y, fill=legendTitle)
   # --------------------------------------------------------

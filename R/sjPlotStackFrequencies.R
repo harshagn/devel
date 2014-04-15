@@ -56,7 +56,7 @@
 #'          displayed in one line and when a line break is inserted.
 #' @param gridBreaksAt Sets the breaks on the y axis, i.e. at every n'th position a major
 #'          grid is being printed. Valid values range from 0 to 1.
-#' @param diagramMargins If \code{TRUE} (default), the diagram has margins, i.e. the y-axis is not exceeded
+#' @param expand.grid If \code{TRUE} (default), the diagram has margins, i.e. the y-axis is not exceeded
 #'          to the diagram's boundaries.
 #' @param barWidth Width of bars. Recommended values for this parameter are from 0.4 to 1.5
 #' @param barColor User defined color for bars.
@@ -70,6 +70,8 @@
 #' @param borderColor User defined color of whole diagram border (panel border).
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Default is \code{FALSE}.
 #' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
+#' @param barOutlineSize The size of the bar outlines. Only applies if \code{barOutline} is \code{TRUE}.
+#'          Default is 0.2
 #' @param majorGridColor Specifies the color of the major grid lines of the diagram background.
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.
@@ -192,7 +194,7 @@ sjp.stackfrq <- function(items,
                         breakLegendTitleAt=30, 
                         breakLegendLabelsAt=28,
                         gridBreaksAt=0.2,
-                        diagramMargins=FALSE,
+                        expand.grid=FALSE,
                         barWidth=0.5, 
                         barColor=NULL,
                         colorPalette="GnBu",
@@ -200,6 +202,7 @@ sjp.stackfrq <- function(items,
                         borderColor=NULL, 
                         axisColor=NULL, 
                         barOutline=FALSE, 
+                        barOutlineSize=0.2,
                         barOutlineColor="black", 
                         majorGridColor=NULL,
                         minorGridColor=NULL,
@@ -456,7 +459,7 @@ sjp.stackfrq <- function(items,
   # --------------------------------------------------------
   # set diagram margins
   # --------------------------------------------------------
-  if (diagramMargins) {
+  if (expand.grid) {
     expgrid <- waiver()
   }
   else {
@@ -546,7 +549,7 @@ sjp.stackfrq <- function(items,
   }  
   baseplot <- baseplot +
     # plot bar chart
-    geom_bar(stat="identity", position="stack", colour=barOutlineColor, width=barWidth, alpha=barAlpha)
+    geom_bar(stat="identity", position="stack", colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha)
   # --------------------------------------------------------
   # check whether bars should be visually separated by an 
   # additional separator line

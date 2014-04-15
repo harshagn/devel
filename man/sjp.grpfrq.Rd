@@ -15,11 +15,11 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
   innerBoxPlotWidth = 0.15, innerBoxPlotDotSize = 3,
   colorPalette = "GnBu", lineType = 1, lineSize = 1, lineAlpha = 1,
   smoothLines = FALSE, borderColor = NULL, axisColor = NULL,
-  barOutline = FALSE, barOutlineColor = "black", majorGridColor = NULL,
-  minorGridColor = NULL, hideGrid.x = FALSE, hideGrid.y = FALSE,
-  expand.grid = FALSE, showValueLabels = TRUE, showCountValues = TRUE,
-  showPercentageValues = TRUE, showAxisLabels.x = TRUE,
-  showAxisLabels.y = TRUE, showTickMarks = TRUE,
+  barOutline = FALSE, barOutlineSize = 0.2, barOutlineColor = "black",
+  majorGridColor = NULL, minorGridColor = NULL, hideGrid.x = FALSE,
+  hideGrid.y = FALSE, expand.grid = FALSE, showValueLabels = TRUE,
+  showCountValues = TRUE, showPercentageValues = TRUE,
+  showAxisLabels.x = TRUE, showAxisLabels.y = TRUE, showTickMarks = TRUE,
   showPlotAnnotation = TRUE, showMeanIntercept = FALSE,
   showMeanValue = TRUE, showStandardDeviation = FALSE,
   showTableSummary = TRUE, showGroupCount = FALSE, tableSummaryPos = "r",
@@ -234,6 +234,10 @@ sjp.grpfrq(varCount, varGroup, weightBy = NULL, weightByTitleString = NULL,
 
   \item{barOutline}{If \code{TRUE}, each bar gets a colored
   outline. Default is \code{FALSE}.}
+
+  \item{barOutlineSize}{The size of the bar outlines. Only
+  applies if \code{barOutline} is \code{TRUE}.  Default is
+  0.2}
 
   \item{barOutlineColor}{The color of the bar outline. Only
   applies, if \code{barOutline} is set to \code{TRUE}.}

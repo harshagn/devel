@@ -15,9 +15,9 @@ sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
   barColor = NULL, colorPalette = "GnBu", barAlpha = 1, lineType = 1,
   lineSize = 1, lineAlpha = 1, lineDotSize = 3, smoothLines = FALSE,
   borderColor = NULL, axisColor = NULL, barOutline = FALSE,
-  barOutlineColor = "black", majorGridColor = NULL, minorGridColor = NULL,
-  hideGrid.x = FALSE, hideGrid.y = FALSE, expand.grid = FALSE,
-  showValueLabels = TRUE, jitterValueLabels = FALSE,
+  barOutlineSize = 0.2, barOutlineColor = "black", majorGridColor = NULL,
+  minorGridColor = NULL, hideGrid.x = FALSE, hideGrid.y = FALSE,
+  expand.grid = FALSE, showValueLabels = TRUE, jitterValueLabels = FALSE,
   showCategoryLabels = TRUE, showTickMarks = TRUE,
   showTableSummary = TRUE, tableSummaryPos = "r", showTotalColumn = TRUE,
   hideLegend = FALSE, axisTitle.x = NULL, axisTitle.y = NULL,
@@ -193,6 +193,10 @@ sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
 
   \item{barOutlineColor}{The color of the bar outline. Only
   applies, if \code{barOutline} is set to \code{TRUE}}
+
+  \item{barOutlineSize}{The size of the bar outlines. Only
+  applies if \code{barOutline} is \code{TRUE}.  Default is
+  0.2}
 
   \item{majorGridColor}{specifies the color of the major
   grid lines of the diagram background}

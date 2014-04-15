@@ -92,6 +92,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "
 #'          the diagram border).
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Default is \code{FALSE}.
 #' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}
+#' @param barOutlineSize The size of the bar outlines. Only applies if \code{barOutline} is \code{TRUE}.
+#'          Default is 0.2
 #' @param majorGridColor specifies the color of the major grid lines of the diagram background
 #' @param minorGridColor specifies the color of the minor grid lines of the diagram background
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.
@@ -251,6 +253,7 @@ sjp.xtab <- function(y,
                     borderColor=NULL, 
                     axisColor=NULL, 
                     barOutline=FALSE, 
+                    barOutlineSize=0.2,
                     barOutlineColor="black", 
                     majorGridColor=NULL,
                     minorGridColor=NULL,
@@ -736,10 +739,10 @@ sjp.xtab <- function(y,
   # ----------------------------------
   if (type=="bars") {
     if (barPosition=="dodge") {
-      geob <- geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha)
     }
     else {
-      geob <- geom_bar(stat="identity", position="stack", colour=barOutlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", position="stack", colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha)
     }
   }
   # check if we have lines

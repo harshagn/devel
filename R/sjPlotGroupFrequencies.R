@@ -116,6 +116,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #' @param axisColor User defined color of axis border (y- and x-axis, in case the axes should have different colors than
 #'          the diagram border).
 #' @param barOutline If \code{TRUE}, each bar gets a colored outline. Default is \code{FALSE}.
+#' @param barOutlineSize The size of the bar outlines. Only applies if \code{barOutline} is \code{TRUE}.
+#'          Default is 0.2
 #' @param barOutlineColor The color of the bar outline. Only applies, if \code{barOutline} is set to \code{TRUE}.
 #' @param majorGridColor Specifies the color of the major grid lines of the diagram background.
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
@@ -305,6 +307,7 @@ sjp.grpfrq <- function(varCount,
                        borderColor=NULL, 
                        axisColor=NULL, 
                        barOutline=FALSE, 
+                       barOutlineSize=0.2,
                        barOutlineColor="black", 
                        majorGridColor=NULL,
                        minorGridColor=NULL,
@@ -875,10 +878,10 @@ sjp.grpfrq <- function(varCount,
   }
   else if (type=="bars") {
     if (barPosition=="dodge") {
-      geob <- geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha)
     }
     else {
-      geob <- geom_bar(stat="identity", position="stack", colour=barOutlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", position="stack", colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha)
     }
   }
   else if (type=="lines") {
@@ -896,7 +899,7 @@ sjp.grpfrq <- function(varCount,
     geob <- geom_violin(colour=barOutlineColor, width=barWidth, alpha=barAlpha, trim=trimViolin)
   }
   else {
-    geob <- geom_histogram(stat="identity", binwidth=barWidth, position=barPosition, alpha=barAlpha)
+    geob <- geom_histogram(stat="identity", binwidth=barWidth, colour=barOutlineColor, size=barOutlineSize, position=barPosition, alpha=barAlpha)
   }
   # --------------------------------------------------------
   # Set theme and default grid colours. grid colours

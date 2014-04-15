@@ -612,7 +612,7 @@ sjp.frq <- function(varCount,
     # set default color for histograms
     barColor <- c("#4080c0")
     if (type=="bars") {
-      geob <- geom_bar(stat="identity", colour=barOutlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha)
     }
     else if (type=="dots") {
       geob <- geom_point(size=dotSize, alpha=barAlpha)
@@ -621,7 +621,7 @@ sjp.frq <- function(varCount,
   else {
     # continue here, if barcolor is defined.
     if (type=="bars") {
-      geob <- geom_bar(stat="identity", fill=barColor, colour=barOutlineColor, width=barWidth, alpha=barAlpha)
+      geob <- geom_bar(stat="identity", fill=barColor, colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha)
     }
     else if (type=="dots") {
       geob <- geom_point(colour=barColor, size=dotSize, alpha=barAlpha)
