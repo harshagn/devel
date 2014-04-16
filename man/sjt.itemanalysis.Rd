@@ -99,8 +99,8 @@ sjt.itemanalysis(df, factor.groups = NULL, factor.groups.titles = "auto",
   fontweight in the summary row.  \item
   \code{css.arc='color:blue;'} for a blue text color each
   2nd row.  \item \code{css.arc='+font-style:italic;'} to
-  add italic formatting to each 2nd row.  } See
-  \code{\link{sjt.df}} for further examples.}
+  add italic formatting to each 2nd row.  } See further
+  examples at \url{http://rpubs.com/sjPlot/sjtbasics}.}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If

@@ -1,8 +1,8 @@
 #' @title Show stacked frequencies as HTML table
 #' @name sjt.stackfrq
 #' @references \itemize{
+#'              \item \url{http://rpubs.com/sjPlot/sjtstackfrq}
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
-#'              \item \url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
 #'              }
 #' 
 #' @description Shows the results of stacked frequencies (such as likert scales) as HTML table.
@@ -68,6 +68,7 @@
 #'            \item \code{css.caption='border-bottom: 1px dotted blue;'} for a blue dotted border of the last table row.
 #'            \item \code{css.caption='+color:red;'} to add red font-color to the default table caption style.
 #'          }
+#'          See further examples below and \url{http://rpubs.com/sjPlot/sjtbasics}.
 #' @param useViewer If \code{TRUE}, the function tries to show the HTML table in the IDE's viewer pane. If
 #'          \code{FALSE} or no viewer available, the HTML table is opened in a web browser.
 #' @param no.output If \code{TRUE}, the html-output is neither opened in a browser nor shown in

@@ -311,11 +311,9 @@ efc <- sji.setVariableLabels(efc, varlabs)
 sjp.stackfrq(efc[,c(start:end)])
 }
 \references{
-\itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/}
+\itemize{ \item \url{http://rpubs.com/sjPlot/sjpstackfrq}
 \item
-\url{http://strengejacke.wordpress.com/2013/07/17/plotting-likert-scales-net-stacked-distributions-with-ggplot-rstats/}
-}
+\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
 }
 \seealso{
 \code{\link{sjp.likert}} \cr \code{\link{sjt.stackfrq}}

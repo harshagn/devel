@@ -53,6 +53,8 @@ sji.SPSS <- function(path, enc=NA, autoAttachVarLabels=FALSE) {
 #' @description This function retrieves the value labels of an imported
 #' SPSS data set and returns the result as list.
 #' 
+#' @references \url{http://rpubs.com/sjPlot/datainit}
+#' 
 #' @seealso \link{sji.SPSS} \cr
 #'          \link{sji.getVariableLabels} \cr
 #'          \link{sji.convertToLabel} \cr
@@ -89,6 +91,8 @@ getValLabels <- function(x){
 #'                if \code{"x"} is a \code{\link{data.frame}}. These value labels will be accessed
 #'                by most of this package's functions, in order to automatically set values
 #'                or legend labels.
+#'                
+#' @references \url{http://rpubs.com/sjPlot/datainit}
 #' 
 #' @seealso \link{sji.SPSS} \cr
 #'          \link{sji.getVariableLabels} \cr
@@ -175,6 +179,8 @@ sji.setValueLabels.vector <- function(var, labels) {
 #' @description This function retrieves the variable labels of an imported
 #' SPSS data set and returns the result as list.
 #' 
+#' @references \url{http://rpubs.com/sjPlot/datainit}
+#' 
 #' @seealso \link{sji.getValueLabels} \cr
 #'          \link{sji.setValueLabels} \cr
 #'          \link{sji.setVariableLabels} \cr
@@ -208,6 +214,8 @@ sji.getVariableLabels <- function(dat) {
 #'                attribute \code{"variable.label"} with the related variable
 #'                name is attached. Most of this package's functions can automatically
 #'                retrieve the variable name to use it as axis labels or plot title.
+#' 
+#' @references \url{http://rpubs.com/sjPlot/datainit}
 #' 
 #' @seealso \link{sji.getValueLabels} \cr
 #'          \link{sji.setValueLabels} \cr

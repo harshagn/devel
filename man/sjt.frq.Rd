@@ -136,7 +136,7 @@ sjt.frq(data, file = NULL, weightBy = NULL, variableLabels = NULL,
   for a blue dotted border of the last table row.  \item
   \code{css.caption='+color:red;'} to add red font-color to
   the default table caption style.  } See further examples
-  below and \url{http://rpubs.com/sjPlot/sjtfrq}.}
+  below and \url{http://rpubs.com/sjPlot/sjtbasics}.}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If

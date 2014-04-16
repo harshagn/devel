@@ -4,8 +4,8 @@
 #' @description Shows contingency tables as HTML file in browser or viewer pane, or saves them as file.
 #' 
 #' @references \itemize{
+#'              \item \url{http://rpubs.com/sjPlot/sjtxtab}
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
-#'              \item \url{http://strengejacke.wordpress.com/2014/02/20/no-need-for-spss-beautiful-output-in-r-rstats/}
 #'              }
 #'              
 #' @seealso \code{\link{sjp.xtab}} \cr
@@ -83,7 +83,7 @@
 #'            \item \code{css.lasttablerow='border-bottom: 1px dotted blue;'} for a blue dotted border of the last table row.
 #'            \item \code{css.summary='+color:blue;'} to add blue font color style to the summary row.
 #'          }
-#'          See further examples below.
+#'          See further examples below and \url{http://rpubs.com/sjPlot/sjtbasics}.
 #' @param useViewer If \code{TRUE}, the function tries to show the HTML table in the IDE's viewer pane. If
 #'          \code{FALSE} or no viewer available, the HTML table is opened in a web browser.
 #' @param no.output If \code{TRUE}, the html-output is neither opened in a browser nor shown in
@@ -195,7 +195,7 @@ sjt.xtab <- function (var.row,
                       tdcol.col="#339933",
                       highlightTotal=FALSE,
                       highlightColor="#f8f8f8",
-                      percSign="&nbsp;%",
+                      percSign="&nbsp;&#37;",
                       hundret="100.0",
                       encoding="UTF-8",
                       CSS=NULL,
@@ -694,7 +694,7 @@ sjt.xtab <- function (var.row,
   # -------------------------------------
   # print legend
   # -------------------------------------
-  if (showLegend) page.content <- paste(page.content, sprintf("<p class=\"abstand\"><span class=\"td_n\">observed values</span> &middot; <span class=\"td_ex\">expected values</span> &middot; <span class=\"td_rw\">%% within %s</span> &middot; <span class=\"td_cl\">%% within %s</span> &middot; <span class=\"td_c\">%% of total</span></p>", gsub("<br>", " ", s.var.row), gsub("<br>", " ", s.var.col)), "\n")
+  if (showLegend) page.content <- paste(page.content, sprintf("<p>\n  <span class=\"td_n\">observed values</span> &middot; \n  <span class=\"td_ex\">expected values</span> &middot; \n  <span class=\"td_rw\">&#37; within %s</span> &middot; \n  <span class=\"td_cl\">&#37; within %s</span> &middot; \n  <span class=\"td_c\">&#37; of total</span>\n</p>", gsub("<br>", " ", s.var.row), gsub("<br>", " ", s.var.col)), "\n")
   # -------------------------------------
   # add table to return value list, so user can access each
   # single frequency table

@@ -112,7 +112,8 @@ sjt.stackfrq(items, weightBy = NULL, title = NULL, varlabels = NULL,
   \code{css.caption='border-bottom: 1px dotted blue;'} for
   a blue dotted border of the last table row.  \item
   \code{css.caption='+color:red;'} to add red font-color to
-  the default table caption style.  }}
+  the default table caption style.  } See further examples
+  below and \url{http://rpubs.com/sjPlot/sjtbasics}.}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If
@@ -216,11 +217,9 @@ sjt.stackfrq(efc[,c(start:end)],
                       css.summary="font-style:italic;"))}
 }
 \references{
-\itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/}
+\itemize{ \item \url{http://rpubs.com/sjPlot/sjtstackfrq}
 \item
-\url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
-}
+\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
 }
 \seealso{
 \code{\link{sjp.stackfrq}} \cr \code{\link{sjp.likert}}

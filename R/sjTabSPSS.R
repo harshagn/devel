@@ -49,7 +49,7 @@
 #'            \item \code{css.arc='color:blue;'} for a blue text color each 2nd row.
 #'            \item \code{css.summary='+color:blue;'} to add blue font color style to the summary row.
 #'          }
-#'          See further examples below.
+#'          See further examples below and \url{http://rpubs.com/sjPlot/sjtbasics}.
 #' @param useViewer If \code{TRUE}, the function tries to show the HTML table in the IDE's viewer pane. If
 #'          \code{FALSE} or no viewer available, the HTML table is opened in a web browser.
 #' @param no.output If \code{TRUE}, the html-output is neither opened in a browser nor shown in

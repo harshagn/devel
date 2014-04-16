@@ -96,10 +96,10 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #'            \item If not specified (\code{NULL}), a default red-green-yellow color palette will be used for the bar charts.
 #'            \item If barColor is \code{"gs"}, a greyscale will be used.
 #'            \item If barColor is \code{"bw"}, a monochrome white filling will be used.
-#'            \item If barColor is \code{"brewer"}, use the \code{colorPalette} parameter to specify a palette of the color brewer.
+#'            \item If barColor is \code{"brewer"}, use the \code{colorPalette} parameter to specify a palette of the \url{http://colorbrewer2.org}.
 #'          }
 #'          Else specify your own color values as vector (e.g. \code{barColor=c("#f00000", "#00ff00", "#0080ff")}).
-#' @param colorPalette If \code{barColor} is \code{"brewer"}, specify a color palette from the color brewer here. All color brewer 
+#' @param colorPalette If \code{barColor} is \code{"brewer"}, specify a color palette from the \url{http://colorbrewer2.org} here. All color brewer 
 #'          palettes supported by ggplot are accepted here.
 #' @param barAlpha Specify the transparancy (alpha value) of bars.
 #' @param lineType The linetype when using line diagrams. Only applies, when parameter \code{type}

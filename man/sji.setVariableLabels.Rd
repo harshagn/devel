@@ -49,6 +49,9 @@ dummy <- sji.setVariableLabels(dummy, "Dummy-variable")
 # variable labels if parameter "title" set to "auto"
 sjp.frq(dummy, title="auto")
 }
+\references{
+\url{http://rpubs.com/sjPlot/datainit}
+}
 \seealso{
 \link{sji.getValueLabels} \cr \link{sji.setValueLabels} \cr
 \link{sji.getVariableLabels} \cr \link{sji.SPSS} \cr

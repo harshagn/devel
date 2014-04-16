@@ -86,7 +86,7 @@
 #'            \item \code{css.lasttablerow='border-bottom: 1px dotted blue;'} for a blue dotted border of the last table row.
 #'            \item \code{css.colnames='+color:green'} to add green color formatting to column names.
 #'          }
-#'          See further examples below.
+#'          See further examples below and \url{http://rpubs.com/sjPlot/sjtbasics}.
 #' @param useViewer If \code{TRUE}, the function tries to show the HTML table in the IDE's viewer pane. If
 #'          \code{FALSE} or no viewer available, the HTML table is opened in a web browser.
 #' @param no.output If \code{TRUE}, the html-output is neither opened in a browser nor shown in

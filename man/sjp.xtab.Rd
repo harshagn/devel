@@ -140,20 +140,21 @@ sjp.xtab(y, x, title = NULL, titleSize = 1.3, titleColor = "black",
   to 0.5.}
 
   \item{barColor}{User defined color for bars.  \itemize{
-  \item If not specified (\code{NULL}), a default
-  red-green-yellow color palette will be used for the bar
-  charts.  \item If barColor is \code{"gs"}, a greyscale
-  will be used.  \item If barColor is \code{"bw"}, a
-  monochrome white filling will be used.  \item If barColor
-  is \code{"brewer"}, use the \code{colorPalette} parameter
-  to specify a palette of the color brewer.  } Else specify
-  your own color values as vector (e.g.
-  \code{barColor=c("#f00000", "#00ff00", "#0080ff")}).}
+  \item If not specified (\code{NULL}), the "Set1" color
+  palette from \url{http://colorbrewer2.org} will be used
+  for the bar charts.  \item If barColor is \code{"gs"}, a
+  greyscale will be used.  \item If barColor is
+  \code{"bw"}, a monochrome white filling will be used.
+  \item If barColor is \code{"brewer"}, use the
+  \code{colorPalette} parameter to specify a palette of the
+  \url{http://colorbrewer2.org}.  } Else specify your own
+  color values as vector (e.g. \code{barColor=c("#f00000",
+  "#00ff00", "#0080ff")}).}
 
   \item{colorPalette}{If \code{barColor} is
-  \code{"brewer"}, specify a color palette from the color
-  brewer here. All color brewer palettes supported by
-  ggplot are accepted here.}
+  \code{"brewer"}, specify a color palette from the
+  \url{http://colorbrewer2.org} here.  All color brewer
+  palettes supported by ggplot are accepted here.}
 
   \item{barAlpha}{Specify the transparancy (alpha value) of
   bars.}
@@ -381,11 +382,8 @@ efc <- sji.setVariableLabels(efc, efc.var)
 sjp.xtab(efc$e16sex, efc$e42dep, title="auto", axisTitle.x="auto")
 }
 \references{
-\itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/}
-\item
-\url{http://strengejacke.wordpress.com/2013/04/18/examples-for-sjplotting-functions-including-correlations-and-proportional-tables-with-ggplot-rstats/}
-}
+\itemize{ \item \url{http://rpubs.com/sjPlot/sjpxtab} \item
+\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
 }
 \seealso{
 \code{\link{sjt.xtab}}

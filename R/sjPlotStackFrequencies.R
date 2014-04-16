@@ -1,8 +1,8 @@
 #' @title Plot stacked proportional bars
 #' @name sjp.stackfrq
 #' @references \itemize{
+#'              \item \url{http://rpubs.com/sjPlot/sjpstackfrq}
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
-#'              \item \url{http://strengejacke.wordpress.com/2013/07/17/plotting-likert-scales-net-stacked-distributions-with-ggplot-rstats/}
 #'              }
 #'             
 #' @seealso \code{\link{sjp.likert}} \cr

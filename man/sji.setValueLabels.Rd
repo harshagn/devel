@@ -36,6 +36,9 @@ sjp.frq(dummy)
 dummy <- sji.setValueLabels(dummy, c("very low", "low", "mid", "hi"))
 sjp.frq(dummy)
 }
+\references{
+\url{http://rpubs.com/sjPlot/datainit}
+}
 \seealso{
 \link{sji.SPSS} \cr \link{sji.getVariableLabels} \cr
 \link{sji.convertToLabel} \cr \link{sji.convertToValue} \cr

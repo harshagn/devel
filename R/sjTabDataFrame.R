@@ -59,8 +59,7 @@
 #'            \item \code{css.arc='color:blue;'} for a blue text color each 2nd row.
 #'            \item \code{css.caption='+color:red;'} to add red font-color to the default table caption style.
 #'          }
-#'          You can add style information to the default styles by using a + (plus-sign) as
-#'          initial letter for the parameter attributes. Examples:
+#'          See further examples below and \url{http://rpubs.com/sjPlot/sjtbasics}.
 #' @param useViewer If \code{TRUE}, the function tries to show the HTML table in the IDE's viewer pane. If
 #'          \code{FALSE} or no viewer available, the HTML table is opened in a web browser.
 #' @param no.output If \code{TRUE}, the html-output is neither opened in a browser nor shown in

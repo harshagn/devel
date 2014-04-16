@@ -85,7 +85,7 @@
 #'            \item \code{css.arc='color:blue;'} for a blue text color each 2nd row.
 #'            \item \code{css.arc='+font-style:italic;'} to add italic formatting to each 2nd row.
 #'          }
-#'          See \code{\link{sjt.df}} for further examples.
+#'          See further examples at \url{http://rpubs.com/sjPlot/sjtbasics}.
 #' @param useViewer If \code{TRUE}, the function tries to show the HTML table in the IDE's viewer pane. If
 #'          \code{FALSE} or no viewer available, the HTML table is opened in a web browser.
 #' @param no.output If \code{TRUE}, the html-output is neither opened in a browser nor shown in

@@ -4,8 +4,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "
 #' @title Plot contingency tables
 #' @name sjp.xtab
 #' @references \itemize{
+#'              \item \url{http://rpubs.com/sjPlot/sjpxtab}
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
-#'              \item \url{http://strengejacke.wordpress.com/2013/04/18/examples-for-sjplotting-functions-including-correlations-and-proportional-tables-with-ggplot-rstats/}
 #'              }
 #' 
 #' @seealso \code{\link{sjt.xtab}}
@@ -66,14 +66,14 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("Perc", "Sum", "Count", "
 #'          in between. Recommended values for this parameter are from 0 to 0.5.
 #' @param barColor User defined color for bars.
 #'          \itemize{
-#'          \item If not specified (\code{NULL}), a default red-green-yellow color palette will be used for the bar charts.
+#'          \item If not specified (\code{NULL}), the "Set1" color palette from \url{http://colorbrewer2.org} will be used for the bar charts.
 #'          \item If barColor is \code{"gs"}, a greyscale will be used.
 #'          \item If barColor is \code{"bw"}, a monochrome white filling will be used.
-#'          \item If barColor is \code{"brewer"}, use the \code{colorPalette} parameter to specify a palette of the color brewer.
+#'          \item If barColor is \code{"brewer"}, use the \code{colorPalette} parameter to specify a palette of the \url{http://colorbrewer2.org}.
 #'          }
 #'          Else specify your own color values as vector (e.g. \code{barColor=c("#f00000", "#00ff00", "#0080ff")}).
-#' @param colorPalette If \code{barColor} is \code{"brewer"}, specify a color palette from the color brewer here. All color brewer 
-#'          palettes supported by ggplot are accepted here.
+#' @param colorPalette If \code{barColor} is \code{"brewer"}, specify a color palette from the \url{http://colorbrewer2.org} here.
+#'          All color brewer palettes supported by ggplot are accepted here.
 #' @param barAlpha Specify the transparancy (alpha value) of bars.
 #' @param lineType The linetype when using line diagrams. Only applies, when parameter \code{type}
 #'          is set to \code{"lines"}.
@@ -641,7 +641,7 @@ sjp.xtab <- function(y,
     # for lines, we have a different default colour palette because RYG is
     # better to distinguish with thin lines. For bars, we take blue colours
     # as default
-    fpal <- ifelse(type=="lines", "RdYlGn", "PuBu")
+    fpal <- ifelse(type=="lines", "RdYlGn", "Set1")
     scalecolors <- scale_fill_brewer(labels=legendLabels, palette=fpal)
     scalecolorsline <- scale_colour_brewer(labels=legendLabels, palette="RdYlGn")
   }

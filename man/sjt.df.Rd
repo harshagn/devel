@@ -88,10 +88,9 @@ sjt.df(df, describe = TRUE, file = NULL, alternateRowColors = FALSE,
   fontweight in the summary row.  \item
   \code{css.arc='color:blue;'} for a blue text color each
   2nd row.  \item \code{css.caption='+color:red;'} to add
-  red font-color to the default table caption style.  } You
-  can add style information to the default styles by using
-  a + (plus-sign) as initial letter for the parameter
-  attributes. Examples:}
+  red font-color to the default table caption style.  } See
+  further examples below and
+  \url{http://rpubs.com/sjPlot/sjtbasics}.}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If

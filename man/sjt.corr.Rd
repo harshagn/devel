@@ -109,7 +109,8 @@ sjt.corr(data, missingDeletion = "pairwise", corMethod = "spearman",
   \code{css.lasttablerow='border-bottom: 1px dotted blue;'}
   for a blue dotted border of the last table row.  \item
   \code{css.summary='+color:blue;'} adds blue font color to
-  summary row.  } See further examples below.}
+  summary row.  } See further examples below and
+  \url{http://rpubs.com/sjPlot/sjtbasics}.}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If

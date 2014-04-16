@@ -78,7 +78,8 @@ sji.viewSPSS(df, file = NULL, alternateRowColors = TRUE, showID = TRUE,
   \code{css.arc='color:blue;'} for a blue text color each
   2nd row.  \item \code{css.summary='+color:blue;'} to add
   blue font color style to the summary row.  } See further
-  examples below.}
+  examples below and
+  \url{http://rpubs.com/sjPlot/sjtbasics}.}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If

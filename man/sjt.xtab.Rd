@@ -10,7 +10,7 @@ sjt.xtab(var.row, var.col, var.grp = NULL, weightBy = NULL, digits = 1,
   showSummary = TRUE, showLegend = TRUE, showNA = FALSE, labelNA = "NA",
   tdcol.n = "black", tdcol.expected = "#339999", tdcol.cell = "#993333",
   tdcol.row = "#333399", tdcol.col = "#339933", highlightTotal = FALSE,
-  highlightColor = "#f8f8f8", percSign = "&nbsp;\%", hundret = "100.0",
+  highlightColor = "#f8f8f8", percSign = "&nbsp;&#37;", hundret = "100.0",
   encoding = "UTF-8", CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
@@ -160,7 +160,8 @@ sjt.xtab(var.row, var.col, var.grp = NULL, weightBy = NULL, digits = 1,
   \code{css.lasttablerow='border-bottom: 1px dotted blue;'}
   for a blue dotted border of the last table row.  \item
   \code{css.summary='+color:blue;'} to add blue font color
-  style to the summary row.  } See further examples below.}
+  style to the summary row.  } See further examples below
+  and \url{http://rpubs.com/sjPlot/sjtbasics}.}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If
@@ -261,11 +262,8 @@ sjt.xtab(efc$e16sex, efc$e42dep,
                  css.horline="border-bottom: double blue;"))}
 }
 \references{
-\itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/}
-\item
-\url{http://strengejacke.wordpress.com/2014/02/20/no-need-for-spss-beautiful-output-in-r-rstats/}
-}
+\itemize{ \item \url{http://rpubs.com/sjPlot/sjtxtab} \item
+\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
 }
 \seealso{
 \code{\link{sjp.xtab}} \cr \code{\link{sju.table.values}}

@@ -68,9 +68,9 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("OR", "lower", "upper", "
 #'            \item \code{"gray"}, \code{"grey"} or \code{"gs"} for a grayscale
 #'            \item \code{"brewer"} for colours from the color brewer palette.
 #'            }
-#'          If barColors is \code{"brewer"}, use the \code{colorPalette} parameter to specify a palette of the color brewer.
+#'          If barColors is \code{"brewer"}, use the \code{colorPalette} parameter to specify a palette of the \url{http://colorbrewer2.org}
 #'          Else specify your own color values as vector (e.g. \code{barColors=c("#f00000", "#00ff00")}).
-#' @param colorPalette If parameter \code{barColor} is \code{brewer}, specify a color palette from the color brewer here.
+#' @param colorPalette If parameter \code{barColor} is \code{brewer}, specify a color palette from the \url{http://colorbrewer2.org} here.
 #'          All color brewer palettes supported by ggplot are accepted here.
 #' @param barWidth The width of the bars in bar charts. only applies if parameter \code{type} is \code{bars}. Default is 0.5
 #' @param barAlpha The alpha value of the bars in bar charts. only applies if parameter \code{type} is \code{bars}. Default is 1

@@ -92,11 +92,11 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'            \item If not specified (\code{NULL}), a default color palette will be used for the bar charts.
 #'            \item If barColor is \code{"gs"}, a greyscale will be used.
 #'            \item If barColor is \code{"bw"}, a monochrome white filling will be used.
-#'            \item If barColor is \code{"brewer"}, use the \code{colorPalette} parameter to specify a palette of the color brewer.
+#'            \item If barColor is \code{"brewer"}, use the \code{colorPalette} parameter to specify a palette of the \url{http://colorbrewer2.org}.
 #'            }
 #'          Else specify your own color values as vector (e.g. \code{barColor=c("#f00000", "#00ff00", "#0080ff")}).
 #' @param barAlpha Specify the transparancy (alpha value) of bars.
-#' @param colorPalette If \code{barColor} is \code{"brewer"}, specify a color palette from the color brewer here. All color brewer 
+#' @param colorPalette If \code{barColor} is \code{"brewer"}, specify a color palette from the \url{http://colorbrewer2.org} here. All color brewer 
 #'          palettes supported by ggplot are accepted here.
 #' @param barWidth Width of bars. Recommended values for this parameter are from 0.4 to 1.5
 #' @param barSpace Spacing between bars. Default value is 0.1. If 0 is used, the grouped bars are sticked together and have no space

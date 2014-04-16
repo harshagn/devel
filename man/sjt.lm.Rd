@@ -163,8 +163,8 @@ sjt.lm(..., file = NULL, labelPredictors = NULL,
   \code{css.lasttablerow='border-bottom: 1px dotted blue;'}
   for a blue dotted border of the last table row.  \item
   \code{css.colnames='+color:green'} to add green color
-  formatting to column names.  } See further examples
-  below.}
+  formatting to column names.  } See further examples below
+  and \url{http://rpubs.com/sjPlot/sjtbasics}.}
 
   \item{useViewer}{If \code{TRUE}, the function tries to
   show the HTML table in the IDE's viewer pane. If

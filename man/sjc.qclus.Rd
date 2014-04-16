@@ -162,17 +162,17 @@ sjc.qclus(data, groupcount = NULL, groups = NULL, method = "k",
   If barColor is \code{"bw"}, a monochrome white filling
   will be used.  \item If barColor is \code{"brewer"}, use
   the \code{colorPalette} parameter to specify a palette of
-  the color brewer.  } Else specify your own color values
-  as vector (e.g. \code{barColor=c("#f00000", "#00ff00",
-  "#0080ff")}).}
+  the \url{http://colorbrewer2.org}.  } Else specify your
+  own color values as vector (e.g.
+  \code{barColor=c("#f00000", "#00ff00", "#0080ff")}).}
 
   \item{barAlpha}{Specify the transparancy (alpha value) of
   bars.}
 
   \item{colorPalette}{If \code{barColor} is
-  \code{"brewer"}, specify a color palette from the color
-  brewer here. All color brewer palettes supported by
-  ggplot are accepted here.}
+  \code{"brewer"}, specify a color palette from the
+  \url{http://colorbrewer2.org} here. All color brewer
+  palettes supported by ggplot are accepted here.}
 
   \item{barWidth}{Width of bars. Recommended values for
   this parameter are from 0.4 to 1.5}
