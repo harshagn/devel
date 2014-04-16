@@ -6,8 +6,8 @@
 #'                for each group as well as for the overall plot.
 #'
 #' @references \itemize{
+#'              \item \url{http://rpubs.com/sjPlot/sjpscatter}
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
-#'              \item \url{http://strengejacke.wordpress.com/2014/02/28/simply-creating-various-scatter-plots-with-ggplot-rstats/}
 #'              }
 #'              
 #' @seealso \code{\link{sjp.lm1}} \cr
