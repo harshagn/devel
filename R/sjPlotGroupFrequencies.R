@@ -5,8 +5,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("ypos", "wb", "ia", "mw",
 #' @title Plot grouped or stacked frequencies
 #' @name sjp.grpfrq
 #' @references \itemize{
-#'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/} \cr \cr
-#'              \item \url{http://strengejacke.wordpress.com/2013/03/05/easily-plotting-grouped-bars-with-ggplot}
+#'              \item \url{http://rpubs.com/sjPlot/sjpgrpfrq}
+#'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
 #'              }
 #'             
 #' @description Plot grouped or stacked frequencies of variables 

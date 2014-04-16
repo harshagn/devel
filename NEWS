@@ -15,6 +15,7 @@ Changes to functions:
 * "sji.setValueLabels" can now apply value labels to a complete data frame at once.
 
 Parameter changes:
+* Added parameters "showValueLabels", "showFreq", "showPerc" and "showID" to function "sji.viewSPSS" to be more flexible with table content.
 * Added parameter "expand.grid" to "sjp.frq", "sjp.grpfrq", "sjp.stackfrq", "sjp.xtab" and "sjp.aov1", so plotting region can have margins to axes (ggplot-default-behaviour). 
 * Added parameter "stringDiagonal" to "sjt.corr" to print custom values into the diagnoal "self-correlation" cells (which are by default empty).
 * Added parameter "barOutlineSize" to functions "sjp.grpfrq", "sjc.qclus" and "sjp.xtab".

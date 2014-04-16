@@ -2,10 +2,11 @@
 \alias{sji.viewSPSS}
 \title{View SPSS data set structure}
 \usage{
-sji.viewSPSS(df, file = NULL, alternateRowColors = TRUE, showType = FALSE,
-  showValues = TRUE, orderByName = FALSE, breakVariableNamesAt = 50,
-  encoding = "UTF-8", hideProgressBar = FALSE, CSS = NULL,
-  useViewer = TRUE, no.output = FALSE)
+sji.viewSPSS(df, file = NULL, alternateRowColors = TRUE, showID = TRUE,
+  showType = FALSE, showValues = TRUE, showValueLabels = TRUE,
+  showFreq = FALSE, showPerc = FALSE, orderByName = FALSE,
+  breakVariableNamesAt = 50, encoding = "UTF-8", hideProgressBar = FALSE,
+  CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
   \item{df}{An imported data frame, imported by
@@ -19,14 +20,25 @@ sji.viewSPSS(df, file = NULL, alternateRowColors = TRUE, showType = FALSE,
   \item{alternateRowColors}{If \code{TRUE}, alternating
   rows are highlighted with a light gray background color.}
 
+  \item{showID}{If \code{TRUE} (default), the variable ID
+  is shown in the first column.}
+
   \item{showType}{If \code{TRUE}, the variable type is
   shown in a separate column. Since SPSS variable types are
   mostly \code{\link{numeric}} after import, this column is
   hidden by default.}
 
   \item{showValues}{If \code{TRUE} (default), the variable
-  values and their associated value labels are shown as
-  additional column.}
+  values are shown as additional column.}
+
+  \item{showValueLabels}{If \code{TRUE} (default), the
+  value labels are shown as additional column.}
+
+  \item{showFreq}{If \code{TRUE}, an additional column with
+  frequencies for each variable is shown.}
+
+  \item{showPerc}{If \code{TRUE}, an additional column with
+  percentage of frequencies for each variable is shown.}
 
   \item{orderByName}{If \code{TRUE}, rows are ordered
   according to the variable names. By default, rows
@@ -104,7 +116,7 @@ sji.viewSPSS(efc)}
 
 # view variables w/o values and value labels
 \dontrun{
-sji.viewSPSS(efc, showValues=FALSE)}
+sji.viewSPSS(efc, showValues=FALSE, showValueLabels=FALSE)}
 
 # view variables including variable typed, orderd by name
 \dontrun{

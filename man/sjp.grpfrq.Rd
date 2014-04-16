@@ -491,10 +491,8 @@ sjp.grpfrq(efc$neg_c_7, efc$e42dep, showValueLabels=FALSE, startAxisAt=1)
 sjp.grpfrq(efc$neg_c_7, efc$e42dep, showValueLabels=FALSE)
 }
 \references{
-\itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/}
-\cr \cr \item
-\url{http://strengejacke.wordpress.com/2013/03/05/easily-plotting-grouped-bars-with-ggplot}
-}
+\itemize{ \item \url{http://rpubs.com/sjPlot/sjpgrpfrq}
+\item
+\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
 }
 

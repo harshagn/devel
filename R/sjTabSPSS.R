@@ -16,11 +16,14 @@
 #'          in the default web browser.
 #' @param alternateRowColors If \code{TRUE}, alternating rows are highlighted with a light gray
 #'          background color.
+#' @param showID If \code{TRUE} (default), the variable ID is shown in the first column.
 #' @param showType If \code{TRUE}, the variable type is shown in a separate column. Since
 #'          SPSS variable types are mostly \code{\link{numeric}} after import, this column
 #'          is hidden by default.
-#' @param showValues If \code{TRUE} (default), the variable values and their associated value labels
-#'          are shown as additional column.
+#' @param showValues If \code{TRUE} (default), the variable values are shown as additional column.
+#' @param showValueLabels If \code{TRUE} (default), the value labels are shown as additional column.
+#' @param showFreq If \code{TRUE}, an additional column with frequencies for each variable is shown.
+#' @param showPerc If \code{TRUE}, an additional column with percentage of frequencies for each variable is shown.
 #' @param orderByName If \code{TRUE}, rows are ordered according to the variable
 #'          names. By default, rows (variables) are ordered according to their
 #'          order in the data frame.
@@ -72,7 +75,7 @@
 #' 
 #' # view variables w/o values and value labels
 #' \dontrun{
-#' sji.viewSPSS(efc, showValues=FALSE)}
+#' sji.viewSPSS(efc, showValues=FALSE, showValueLabels=FALSE)}
 #' 
 #' # view variables including variable typed, orderd by name
 #' \dontrun{
@@ -91,8 +94,12 @@
 sji.viewSPSS <- function (df,
                           file=NULL,
                           alternateRowColors=TRUE,
+                          showID=TRUE,
                           showType=FALSE,
                           showValues=TRUE,
+                          showValueLabels=TRUE,
+                          showFreq=FALSE,
+                          showPerc=FALSE,
                           orderByName=FALSE,
                           breakVariableNamesAt=50,
                           encoding="UTF-8",
@@ -162,10 +169,15 @@ sji.viewSPSS <- function (df,
   # -------------------------------------
   # header row
   # -------------------------------------
-  page.content <- paste0(page.content, "  <tr>\n    <th class=\"thead\">ID</th><th class=\"thead\">Name</th>")
+  page.content <- paste0(page.content, "  <tr>\n    ")
+  if (showID) page.content <- paste0(page.content, "<th class=\"thead\">ID</th>")
+  page.content <- paste0(page.content, "<th class=\"thead\">Name</th>")
   if (showType) page.content <- paste0(page.content, "<th class=\"thead\">Type</th>")
   page.content <- paste0(page.content, "<th class=\"thead\">Label</th>")
-  if (showValues) page.content <- paste0(page.content, "<th class=\"thead\">Values</th><th class=\"thead\">Value Labels</th>")
+  if (showValues) page.content <- paste0(page.content, "<th class=\"thead\">Values</th>")
+  if (showValueLabels) page.content <- paste0(page.content, "<th class=\"thead\">Value Labels</th>")
+  if (showFreq) page.content <- paste0(page.content, "<th class=\"thead\">Freq.</th>")
+  if (showPerc) page.content <- paste0(page.content, "<th class=\"thead\">%</th>")
   page.content <- paste0(page.content, "\n  </tr>\n")
   # -------------------------------------
   # create progress bar
@@ -183,7 +195,7 @@ sji.viewSPSS <- function (df,
     if (alternateRowColors) arcstring <- ifelse(rcnt %% 2 ==0, " arc", "")
     page.content <- paste0(page.content, "  <tr>\n")
     # ID
-    page.content <- paste0(page.content, sprintf("    <td class=\"tdata%s\">%i</td>\n", arcstring, index))
+    if (showID) page.content <- paste0(page.content, sprintf("    <td class=\"tdata%s\">%i</td>\n", arcstring, index))
     # name
     page.content <- paste0(page.content, sprintf("    <td class=\"tdata%s\">%s</td>\n", arcstring, names(df.var[index])))
     # type
@@ -210,7 +222,7 @@ sji.viewSPSS <- function (df,
     # values
     if (showValues) {
       if (index<=ncol(df)) {
-        vals <- rev(attr(df[,index], "value.labels"))
+        vals <- rev(unname(attr(df[,index], "value.labels")))
         valstring <- c("")
         for (i in 1:length(vals)) {
           valstring <- paste0(valstring, vals[i])
@@ -221,6 +233,9 @@ sji.viewSPSS <- function (df,
         valstring <- "<NA>"
       }
       page.content <- paste0(page.content, sprintf("    <td class=\"tdata%s\">%s</td>\n", arcstring, valstring))
+    }
+    # values
+    if (showValueLabels) {
       if (index<=length(df.val)) {
         # value labels
         vals <- df.val[[index]]
@@ -232,6 +247,36 @@ sji.viewSPSS <- function (df,
       }
       else {
         valstring <- "<NA>"
+      }
+      page.content <- paste0(page.content, sprintf("    <td class=\"tdata%s\">%s</td>\n", arcstring, valstring))
+    }
+    # frequencies
+    if (showFreq) {
+      if (index<=ncol(df) && !is.null(attr(df[,index], "value.labels"))) {
+        ftab <- as.numeric(table(df[,index]))
+        valstring <- c("")
+        for (i in 1:length(ftab)) {
+          valstring <- paste0(valstring, ftab[i])
+          if (i<length(ftab)) valstring <- paste0(valstring, "<br>")
+        }
+      }
+      else {
+        valstring <- ""
+      }
+      page.content <- paste0(page.content, sprintf("    <td class=\"tdata%s\">%s</td>\n", arcstring, valstring))
+    }
+    # frequencies
+    if (showPerc) {
+      if (index<=ncol(df) && !is.null(attr(df[,index], "value.labels"))) {
+        ftab <- 100*as.numeric(prop.table(table(df[,index])))
+        valstring <- c("")
+        for (i in 1:length(ftab)) {
+          valstring <- paste0(valstring, sprintf("%.2f", ftab[i]))
+          if (i<length(ftab)) valstring <- paste0(valstring, "<br>")
+        }
+      }
+      else {
+        valstring <- ""
       }
       page.content <- paste0(page.content, sprintf("    <td class=\"tdata%s\">%s</td>\n", arcstring, valstring))
     }
