@@ -201,11 +201,8 @@ sjt.corr(efc[,c(start:end)], triangle="lower",
          val.rm=0.3, CSS=list(css.valueremove='color:blue;'))}
 }
 \references{
-\itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/}
-\item
-\url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
-}
+\itemize{ \item \url{http://rpubs.com/sjPlot/sjtcorr} \item
+\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
 }
 \seealso{
 \code{\link{sjp.corr}}

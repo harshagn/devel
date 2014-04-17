@@ -5,8 +5,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("vars", "Beta", "xv", "lo
 #' @title Plot beta coefficients of lm
 #' @name sjp.lm
 #' @references \itemize{
+#'              \item \url{http://rpubs.com/sjPlot/sjplm}
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
-#'              \item \url{http://strengejacke.wordpress.com/2013/03/22/plotting-lm-and-glm-models-with-ggplot-rstats/}
 #'             }
 #' 
 #' @description Plot beta coefficients of linear regressions with confidence intervalls as dot plot
@@ -490,6 +490,8 @@ sjp.lm <- function(fit,
 #'                Furthermore, a scatter plot of response and predictor values
 #'                is plotted.
 #'                
+#' @references \url{http://rpubs.com/sjPlot/sjplm}
+#'                
 #' @seealso \code{\link{sjp.lm}} \cr
 #'          \code{\link{sjp.scatter}} \cr
 #'          \code{\link{sjp.lm.ma}} \cr
@@ -652,6 +654,8 @@ sjp.reglin <- function(fit,
 #' @name sjp.lm.ma
 #' 
 #' @description Plots model assumptions of linear models to verify if linear regression is applicable
+#' 
+#' @references \url{http://rpubs.com/sjPlot/sjplm}
 #' 
 #' @seealso \code{\link{sjp.lm}} \cr
 #'          \code{\link{sjp.reglin}} \cr

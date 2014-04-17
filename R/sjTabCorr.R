@@ -1,8 +1,8 @@
 #' @title Show correlations as HTML table
 #' @name sjt.corr
 #' @references \itemize{
+#'              \item \url{http://rpubs.com/sjPlot/sjtcorr}
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
-#'              \item \url{http://strengejacke.wordpress.com/2014/03/04/beautiful-table-outputs-in-r-part-2-rstats-sjplot/}
 #'              }
 #' 
 #' @description Shows the results of a computed correlation as HTML table. Requires either 
@@ -489,6 +489,7 @@ sjt.corr <- function (data,
   knitr <- gsub(tag.pval, css.pval, knitr)  
   knitr <- gsub(tag.summary, css.summary, knitr)  
   knitr <- gsub(tag.firsttablecol, css.firsttablecol, knitr)  
+  knitr <- gsub(tag.valueremove, css.valueremove, knitr)  
   # -------------------------------------
   # check if html-content should be outputted
   # -------------------------------------

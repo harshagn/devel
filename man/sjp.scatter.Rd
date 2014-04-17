@@ -257,11 +257,9 @@ sjp.scatter(efc$c160age,efc$e17age, efc$e42dep,
             title="auto", axisTitle.x="auto", axisTitle.y="auto")
 }
 \references{
-\itemize{ \item
-\url{http://strengejacke.wordpress.com/sjplot-r-package/}
+\itemize{ \item \url{http://rpubs.com/sjPlot/sjpscatter}
 \item
-\url{http://strengejacke.wordpress.com/2014/02/28/simply-creating-various-scatter-plots-with-ggplot-rstats/}
-}
+\url{http://strengejacke.wordpress.com/sjplot-r-package/} }
 }
 \seealso{
 \code{\link{sjp.lm1}} \cr \code{\link{sjp.reglin}}
