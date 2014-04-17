@@ -451,13 +451,6 @@ sjp.grpfrq(efc$e17age,
 # boxplot
 sjp.grpfrq(efc$e17age, efc$e42dep, type="box")
 
-# violin plot
-sjp.grpfrq(efc$e17age, efc$e42dep, type="v")
-
-# grouped bars with EUROFAMCARE sample dataset
-# dataset was importet from an SPSS-file, using:
-# efc <- sji.SPSS("efc.sav", enc="UTF-8")
-data(efc)
 # -------------------------------------------------
 # auto-detection of value labels and variable names
 # -------------------------------------------------
