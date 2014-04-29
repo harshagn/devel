@@ -1,3 +1,8 @@
+Version 1.5
+------------------------------------------------------------------------------
+Changes to functions:
+* The correlation matrix of each component's index score in "sjt.itemanalysis"(see parameter "showCompCorrMat") now only displays the lower triangle.
+
 Version 1.4.1
 ------------------------------------------------------------------------------
 New functions:

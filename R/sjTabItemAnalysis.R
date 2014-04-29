@@ -379,7 +379,7 @@ sjt.itemanalysis <- function(df,
       # give proper columm names
       colnames(df.cc) <- sprintf("Component %i", c(1:ncol(df.cc)))
       # compute correlation table, store html result
-      html <- sjt.corr(df.cc, missingDeletion="listwise", pvaluesAsNumbers=TRUE, stringDiagonal=sprintf("&alpha;=%.3f", unlist(cronbach.total)), encoding=encoding, no.output=TRUE)
+      html <- sjt.corr(df.cc, missingDeletion="listwise", pvaluesAsNumbers=TRUE, triangle="lower", stringDiagonal=sprintf("&alpha;=%.3f", unlist(cronbach.total)), encoding=encoding, no.output=TRUE)
       # add to html that is printed
       complete.page <- paste0(complete.page, html$knitr)
       knitr.list[[length(knitr.list)+1]] <- html$knitr
