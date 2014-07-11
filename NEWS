@@ -1,7 +1,11 @@
 Version 1.4.3
 ------------------------------------------------------------------------------
 Changes to functions:
-* Added parameter "showPercentageAxis" to sjp.stackfrq" to show or hide the percentage values for the x-axis.
+* Added parameter "showPercentageAxis" to "sjp.stackfrq" to show or hide the percentage values for the x-axis.
+* Added parameter "reverseAxis.x" to "sjp.qclus"
+
+Bug fixes
+* Fixed minor bugs in "sjp.frq"
 
 Version 1.4.2
 ------------------------------------------------------------------------------
@@ -52,7 +56,6 @@ Bug fixes:
 
 Various:
 * Spell corrections and additions to documentation.
-
 
 Version 1.3
 ------------------------------------------------------------------------------
@@ -114,7 +117,6 @@ Various:
 * Minor improvements.
 * Spell corrections and additions to documentation.
 
-
 Version 1.2.2
 ------------------------------------------------------------------------------
 New functions:
@@ -155,7 +157,6 @@ Various:
 * Removed function "sju.modsum.lm" from official namespace (cleaning-up), since it was too specific and not generally useful.
 * Improved table layouts for "sjt." functions.
 
-
 Version 1.1
 ------------------------------------------------------------------------------
 New functions:
@@ -183,7 +184,6 @@ Bug fixes:
 * Fixed bug in function "sjc.grpdisc" (missing values in data frame have not been removed).
 * Fixed bug in function "sjp.likert" when a dropped level from the likert scale (parameter "dropLevels") was outside of the legendLabels index (i.e. "dropLevels" was greater than "length(legendLabes)".
 * Spell corrections in documentation.
-
 
 Version 1.0
 ------------------------------------------------------------------------------
@@ -216,7 +216,6 @@ Parameter changes:
 Bug fixes:
 * Fixed bug that added unnessecary line break in axis-, title- and legend-labels, which let them appear a bit misaligned.
 * Fixed bug in VIF calculation (see "sjp.lm.ma").
-
 
 Version 0.9
 ------------------------------------------------------------------------------
