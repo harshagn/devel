@@ -1,4 +1,4 @@
-#' @title Plot interaction terms (moedration) of linear models
+#' @title Plot interaction terms (moderation) of linear models
 #' @name sjp.lm.int
 #' @references \itemize{
 #'              \item \url{http://strengejacke.wordpress.com/sjplot-r-package/}
@@ -9,7 +9,7 @@
 #'              \item Aiken and West (1991). Multiple Regression: Testing and Interpreting Interactions.
 #'              }
 #'             
-#' @description Plot regression curves of significant interaction terms in linear models (lm). Note that beside interaction
+#' @description Plot regression curves of significant interaction terms (moderation) in linear models (lm). Note that beside interaction
 #'                terms, also the single predictors of each interaction must be included in the fitted model as well.
 #'                Thus, \code{lm(dep~pred1*pred2)} will work, but \code{lm(dep~pred1:pred2)} won't!
 #' 
@@ -17,6 +17,7 @@
 #'         Thus, \code{lm(dep~pred1*pred2)} will work, but \code{lm(dep~pred1:pred2)} won't!
 #' 
 #' @seealso \code{\link{sjp.lm}} \cr
+#'          \code{\link{sjp.emm.int}} \cr
 #'          \code{\link{sjp.reglin}} \cr
 #'          \code{\link{sjp.lm.ma}}
 #' 
@@ -33,7 +34,7 @@
 #'          to plot the effect of the moderator on the independent variable (following
 #'          the convention suggested by Cohen and Cohen and popularized by Aiken and West, 
 #'          i.e. using the mean, the value one standard deviation above, and the value one standard deviation below the mean
-#'          as values of the moderator, see \code{\url{http://www.theanalysisfactor.com/3-tips-interpreting-moderation/}}).
+#'          as values of the moderator, see \url{http://www.theanalysisfactor.com/3-tips-interpreting-moderation/}).
 #' @param swapPredictors if \code{TRUE}, the predictor with less unique values is printed along the x-axis. Default is
 #'          \code{FALSE}, so the predictor with more unique values is printed along the x-axis.
 #' @param plevel Indicates at which p-value an interaction term is considered as significant. Default is
@@ -110,6 +111,7 @@
 #'          variable name. By default, this string is \code{"(no interaction)"}.
 #' @param borderColor user defined color of whole diagram border (panel border)
 #' @param axisColor user defined color of axis border (y- and x-axis, in case the axes should have different colors than
+#'          the diagram border).
 #' @param majorGridColor specifies the color of the major grid lines of the diagram background
 #' @param minorGridColor specifies the color of the minor grid lines of the diagram background
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.

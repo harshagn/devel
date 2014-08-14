@@ -1,3 +1,6 @@
+# bind global variables
+if(getRversion() >= "2.15.1") utils::globalVariables(c("NEWDAT"))
+
 #' @title Dichotomize variables
 #' @name sju.dicho
 #' @description Dichotomizes variables into dummy variables (0/1). Dichotomization is

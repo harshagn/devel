@@ -1,5 +1,8 @@
 Version 1.4.3
 ------------------------------------------------------------------------------
+### New functions:
+* "sjp.emm.int" to plot estimated marginal means (least-squares means) of linear models with interaction terms.
+
 ### Changes to functions:
 * Added parameter "showRowNames" to "sjt.df", so first table column with row names can be omitted from output, when "describe" is set to "FALSE".
 * "sju.mwu" now computes exacts p-values and additionally reports Z-value and effect-size r.
