@@ -13,8 +13,8 @@ sjp.lm.int(fit, smooth = "none", diff = FALSE, moderatorValues = "minmax",
   legendLabelSize = 0.9, legendLabelColor = "black",
   showValueLabels = FALSE, valueLabelSize = 4, valueLabelColor = "black",
   valueLabelAlpha = 0.8, breakTitleAt = 50, breakLegendLabelsAt = 20,
-  breakAnnotationLabelsAt = 50, gridBreaksAt = NULL, theme = NULL,
-  showTickMarks = TRUE, showInterceptLines = FALSE,
+  breakAnnotationLabelsAt = 50, axisLimits.y = NULL, gridBreaksAt = NULL,
+  theme = NULL, showTickMarks = TRUE, showInterceptLines = FALSE,
   showInterceptLabels = TRUE, interceptLineColor = "#3366cc",
   estLineColor = "#cc3300", lineLabelSize = 3.7, lineLabelColor = "black",
   lineLabelString = "(no interaction)", borderColor = NULL,
@@ -119,6 +119,10 @@ displayed in one line and when a line break is inserted. Default is \code{20}.}
 \item{breakAnnotationLabelsAt}{Wordwrap for diagram annotation labels. Determines how many chars of the legend labels are
 displayed in one line and when a line break is inserted. Default is \code{50}.
 Only applies if \code{showInterceptLine} is \code{TRUE}.}
+
+\item{axisLimits.y}{A vector with two values, defining the lower and upper limit from the y-axis.
+By default, this value is \code{NULL}, i.e. axis limits will be calculated upon the
+range of y-values.}
 
 \item{gridBreaksAt}{Sets the breaks on the y axis, i.e. at every n'th position a major
 grid is being printed. Default is \code{NULL}.}

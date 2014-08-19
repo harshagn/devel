@@ -1,3 +1,9 @@
+Version 1.4.4
+------------------------------------------------------------------------------
+Changes to functions:
+* Added parameter "axisLimits.y" to function "sjp.emm.int"
+* Added parameter "axisLimits.y" to function "sjp.lm.int"
+
 Version 1.4.3
 ------------------------------------------------------------------------------
 New functions:

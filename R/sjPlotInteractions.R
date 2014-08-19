@@ -88,6 +88,9 @@
 #' @param breakAnnotationLabelsAt Wordwrap for diagram annotation labels. Determines how many chars of the legend labels are 
 #'          displayed in one line and when a line break is inserted. Default is \code{50}.
 #'          Only applies if \code{showInterceptLine} is \code{TRUE}.
+#' @param axisLimits.y A vector with two values, defining the lower and upper limit from the y-axis.
+#'          By default, this value is \code{NULL}, i.e. axis limits will be calculated upon the
+#'          range of y-values.
 #' @param gridBreaksAt Sets the breaks on the y axis, i.e. at every n'th position a major
 #'          grid is being printed. Default is \code{NULL}.
 #' @param theme specifies the diagram's background theme. default (parameter \code{NULL}) is a gray 
@@ -191,6 +194,7 @@ sjp.lm.int <- function(fit,
                       breakTitleAt=50,
                       breakLegendLabelsAt=20,
                       breakAnnotationLabelsAt=50,
+                      axisLimits.y=NULL,
                       gridBreaksAt=NULL,
                       theme=NULL,
                       showTickMarks=TRUE,
@@ -555,8 +559,14 @@ sjp.lm.int <- function(fit,
     # -----------------------------------------------------------
     lowerLim.x <- floor(min(intdf$x))
     upperLim.x <- ceiling(max(intdf$x))
-    lowerLim.y <- floor(min(intdf$y))
-    upperLim.y <- ceiling(max(intdf$y))
+    if (is.null(axisLimits.y)) {
+      lowerLim.y <- floor(min(intdf$y))
+      upperLim.y <- ceiling(max(intdf$y))
+    }
+    else {
+      lowerLim.y <- axisLimits.y[1]
+      upperLim.y <- axisLimits.y[2]
+    }
     # -----------------------------------------------------------
     # check whether we have to modify axis limits in case intercept
     # lines are also plotted

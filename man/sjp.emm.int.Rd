@@ -12,10 +12,10 @@ sjp.emm.int(fit, swapPredictors = FALSE, plevel = 0.05, title = NULL,
   showValueLabels = FALSE, valueLabel.digits = 2, valueLabelSize = 4,
   valueLabelColor = "black", valueLabelAlpha = 0.8, breakTitleAt = 50,
   breakLegendLabelsAt = 20, breakAnnotationLabelsAt = 50,
-  gridBreaksAt = NULL, theme = NULL, showTickMarks = TRUE,
-  borderColor = NULL, axisColor = NULL, majorGridColor = NULL,
-  minorGridColor = NULL, hideGrid.x = FALSE, hideGrid.y = FALSE,
-  printPlot = TRUE)
+  axisLimits.y = NULL, gridBreaksAt = NULL, theme = NULL,
+  showTickMarks = TRUE, borderColor = NULL, axisColor = NULL,
+  majorGridColor = NULL, minorGridColor = NULL, hideGrid.x = FALSE,
+  hideGrid.y = FALSE, printPlot = TRUE)
 }
 \arguments{
 \item{fit}{the fitted linear model (lm) object, including interaction terms}
@@ -93,6 +93,10 @@ displayed in one line and when a line break is inserted. Default is \code{20}.}
 \item{breakAnnotationLabelsAt}{Wordwrap for diagram annotation labels. Determines how many chars of the legend labels are
 displayed in one line and when a line break is inserted. Default is \code{50}.
 Only applies if \code{showInterceptLine} is \code{TRUE}.}
+
+\item{axisLimits.y}{A vector with two values, defining the lower and upper limit from the y-axis.
+By default, this value is \code{NULL}, i.e. axis limits will be calculated upon the
+range of y-values.}
 
 \item{gridBreaksAt}{Sets the breaks on the y axis, i.e. at every n'th position a major
 grid is being printed. Default is \code{NULL}.}

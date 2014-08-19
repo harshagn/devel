@@ -4,6 +4,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #' @title Plot adjusted (estimated marginal) means of interaction (moderation) in linear models
 #' @name sjp.emm.int
 #' @references \itemize{
+#'              \item \url{http://rpubs.com/sjPlot/sjpemmint}
 #'              \item \url{http://www.theanalysisfactor.com/using-adjusted-means-to-interpret-moderators-in-analysis-of-covariance/}
 #'              }
 #'             
@@ -17,6 +18,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #'         (i.e. lm(y~a+b+a:b) means that "a" is used as grouping variable and "b" is plotted along the x-axis).
 #' 
 #' @seealso \code{\link{sjp.lm.int}} \cr
+#'          \code{\link{sjp.reglin}} \cr
+#'          \code{\link{sjp.aov1}} \cr
 #'          \code{\link{sjp.lm.ma}}
 #' 
 #' @param fit the fitted linear model (lm) object, including interaction terms
@@ -69,6 +72,9 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #' @param breakAnnotationLabelsAt Wordwrap for diagram annotation labels. Determines how many chars of the legend labels are 
 #'          displayed in one line and when a line break is inserted. Default is \code{50}.
 #'          Only applies if \code{showInterceptLine} is \code{TRUE}.
+#' @param axisLimits.y A vector with two values, defining the lower and upper limit from the y-axis.
+#'          By default, this value is \code{NULL}, i.e. axis limits will be calculated upon the
+#'          range of y-values.
 #' @param gridBreaksAt Sets the breaks on the y axis, i.e. at every n'th position a major
 #'          grid is being printed. Default is \code{NULL}.
 #' @param theme specifies the diagram's background theme. default (parameter \code{NULL}) is a gray 
@@ -163,6 +169,7 @@ sjp.emm.int <- function(fit,
                        breakTitleAt=50,
                        breakLegendLabelsAt=20,
                        breakAnnotationLabelsAt=50,
+                       axisLimits.y=NULL,
                        gridBreaksAt=NULL,
                        theme=NULL,
                        showTickMarks=TRUE,
@@ -348,8 +355,14 @@ sjp.emm.int <- function(fit,
     # retrieve lowest and highest x and y position to determine
     # the scale limits
     # -----------------------------------------------------------
-    lowerLim.y <- floor(min(intdf$y))
-    upperLim.y <- ceiling(max(intdf$y))
+    if (is.null(axisLimits.y)) {
+      lowerLim.y <- floor(min(intdf$y))
+      upperLim.y <- ceiling(max(intdf$y))
+    }
+    else {
+      lowerLim.y <- axisLimits.y[1]
+      upperLim.y <- axisLimits.y[2]
+    }
     # -----------------------------------------------------------
     # check whether user defined grid breaks / tick marks are used
     # -----------------------------------------------------------
