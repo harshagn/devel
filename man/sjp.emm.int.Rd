@@ -186,11 +186,15 @@ sjp.emm.int(fit, plevel=1, swapPredictors=TRUE)
 }
 \references{
 \itemize{
+             \item \url{http://rpubs.com/sjPlot/sjpemmint}
+             \item \url{http://strengejacke.wordpress.com/2014/08/19/visualize-pre-post-comparison-of-intervention-rstats/}
              \item \url{http://www.theanalysisfactor.com/using-adjusted-means-to-interpret-moderators-in-analysis-of-covariance/}
              }
 }
 \seealso{
 \code{\link{sjp.lm.int}} \cr
+         \code{\link{sjp.reglin}} \cr
+         \code{\link{sjp.aov1}} \cr
          \code{\link{sjp.lm.ma}}
 }
 

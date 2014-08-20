@@ -4,6 +4,9 @@ Changes to functions:
 * Added parameter "axisLimits.y" to function "sjp.emm.int"
 * Added parameter "axisLimits.y" to function "sjp.lm.int"
 
+General:
+* Removed extracted single functions from other packages and added imports for those functions. sjPlot now also imports "psych" and "cluster" package.
+
 Version 1.4.3
 ------------------------------------------------------------------------------
 New functions:

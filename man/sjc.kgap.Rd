@@ -41,12 +41,9 @@ An object containing the used data frame for plotting, the ggplot object
 \description{
 An implementation of the gap statistic algorithm from Tibshirani, Walther, and Hastie's
                "Estimating the number of clusters in a data set via the gap statistic".
-               Source code was taken from the \code{\link{clusGap}} function of the
-               cluster-package (\url{http://cran.r-project.org/web/packages/cluster/index.html}).
-}
-\note{
-Source code was taken from the \code{\link{clusGap}} function of the
-        cluster-package (\url{http://cran.r-project.org/web/packages/cluster/index.html}).
+               This function calls the \code{\link{clusGap}} function of the
+               cluster-package (\url{http://cran.r-project.org/web/packages/cluster/index.html})
+               to calculate the data for the plot.
 }
 \examples{
 # plot gap statistic and determine best number of clusters

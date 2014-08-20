@@ -976,8 +976,9 @@ sjc.elbow <- function (data, steps=15, showDiff=FALSE) {
 #' @name sjc.kgap
 #' @description An implementation of the gap statistic algorithm from Tibshirani, Walther, and Hastie's
 #'                "Estimating the number of clusters in a data set via the gap statistic".
-#'                Source code was taken from the \code{\link{clusGap}} function of the
-#'                cluster-package (\url{http://cran.r-project.org/web/packages/cluster/index.html}).
+#'                This function calls the \code{\link{clusGap}} function of the
+#'                cluster-package (\url{http://cran.r-project.org/web/packages/cluster/index.html})
+#'                to calculate the data for the plot.
 #'                
 #' @seealso \code{\link{sjc.elbow}} \cr
 #'          \code{\link{clusGap}}
@@ -1007,9 +1008,6 @@ sjc.elbow <- function (data, steps=15, showDiff=FALSE) {
 #' @return An object containing the used data frame for plotting, the ggplot object
 #'           and the number of found cluster.
 #' 
-#' @note Source code was taken from the \code{\link{clusGap}} function of the
-#'         cluster-package (\url{http://cran.r-project.org/web/packages/cluster/index.html}).
-#' 
 #' @references \itemize{
 #'              \item Tibshirani R, Walther G, Hastie T (2001) Estimating the number of clusters in a data set via gap statistic. J. R. Statist. Soc. B, 63, Part 2, pp. 411-423
 #'              \item Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2013). cluster: Cluster Analysis Basics and Extensions. R package version 1.14.4. (\url{http://cran.r-project.org/web/packages/cluster/index.html})
@@ -1024,6 +1022,7 @@ sjc.elbow <- function (data, steps=15, showDiff=FALSE) {
 #' sjc.kgap(iris[,1:4])
 #' 
 #' @import ggplot2
+#' @importFrom cluster clusGap maxSE
 #' @export
 sjc.kgap <- function(x, max=10, B=100, SE.factor=1, method="Tibs2001SEmax", plotResults=TRUE) {
   # Prepare Data
@@ -1033,13 +1032,11 @@ sjc.kgap <- function(x, max=10, B=100, SE.factor=1, method="Tibs2001SEmax", plot
   gap <- clusGap(x, kmeans, max, B)
 
   stopifnot((K <- nrow(T <-gap$Tab)) >= 1, SE.factor >= 0)
-  cat("Clustering Gap statistic [\"clusGap\"].\n",
-      sprintf("B=%d simulated reference sets, k = 1..%d\n",gap$B, K), sep="")
-  nc <- maxSE(f = T[,"gap"], SE.f = T[,"SE.sim"],
-              method=method, SE.factor=SE.factor)
+  cat("Clustering Gap statistic [\"clusGap\"].\n", sprintf("B=%d simulated reference sets, k = 1..%d\n",gap$B, K), sep="")
+  nc <- maxSE(f = T[,"gap"], SE.f = T[,"SE.sim"], method=method, SE.factor=SE.factor)
   cat(sprintf(" --> Number of clusters (method '%s'%s): %d\n",
-              method, if(grepl("SE", method))
-                sprintf(", SE.factor=%g",SE.factor) else "", nc))
+              method,
+              if(grepl("SE", method)) sprintf(", SE.factor=%g",SE.factor) else "", nc))
   # point size for cluster solution
   nclus <- rep(2, max)
   nclus[nc] <- 4

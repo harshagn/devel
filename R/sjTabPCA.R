@@ -139,6 +139,7 @@
 #' \dontrun{
 #' sjt.pca(efc[,c(start:end)])}
 #' 
+#' @importFrom psych KMO
 #' @export
 sjt.pca <- function (data,
                      numberOfFactors=NULL,
@@ -395,7 +396,7 @@ sjt.pca <- function (data,
   # retrieve kmo and msa for data set
   # -------------------------------------
   kmo <- NULL
-  if (showMSA) kmo <- pca.kmo(data)
+  if (showMSA) kmo <- KMO(data)
   # -------------------------------------
   # variance
   # -------------------------------------

@@ -5,6 +5,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #' @name sjp.emm.int
 #' @references \itemize{
 #'              \item \url{http://rpubs.com/sjPlot/sjpemmint}
+#'              \item \url{http://strengejacke.wordpress.com/2014/08/19/visualize-pre-post-comparison-of-intervention-rstats/}
 #'              \item \url{http://www.theanalysisfactor.com/using-adjusted-means-to-interpret-moderators-in-analysis-of-covariance/}
 #'              }
 #'             
