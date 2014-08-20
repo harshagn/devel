@@ -2,10 +2,9 @@ sjPlot - data visualization
 ------------------------------------------------------------------------------
 Collection of several plotting / table output functions for visualizing data.
 
-Installation
-------------------------------------------------------------------------------
+### Installation
 
-### Latest development build
+#### Latest development build
 
 To install the latest development snapshot (see latest changes below), type following command in the R console:
 
@@ -13,17 +12,14 @@ To install the latest development snapshot (see latest changes below), type foll
 devtools::install_github("devel", "sjPlot")
 ```
 
-### Officiale, stable release
+#### Officiale, stable release
 To install the latest stable release from CRAN, type following command in the R console:
 
 ```r
 install.packages("sjPlot")
 ```
 
-Changelog of current development build
-------------------------------------------------------------------------------
-
-### Version 1.4.4
+### Changelog of current development build
 
 #### Changes to functions:
 * Added parameter "axisLimits.y" to function "sjp.emm.int"
@@ -32,8 +28,8 @@ Changelog of current development build
 #### General:
 * Removed extracted single functions from other packages and added imports for those functions. sjPlot now also imports "psych" and "cluster" package.
 
-References and documentation
-------------------------------------------------------------------------------
+
+### References and documentation
 
 - [RPubs documentaton](http://rpubs.com/sjPlot/)
 - [Weblog](http://strengejacke.wordpress.com/sjplot-r-package/)
