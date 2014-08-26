@@ -144,10 +144,11 @@ Default is 0.2}
 \item{theme}{Specifies the diagram's background theme. Default (parameter \code{NULL}) is a gray
 background with white grids.
 \itemize{
-  \item Use \code{"bw"} for a white background with gray grids
-  \item \code{"classic"} for a classic theme (black border, no grids)
-  \item \code{"minimal"} for a minimalistic theme (no border,gray grids) or
-  \item \code{"none"} for no borders, grids and ticks.
+\item Use \code{"bw"} for a white background with gray grids
+\item \code{"classic"} for a classic theme (black border, no grids)
+\item \code{"minimal"} for a minimalistic theme (no border,gray grids)
+\item \code{"none"} for no borders, grids and ticks or
+\item \code{"themr"} if you are using the \code{ggthemr} package
 }}
 
 \item{borderColor}{User defined color of whole diagram border (panel border).}

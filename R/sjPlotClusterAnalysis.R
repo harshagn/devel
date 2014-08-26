@@ -108,10 +108,11 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #' @param theme Specifies the diagram's background theme. Default (parameter \code{NULL}) is a gray 
 #'          background with white grids.
 #'          \itemize{
-#'            \item Use \code{"bw"} for a white background with gray grids
-#'            \item \code{"classic"} for a classic theme (black border, no grids)
-#'            \item \code{"minimal"} for a minimalistic theme (no border,gray grids) or 
-#'            \item \code{"none"} for no borders, grids and ticks.
+#'          \item Use \code{"bw"} for a white background with gray grids
+#'          \item \code{"classic"} for a classic theme (black border, no grids)
+#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
+#'          \item \code{"none"} for no borders, grids and ticks or
+#'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
 #' @param borderColor User defined color of whole diagram border (panel border).
 #' @param axisColor User defined color of axis border (y- and x-axis, in case the axes should have different colors than
@@ -400,6 +401,9 @@ sjc.qclus <- function(data,
     ggtheme <- theme_gray()
     hideGridColor <- c("gray90")
   }
+  else if (theme=="themr") {
+    ggtheme <- NULL
+  }
   else if (theme=="bw") {
     ggtheme <- theme_bw()
   }
@@ -418,7 +422,7 @@ sjc.qclus <- function(data,
   # --------------------------------------------------------
   # Hide or show Tick Marks and Axis Labels (x axis text) 
   # --------------------------------------------------------
-  if (!showTickMarks) {
+  if (!showTickMarks && !is.null(ggtheme)) {
     ggtheme <- ggtheme + theme(axis.ticks = element_blank())
   }
   if (!showAxisLabels.x) {
@@ -465,12 +469,15 @@ sjc.qclus <- function(data,
   # --------------------------------------------------------
   # set axis label sizes and colors
   # --------------------------------------------------------
-  gp <- gp +
-    ggtheme +
-    theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
+  # apply theme
+  if (!is.null(ggtheme)) {
+    gp <- gp +
+      ggtheme +
+      theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
             axis.text.x = element_text(angle=axisLabelAngle.x),
             axis.title = element_text(size=rel(axisTitleSize), colour=axisTitleColor),
             plot.title = element_text(size=rel(titleSize), colour=titleColor))
+  }
   # --------------------------------------
   # set position and size of legend
   # --------------------------------------

@@ -99,8 +99,9 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #'          \itemize{
 #'          \item Use \code{"bw"} for a white background with gray grids
 #'          \item \code{"classic"} for a classic theme (black border, no grids)
-#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids) or 
-#'          \item \code{"none"} for no borders, grids and ticks.
+#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
+#'          \item \code{"none"} for no borders, grids and ticks or
+#'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
 #' @param majorGridColor Specifies the color of the major grid lines of the diagram background.
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
@@ -502,6 +503,9 @@ sjp.aov1 <- function(depVar,
     ggtheme <- theme_gray()
     hideGridColor <- c("gray90")
   }
+  else if (theme=="themr") {
+    ggtheme <- NULL
+  }
   else if (theme=="bw") {
     ggtheme <- theme_bw()
   }
@@ -532,7 +536,7 @@ sjp.aov1 <- function(depVar,
   # --------------------------------------------------------
   # Set up visibility of tick marks
   # --------------------------------------------------------
-  if (!showTickMarks) {
+  if (!showTickMarks && !is.null(ggtheme)) {
     ggtheme <- ggtheme + theme(axis.ticks = element_blank())
   }
   if (!showAxisLabels.y) {
@@ -589,14 +593,18 @@ sjp.aov1 <- function(depVar,
     # set value labels to x-axis
     scale_x_discrete(labels=axisLabels.y, limits=c(1:nrow(df))) +
     # flip coordinates
-    labs(title=title, x=NULL, y=axisTitle.x) +
-    ggtheme +
-    # set axes text and 
-    theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
-          axis.title = element_text(size=rel(axisTitleSize), colour=axisTitleColor), 
-          axis.text.y = element_text(angle=axisLabelAngle.y),
-          axis.text.x = element_text(angle=axisLabelAngle.x),
-          plot.title = element_text(size=rel(titleSize), colour=titleColor))
+    labs(title=title, x=NULL, y=axisTitle.x)
+  # apply theme
+  if (!is.null(ggtheme)) {
+    anovaplot <- anovaplot +
+      ggtheme +
+      # set axes text and 
+      theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
+            axis.title = element_text(size=rel(axisTitleSize), colour=axisTitleColor), 
+            axis.text.y = element_text(angle=axisLabelAngle.y),
+            axis.text.x = element_text(angle=axisLabelAngle.x),
+            plot.title = element_text(size=rel(titleSize), colour=titleColor))
+  }
   # --------------------------------------------------------
   # Flip coordinates when we have dots
   # --------------------------------------------------------

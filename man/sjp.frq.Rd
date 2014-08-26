@@ -234,8 +234,9 @@ background with white grids.
 \itemize{
 \item Use \code{"bw"} for a white background with gray grids
 \item \code{"classic"} for a classic theme (black border, no grids)
-\item \code{"minimal"} for a minimalistic theme (no border,gray grids) or
-\item \code{"none"} for no borders, grids and ticks.
+\item \code{"minimal"} for a minimalistic theme (no border,gray grids)
+\item \code{"none"} for no borders, grids and ticks or
+\item \code{"themr"} if you are using the \code{ggthemr} package
 }}
 
 \item{flipCoordinates}{If \code{TRUE}, the x and y axis are swapped. Default is \code{FALSE}.}

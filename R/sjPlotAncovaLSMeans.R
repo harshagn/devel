@@ -78,10 +78,15 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #'          range of y-values.
 #' @param gridBreaksAt Sets the breaks on the y axis, i.e. at every n'th position a major
 #'          grid is being printed. Default is \code{NULL}.
-#' @param theme specifies the diagram's background theme. default (parameter \code{NULL}) is a gray 
-#'          background with white grids. Use \code{"bw"} for a white background with gray grids, \code{"classic"} for
-#'          a classic theme (black border, no grids), \code{"minimal"} for a minimalistic theme (no border,
-#'          gray grids) or \code{"none"} for no borders, grids and ticks.
+#' @param theme Specifies the diagram's background theme. Default (parameter \code{NULL}) is a gray 
+#'          background with white grids.
+#'          \itemize{
+#'          \item Use \code{"bw"} for a white background with gray grids
+#'          \item \code{"classic"} for a classic theme (black border, no grids)
+#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
+#'          \item \code{"none"} for no borders, grids and ticks or
+#'          \item \code{"themr"} if you are using the \code{ggthemr} package
+#'          }
 #' @param showTickMarks Whether tick marks of axes should be shown or not
 #' @param borderColor user defined color of whole diagram border (panel border)
 #' @param axisColor user defined color of axis border (y- and x-axis, in case the axes should have different colors than
@@ -263,6 +268,9 @@ sjp.emm.int <- function(fit,
     ggtheme <- theme_gray()
     hideGridColor <- c("gray90")
   }
+  else if (theme=="themr") {
+    ggtheme <- NULL
+  }
   else if (theme=="bw") {
     ggtheme <- theme_bw()
   }
@@ -281,7 +289,7 @@ sjp.emm.int <- function(fit,
   # --------------------------------------------------------
   # Hide or show Tick Marks
   # --------------------------------------------------------
-  if (!showTickMarks) {
+  if (!showTickMarks && !is.null(ggtheme)) {
     ggtheme <- ggtheme + theme(axis.ticks = element_blank())
   }
   # --------------------------------------------------------
@@ -431,14 +439,17 @@ sjp.emm.int <- function(fit,
       # set plot and axis titles
       labs(title=labtitle, x=labx, y=laby) +
       # set axis scale breaks
-      scale_y_continuous(limits=c(lowerLim.y, upperLim.y), breaks=gridbreaks.y) +
-      # apply theme
-      ggtheme  + 
-      # do minor modifications to theme
-      theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
-            axis.title = element_text(size=rel(axisTitleSize), colour=axisTitleColor),
-            legend.text = element_text(size=rel(legendLabelSize), colour=legendLabelColor),
-            plot.title = element_text(size=rel(titleSize), colour=titleColor))
+      scale_y_continuous(limits=c(lowerLim.y, upperLim.y), breaks=gridbreaks.y)
+    # apply theme
+    if (!is.null(ggtheme)) {
+      baseplot <- baseplot + 
+        ggtheme +
+        # do minor modifications to theme
+        theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
+              axis.title = element_text(size=rel(axisTitleSize), colour=axisTitleColor),
+              legend.text = element_text(size=rel(legendLabelSize), colour=legendLabelColor),
+              plot.title = element_text(size=rel(titleSize), colour=titleColor))
+    }
     # ------------------------------------------------------------------------------------
     # check whether only diff-line is shown or upper and lower boundaries. in the latter
     # case, show legend, else hide legend

@@ -21,12 +21,16 @@ install.packages("sjPlot")
 
 ### Changelog of current development build
 
-#### Changes to functions:
-* Added parameter "axisLimits.y" to function "sjp.emm.int"
-* Added parameter "axisLimits.y" to function "sjp.lm.int"
+#### Changes to functions
+* Added `themr` option to `theme` paramater of all sjp-plotting function, so the sjPlot package can be used with the [ggthemr-package](https://github.com/cttobin/ggthemr)
+* Added parameter `axisLimits.y` to function `sjp.emm.int`
+* Added parameter `axisLimits.y` to function `sjp.lm.int`
 
-#### General:
+#### General
 * Removed extracted single functions from other packages and added imports for those functions. sjPlot now also imports "psych" and "cluster" package.
+
+#### Bug fixes
+* Parameter "theme" was ignored in "sjp.scatter" - fixed.
 
 
 ### References and documentation

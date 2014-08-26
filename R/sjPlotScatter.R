@@ -95,8 +95,9 @@
 #'          \itemize{
 #'          \item Use \code{"bw"} for a white background with gray grids
 #'          \item \code{"classic"} for a classic theme (black border, no grids)
-#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids) or 
-#'          \item \code{"none"} for no borders, grids and ticks.
+#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
+#'          \item \code{"none"} for no borders, grids and ticks or
+#'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
 #' @param useFacetGrid \code{TRUE} when each scatter plot group should be plotted as single facet instead of 
 #'          an integrated single graph. Only applies if \code{grp} is not \code{NULL}. Each category of
@@ -290,6 +291,9 @@ sjp.scatter <- function(x,
     ggtheme <- theme_gray()
     hideGridColor <- c("gray90")
   }
+  else if (theme=="themr") {
+    ggtheme <- NULL
+  }
   else if (theme=="bw") {
     ggtheme <- theme_bw()
   }
@@ -308,7 +312,7 @@ sjp.scatter <- function(x,
   # --------------------------------------------------------
   # Hide or show Tick Marks and Category Labels (x axis text) 
   # --------------------------------------------------------
-  if (!showTickMarks) {
+  if (!showTickMarks && !is.null(ggtheme)) {
     ggtheme <- ggtheme + theme(axis.ticks = element_blank())
   }
   # --------------------------------------------------------
@@ -373,10 +377,15 @@ sjp.scatter <- function(x,
   # set font size for axes.
   # --------------------------------------------------------
   scatter <- scatter + 
-    labs(title=title, x=axisTitle.x, y=axisTitle.y, colour=legendTitle) +
-    theme(axis.text = element_text(size=rel(axisTickMarkSize), colour=axisTickMarkColor), 
-          axis.title = element_text(size=rel(axisTitleSize), colour=axisTitleColor), 
-          plot.title = element_text(size=rel(titleSize), colour=titleColor))
+    labs(title=title, x=axisTitle.x, y=axisTitle.y, colour=legendTitle)
+  if (!is.null(ggtheme)) {
+    scatter <- scatter + 
+      ggtheme +
+      # do minor modifications to theme
+      theme(axis.text = element_text(size=rel(axisTickMarkSize), colour=axisTickMarkColor), 
+            axis.title = element_text(size=rel(axisTitleSize), colour=axisTitleColor), 
+            plot.title = element_text(size=rel(titleSize), colour=titleColor))
+  }
   # --------------------------------------------------------
   # Hide or show tick marks
   # --------------------------------------------------------
