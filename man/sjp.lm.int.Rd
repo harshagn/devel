@@ -127,10 +127,15 @@ range of y-values.}
 \item{gridBreaksAt}{Sets the breaks on the y axis, i.e. at every n'th position a major
 grid is being printed. Default is \code{NULL}.}
 
-\item{theme}{specifies the diagram's background theme. default (parameter \code{NULL}) is a gray
-background with white grids. Use \code{"bw"} for a white background with gray grids, \code{"classic"} for
-a classic theme (black border, no grids), \code{"minimal"} for a minimalistic theme (no border,
-gray grids) or \code{"none"} for no borders, grids and ticks.}
+\item{theme}{Specifies the diagram's background theme. Default (parameter \code{NULL}) is a gray
+background with white grids.
+\itemize{
+\item Use \code{"bw"} for a white background with gray grids
+\item \code{"classic"} for a classic theme (black border, no grids)
+\item \code{"minimal"} for a minimalistic theme (no border,gray grids)
+\item \code{"none"} for no borders, grids and ticks or
+\item \code{"themr"} if you are using the \code{ggthemr} package
+}}
 
 \item{showTickMarks}{Whether tick marks of axes should be shown or not}
 

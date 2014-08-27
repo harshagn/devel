@@ -37,3 +37,8 @@ install.packages("sjPlot")
 
 - [RPubs documentaton](http://rpubs.com/sjPlot/)
 - [Weblog](http://strengejacke.wordpress.com/sjplot-r-package/)
+
+
+### Citation
+
+In case you want / have to cite my package, please use `citation('sjPlot')` for citation information. Since this package makes heavy use of the [ggplot-package](http://cran.r-project.org/web/packages/ggplot2/index.html), consider citing this package as well.

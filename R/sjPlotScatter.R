@@ -378,6 +378,9 @@ sjp.scatter <- function(x,
   # --------------------------------------------------------
   scatter <- scatter + 
     labs(title=title, x=axisTitle.x, y=axisTitle.y, colour=legendTitle)
+  # --------------------------------------------------------
+  # apply theme
+  # --------------------------------------------------------
   if (!is.null(ggtheme)) {
     scatter <- scatter + 
       ggtheme +
