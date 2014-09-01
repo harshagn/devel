@@ -41,7 +41,7 @@ An object containing the used data frame for plotting, the ggplot object
 \description{
 An implementation of the gap statistic algorithm from Tibshirani, Walther, and Hastie's
                "Estimating the number of clusters in a data set via the gap statistic".
-               This function calls the \code{\link{clusGap}} function of the
+               This function calls the \code{clusGap} function of the
                cluster-package (\url{http://cran.r-project.org/web/packages/cluster/index.html})
                to calculate the data for the plot.
 }
@@ -61,7 +61,6 @@ sjc.kgap(iris[,1:4])}
             }
 }
 \seealso{
-\code{\link{sjc.elbow}} \cr
-         \code{\link{clusGap}}
+\code{\link{sjc.elbow}}
 }
 

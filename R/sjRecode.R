@@ -728,14 +728,14 @@ sju.mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
         ysub.n <- na.omit(ysub)
         ysub <- as.factor(ysub.n)
         if (is.null(weights)) {
-          wt <- wilcox_test(xsub ~ ysub, distribution=distribution)
+          wt <- coin::wilcox_test(xsub ~ ysub, distribution=distribution)
         }
         else {
-          wt <- wilcox_test(xsub ~ ysub, distribution=distribution, weights=as.formula("~wsub"))
+          wt <- coin::wilcox_test(xsub ~ ysub, distribution=distribution, weights=as.formula("~wsub"))
         }
-        u <- as.numeric(statistic(wt, type="linear"))
-        z <- as.numeric(statistic(wt, type="standardized"))
-        p <- pvalue(wt)
+        u <- as.numeric(coin::statistic(wt, type="linear"))
+        z <- as.numeric(coin::statistic(wt, type="standardized"))
+        p <- coin::pvalue(wt)
         r <- abs(z / sqrt(length(var)))
         w <- wilcox.test(xsub, ysub.n, paired = TRUE)$statistic
         rkm.i <- mean(rank(xsub)[which(ysub.n==i)], na.rm=TRUE)

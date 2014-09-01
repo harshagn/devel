@@ -991,12 +991,11 @@ sjc.elbow <- function (data, steps=15, showDiff=FALSE) {
 #' @name sjc.kgap
 #' @description An implementation of the gap statistic algorithm from Tibshirani, Walther, and Hastie's
 #'                "Estimating the number of clusters in a data set via the gap statistic".
-#'                This function calls the \code{\link{clusGap}} function of the
+#'                This function calls the \code{clusGap} function of the
 #'                cluster-package (\url{http://cran.r-project.org/web/packages/cluster/index.html})
 #'                to calculate the data for the plot.
 #'                
-#' @seealso \code{\link{sjc.elbow}} \cr
-#'          \code{\link{clusGap}}
+#' @seealso \code{\link{sjc.elbow}}
 #' 
 #' @param x A matrix, where rows are observations and columns are individual dimensions, 
 #'          to compute and plot the gap statistic (according to a uniform reference distribution).
@@ -1050,11 +1049,11 @@ sjc.kgap <- function(x, max=10, B=100, SE.factor=1, method="Tibs2001SEmax", plot
   # listwise deletion of missing
   x <- na.omit(x) 
   
-  gap <- clusGap(x, kmeans, max, B)
+  gap <- cluster::clusGap(x, kmeans, max, B)
 
   stopifnot((K <- nrow(T <-gap$Tab)) >= 1, SE.factor >= 0)
   cat("Clustering Gap statistic [\"clusGap\"].\n", sprintf("B=%d simulated reference sets, k = 1..%d\n",gap$B, K), sep="")
-  nc <- maxSE(f = T[,"gap"], SE.f = T[,"SE.sim"], method=method, SE.factor=SE.factor)
+  nc <- cluster::maxSE(f = T[,"gap"], SE.f = T[,"SE.sim"], method=method, SE.factor=SE.factor)
   cat(sprintf(" --> Number of clusters (method '%s'%s): %d\n",
               method,
               if(grepl("SE", method)) sprintf(", SE.factor=%g",SE.factor) else "", nc))

@@ -838,7 +838,7 @@ sjp.lm.ma <- function(linreg, showOriginalModelOnly=TRUE, completeDiagnostic=FAL
     # Non-constant residuals
     # ---------------------------------
     print(ncvTest(linreg))
-    print(bptest(linreg))
+    print(lmtest::bptest(linreg))
     print(spreadLevelPlot(linreg))
   }
   # return updated model

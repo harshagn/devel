@@ -354,7 +354,7 @@ sjp.emm.int <- function(fit,
     # -----------------------------------------------------------
     # retrieve estiamted marginal means
     # -----------------------------------------------------------
-    emm <- summary(lsmeans(fit, term.pairs))
+    emm <- summary(lsmeans::lsmeans(fit, term.pairs))
     # create data frame from lsmeans
     intdf <- data.frame(emm[2], emm[3], emm[1], emm[6], emm[7], rep(valueLabel.digits, times=nrow(emm[1])))
     colnames(intdf) <- c("x", "y", "grp", "l.ci", "u.ci", "vld")
