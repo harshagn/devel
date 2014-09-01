@@ -99,6 +99,7 @@
 #'          \item \code{"none"} for no borders, grids and ticks or
 #'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
+#'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param useFacetGrid \code{TRUE} when each scatter plot group should be plotted as single facet instead of 
 #'          an integrated single graph. Only applies if \code{grp} is not \code{NULL}. Each category of
 #'          \code{grp} will be plotted in an own facet.

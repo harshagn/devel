@@ -114,6 +114,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'          \item \code{"none"} for no borders, grids and ticks or
 #'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
+#'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param borderColor User defined color of whole diagram border (panel border).
 #' @param axisColor User defined color of axis border (y- and x-axis, in case the axes should have different colors than
 #'          the diagram border).
@@ -948,7 +949,7 @@ sjc.elbow <- function (data, steps=15, showDiff=FALSE) {
   for (i in 2:steps) wss[i] <- sum(kmeans(data,centers=i)$withinss)
   # round and print elbow values
   wssround <- round(wss,0)
-  dfElbowValues <- as.data.frame(melt(wssround))
+  dfElbowValues <- as.data.frame(wssround)
   dfElbowValues <- cbind(dfElbowValues, xpos=1:nrow(dfElbowValues))
   # calculate differences between each step
   diff <- c()
@@ -959,7 +960,7 @@ sjc.elbow <- function (data, steps=15, showDiff=FALSE) {
   # all pointes are connected with a line
   # a bend the in curve progression might indicate elbow
   # --------------------------------------------------
-  plot(ggplot(dfElbowValues, aes(x=xpos, y=value, label=value)) + 
+  plot(ggplot(dfElbowValues, aes(x=xpos, y=wssround, label=wssround)) + 
     geom_line(colour=lcol) + 
     geom_point(colour=lcol, size=3) +
     geom_text(hjust=-0.3, size=4) +

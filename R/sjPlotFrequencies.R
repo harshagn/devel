@@ -164,6 +164,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("grp", "ia", "..density..
 #'          \item \code{"none"} for no borders, grids and ticks or
 #'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
+#'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param flipCoordinates If \code{TRUE}, the x and y axis are swapped. Default is \code{FALSE}.
 #' @param labelPos If \code{flipCoordinates} is \code{TRUE}, use this parameter to specify value label position.
 #'          Can be either \code{"inside"} or \code{"outside"} (default). You may specify

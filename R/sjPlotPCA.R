@@ -83,9 +83,11 @@
 #'          \itemize{
 #'          \item Use \code{"bw"} for a white background with gray grids
 #'          \item \code{"classic"} for a classic theme (black border, no grids)
-#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids) or 
-#'          \item \code{"none"} for no borders, grids and ticks.
+#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
+#'          \item \code{"none"} for no borders, grids and ticks or
+#'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
+#'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param printPlot If \code{TRUE} (default), plots the results as graph. Use \code{FALSE} if you don't
 #'          want to plot any graphs. In either case, the ggplot-object will be returned as value.
 #' @return (Invisibly) returns a \code{\link{structure}} with
@@ -392,6 +394,9 @@ sjp.pca <- function(data,
   if (is.null(theme)) {
     ggtheme <- theme_gray()
   }
+  else if (theme=="themr") {
+    ggtheme <- NULL
+  }
   else if (theme=="bw") {
     ggtheme <- theme_bw()
   }
@@ -421,7 +426,7 @@ sjp.pca <- function(data,
   # --------------------------------------------------------
   # Set up visibility oftick marks
   # --------------------------------------------------------
-  if (!showTickMarks) {
+  if (!showTickMarks && !is.null(ggtheme)) {
     ggtheme <- ggtheme + theme(axis.ticks = element_blank())
   }
   if (!showValueLabels) {
@@ -482,13 +487,19 @@ sjp.pca <- function(data,
   }
   heatmap <- heatmap +
     geom_text(label=valueLabels, colour=valueLabelColor, alpha=valueLabelAlpha, size=valueLabelSize) +
-    labs(title=title, x=NULL, y=NULL, fill=legendTitle) +
-    ggtheme +
-    # set font size for axes.
-    theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
-          axis.text.x = element_text(angle=axisLabelAngle.x),
-          axis.text.y = element_text(angle=axisLabelAngle.y),
-          plot.title = element_text(size=rel(titleSize), colour=titleColor))
+    labs(title=title, x=NULL, y=NULL, fill=legendTitle)
+  # --------------------------------------------------------
+  # apply theme
+  # --------------------------------------------------------
+  if (!is.null(ggtheme)) {
+    heatmap <- heatmap +      
+      ggtheme +
+      # set font size for axes.
+      theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
+            axis.text.x = element_text(angle=axisLabelAngle.x),
+            axis.text.y = element_text(angle=axisLabelAngle.y),
+            plot.title = element_text(size=rel(titleSize), colour=titleColor))
+  }
   # --------------------------------------------------------
   # show cronbach's alpha value for each scale 
   # --------------------------------------------------------

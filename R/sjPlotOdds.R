@@ -106,6 +106,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("OR", "lower", "upper", "
 #'          \item \code{"none"} for no borders, grids and ticks or
 #'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
+#'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param flipCoordinates If \code{TRUE} (default), predictors are plotted on the left y-axis and estimate
 #'          values are plotted on the x-axis.
 #' @param showIntercept If \code{TRUE}, the intercept of the fitted model is also plotted.

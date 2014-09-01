@@ -104,6 +104,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("beta", "lower", "upper",
 #'          \item \code{"none"} for no borders, grids and ticks or
 #'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
+#'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param flipCoordinates If \code{TRUE} (default), predictors are plotted on the left y-axis and estimate
 #'          values are plotted on the x-axis.
 #' @param legendPos The position of the legend, if a legend is drawn. Use \code{"bottom"}, \code{"top"}, \code{"left"}

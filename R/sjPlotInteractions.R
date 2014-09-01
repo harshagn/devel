@@ -102,6 +102,7 @@
 #'          \item \code{"none"} for no borders, grids and ticks or
 #'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
+#'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param showTickMarks Whether tick marks of axes should be shown or not
 #' @param showInterceptLines If \code{TRUE}, the intercept and the estimate of the predictor
 #'          (reference category of predictor in case interaction is not present) are plotted.
