@@ -678,14 +678,20 @@ sjp.reglin <- function(fit,
 #' @return an updated fitted linear model where outliers are dropped out.
 #' 
 #' @examples
+#' \dontrun{
 #' # fit linear model
 #' fit <- lm(airquality$Ozone ~ airquality$Wind + airquality$Temp + airquality$Solar.R)
-#' fit.updated <- sjp.lm.ma(fit)
+#' fit.updated <- sjp.lm.ma(fit)}
 #' 
-#' @importFrom lmtest bptest
 #' @importFrom car outlierTest crPlots durbinWatsonTest leveragePlots ncvTest spreadLevelPlot
 #' @export
 sjp.lm.ma <- function(linreg, showOriginalModelOnly=TRUE, completeDiagnostic=FALSE) {
+  # ------------------------
+  # check if suggested package is available
+  # ------------------------
+  if (!requireNamespace("lmtest", quietly = TRUE)) {
+    stop("Package 'lmtest' needed for this function to work. Please install it.", call. = FALSE)
+  }
   # ---------------------------------
   # remove outliers
   # ---------------------------------

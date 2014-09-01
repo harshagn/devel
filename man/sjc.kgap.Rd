@@ -46,12 +46,13 @@ An implementation of the gap statistic algorithm from Tibshirani, Walther, and H
                to calculate the data for the plot.
 }
 \examples{
+\dontrun{
 # plot gap statistic and determine best number of clusters
 # in mtcars dataset
 sjc.kgap(mtcars)
 
 # and in iris dataset
-sjc.kgap(iris[,1:4])
+sjc.kgap(iris[,1:4])}
 }
 \references{
 \itemize{

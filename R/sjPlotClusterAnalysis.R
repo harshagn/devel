@@ -166,12 +166,13 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'        always selects initial cluster sets randomly.
 #' 
 #' @examples
+#' \dontrun{
 #' # K-means clustering of mtcars-dataset
 #' sjc.qclus(mtcars)
 #' 
 #' # K-means clustering of mtcars-dataset with 4 pre-defined
 #' # groups in a faceted panel
-#' sjc.qclus(airquality, groupcount=4, facetCluster=TRUE)
+#' sjc.qclus(airquality, groupcount=4, facetCluster=TRUE)}
 #' 
 #' @import ggplot2
 #' @export
@@ -282,6 +283,12 @@ sjc.qclus <- function(data,
   # check for auto-groupcount
   # ---------------------------------------------
   if (is.null(groupcount)) {
+    # ------------------------
+    # check if suggested package is available
+    # ------------------------
+    if (!requireNamespace("cluster", quietly = TRUE)) {
+      stop("Package 'cluster' needed for this function to work. Please install it.", call. = FALSE)
+    }
     # check whether method is kmeans. hierarchical clustering
     # requires a specified groupcount
     if (method!="k") {
@@ -1022,17 +1029,23 @@ sjc.elbow <- function (data, steps=15, showDiff=FALSE) {
 #'             }
 #' 
 #' @examples
+#' \dontrun{
 #' # plot gap statistic and determine best number of clusters
 #' # in mtcars dataset
 #' sjc.kgap(mtcars)
 #' 
 #' # and in iris dataset
-#' sjc.kgap(iris[,1:4])
+#' sjc.kgap(iris[,1:4])}
 #' 
 #' @import ggplot2
-#' @importFrom cluster clusGap maxSE
 #' @export
 sjc.kgap <- function(x, max=10, B=100, SE.factor=1, method="Tibs2001SEmax", plotResults=TRUE) {
+  # ------------------------
+  # check if suggested package is available
+  # ------------------------
+  if (!requireNamespace("cluster", quietly = TRUE)) {
+    stop("Package 'cluster' needed for this function to work. Please install it.", call. = FALSE)
+  }
   # Prepare Data
   # listwise deletion of missing
   x <- na.omit(x) 

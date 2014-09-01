@@ -87,6 +87,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #'          \item \code{"none"} for no borders, grids and ticks or
 #'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
+#'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param showTickMarks Whether tick marks of axes should be shown or not
 #' @param borderColor user defined color of whole diagram border (panel border)
 #' @param axisColor user defined color of axis border (y- and x-axis, in case the axes should have different colors than
@@ -101,6 +102,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #'           as well as the data frame that were used for setting up the ggplot-objects (\code{df.list}).
 #' 
 #' @examples
+#' \dontrun{
 #' # Note that the data sets used in this example may not be perfectly suitable for
 #' # fitting linear models. I just used them because they are part of the R-software.
 #' 
@@ -138,16 +140,14 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #' summary(fit)
 #' 
 #' # plot marginal means of interactions, no interaction found
-#' \dontrun{
-#' sjp.emm.int(fit)}
+#' sjp.emm.int(fit)
 #' # plot marginal means of interactions, including those with p-value up to 1
 #' sjp.emm.int(fit, plevel=1)
 #' # swap predictors
-#' sjp.emm.int(fit, plevel=1, swapPredictors=TRUE)
+#' sjp.emm.int(fit, plevel=1, swapPredictors=TRUE)}
 #' 
 #' 
 #' @import ggplot2
-#' @import lsmeans
 #' @export
 sjp.emm.int <- function(fit,
                        swapPredictors=FALSE,
@@ -186,6 +186,12 @@ sjp.emm.int <- function(fit,
                        hideGrid.x=FALSE,
                        hideGrid.y=FALSE,
                        printPlot=TRUE) {
+  # ------------------------
+  # check if suggested package is available
+  # ------------------------
+  if (!requireNamespace("lsmeans", quietly = TRUE)) {
+    stop("Package 'lsmeans' needed for this function to work. Please install it.", call. = FALSE)
+  }
   # init vector that saves ggplot objects
   plotlist <- list()
   dflist <- list()

@@ -149,7 +149,8 @@ background with white grids.
 \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
 \item \code{"none"} for no borders, grids and ticks or
 \item \code{"themr"} if you are using the \code{ggthemr} package
-}}
+}
+See \url{http://rpubs.com/sjPlot/custplot} for details and examples.}
 
 \item{borderColor}{User defined color of whole diagram border (panel border).}
 
@@ -236,12 +237,13 @@ To get similar results as in SPSS Quick Cluster function, following points
        always selects initial cluster sets randomly.
 }
 \examples{
+\dontrun{
 # K-means clustering of mtcars-dataset
 sjc.qclus(mtcars)
 
 # K-means clustering of mtcars-dataset with 4 pre-defined
 # groups in a faceted panel
-sjc.qclus(airquality, groupcount=4, facetCluster=TRUE)
+sjc.qclus(airquality, groupcount=4, facetCluster=TRUE)}
 }
 \seealso{
 \code{\link{sjc.cluster}} \cr

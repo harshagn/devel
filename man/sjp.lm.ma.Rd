@@ -21,9 +21,10 @@ an updated fitted linear model where outliers are dropped out.
 Plots model assumptions of linear models to verify if linear regression is applicable
 }
 \examples{
+\dontrun{
 # fit linear model
 fit <- lm(airquality$Ozone ~ airquality$Wind + airquality$Temp + airquality$Solar.R)
-fit.updated <- sjp.lm.ma(fit)
+fit.updated <- sjp.lm.ma(fit)}
 }
 \references{
 \url{http://rpubs.com/sjPlot/sjplm}

@@ -12,7 +12,7 @@ sju.mwu(var, grp, distribution = "asymptotic", weights = NULL)
 
 \item{distribution}{indicates how the null distribution of the test statistic should be computed. Mey be one of
 \code{exact}, \code{approximate} or \code{asymptotic} (default).
-See \code{\link{wilcox_test}} for details.}
+See \code{wilcox_test} for details.}
 
 \item{weights}{defining integer valued weights for the observations. By default,
 this is \code{NULL}.}
@@ -23,14 +23,14 @@ this is \code{NULL}.}
 }
 \description{
 This function performs a Mann-Whitney-U-Test (or \code{Wilcoxon rank sum test},
-               see \code{\link{wilcox.test}} and \code{\link{wilcox_test}}) for the variable \code{var}, which is
+               see \code{\link{wilcox.test}} and \code{wilcox_test}) for the variable \code{var}, which is
                divided into groups indicated by \code{grp} (so the formula \code{var ~ grp}
                is used). If \code{grp} has more than two categories, a comparison between each
                two groups is performed. \cr \cr
                The function reports U, p and Z-values as well as effect size r and group-rank-means.
 }
 \note{
-This function calls the \code{\link{wilcox_test}} (from the coin package) with formula. If \code{grp}
+This function calls the \code{wilcox_test} (from the coin package) with formula. If \code{grp}
         has more than two groups, additionally a Kruskal-Wallis-Test (see \code{\link{kruskal.test}})
         is performed. \cr \cr
         Interpretation of effect sizes:
@@ -41,9 +41,10 @@ This function calls the \code{\link{wilcox_test}} (from the coin package) with f
        }
 }
 \examples{
+\dontrun{
 data(efc)
 # Mann-Whitney-U-Tests for elder's age by elder's dependency.
-sju.mwu(efc$e17age, efc$e42dep)
+sju.mwu(efc$e17age, efc$e42dep)}
 }
 \seealso{
 \code{\link{sju.chi2.gof}}, \code{\link{sju.aov1.levene}} and \code{\link{wilcox.test}}, \code{\link{ks.test}}, \code{\link{kruskal.test}},

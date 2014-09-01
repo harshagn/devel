@@ -135,7 +135,8 @@ background with white grids.
 \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
 \item \code{"none"} for no borders, grids and ticks or
 \item \code{"themr"} if you are using the \code{ggthemr} package
-}}
+}
+See \url{http://rpubs.com/sjPlot/custplot} for details and examples.}
 
 \item{showTickMarks}{Whether tick marks of axes should be shown or not}
 

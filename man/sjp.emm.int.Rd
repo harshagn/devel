@@ -109,7 +109,8 @@ background with white grids.
 \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
 \item \code{"none"} for no borders, grids and ticks or
 \item \code{"themr"} if you are using the \code{ggthemr} package
-}}
+}
+See \url{http://rpubs.com/sjPlot/custplot} for details and examples.}
 
 \item{showTickMarks}{Whether tick marks of axes should be shown or not}
 
@@ -145,6 +146,7 @@ Please note that all interaction terms have to be of type \code{\link{factor}}!
         (i.e. lm(y~a+b+a:b) means that "a" is used as grouping variable and "b" is plotted along the x-axis).
 }
 \examples{
+\dontrun{
 # Note that the data sets used in this example may not be perfectly suitable for
 # fitting linear models. I just used them because they are part of the R-software.
 
@@ -182,12 +184,11 @@ fit <- lm(burden ~ .*., data=df, na.action=na.omit)
 summary(fit)
 
 # plot marginal means of interactions, no interaction found
-\dontrun{
-sjp.emm.int(fit)}
+sjp.emm.int(fit)
 # plot marginal means of interactions, including those with p-value up to 1
 sjp.emm.int(fit, plevel=1)
 # swap predictors
-sjp.emm.int(fit, plevel=1, swapPredictors=TRUE)
+sjp.emm.int(fit, plevel=1, swapPredictors=TRUE)}
 }
 \references{
 \itemize{

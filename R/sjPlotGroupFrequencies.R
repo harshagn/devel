@@ -600,7 +600,7 @@ sjp.grpfrq <- function(varCount,
   # convert prz to numeric
   mydat$texty <- as.numeric(as.character(mydat$prz))
   # add half of Percentage values as new y-position for stacked bars
-  mydat = ddply(mydat, "count", transform, ypos = cumsum(frq) - 0.5*frq)
+  mydat <- ddply(mydat, "count", transform, ypos = cumsum(frq) - 0.5*frq)
   # --------------------------------------------------------
   # If we have boxplots, use different data frame structure
   # --------------------------------------------------------

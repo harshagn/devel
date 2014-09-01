@@ -28,6 +28,7 @@ install.packages("sjPlot")
 
 #### General
 * Removed extracted single functions from other packages and added imports for those functions. sjPlot now also imports "psych" and "cluster" package.
+* Removed packages `cluster`, `coin`, `lsmeans` and `lmtest` from required imports and moved them to suggested packages.
 
 #### Bug fixes
 * Parameter "theme" was ignored in "sjp.scatter" - fixed.

@@ -660,7 +660,7 @@ sju.weight <- function(var, weights) {
 #' @title Performs a Mann-Whitney-U-Test
 #' @name sju.mwu
 #' @description This function performs a Mann-Whitney-U-Test (or \code{Wilcoxon rank sum test},
-#'                see \code{\link{wilcox.test}} and \code{\link{wilcox_test}}) for the variable \code{var}, which is
+#'                see \code{\link{wilcox.test}} and \code{wilcox_test}) for the variable \code{var}, which is
 #'                divided into groups indicated by \code{grp} (so the formula \code{var ~ grp}
 #'                is used). If \code{grp} has more than two categories, a comparison between each 
 #'                two groups is performed. \cr \cr 
@@ -670,13 +670,13 @@ sju.weight <- function(var, weights) {
 #' @param grp The grouping variable indicating the groups that should be used for comparison.
 #' @param distribution indicates how the null distribution of the test statistic should be computed. Mey be one of
 #'          \code{exact}, \code{approximate} or \code{asymptotic} (default).
-#'          See \code{\link{wilcox_test}} for details.
+#'          See \code{wilcox_test} for details.
 #' @param weights defining integer valued weights for the observations. By default,
 #'          this is \code{NULL}.
 #' @return (Invisibly) returns a data frame with U, p and Z-values for each group-comparison
 #'         as well as effect-size r.
 #' 
-#' @note This function calls the \code{\link{wilcox_test}} (from the coin package) with formula. If \code{grp}
+#' @note This function calls the \code{wilcox_test} (from the coin package) with formula. If \code{grp}
 #'         has more than two groups, additionally a Kruskal-Wallis-Test (see \code{\link{kruskal.test}})
 #'         is performed. \cr \cr
 #'         Interpretation of effect sizes:
@@ -690,13 +690,19 @@ sju.weight <- function(var, weights) {
 #'          \code{\link{t.test}}, \code{\link{chisq.test}}, \code{\link{fisher.test}}
 #' 
 #' @examples
+#' \dontrun{
 #' data(efc)
 #' # Mann-Whitney-U-Tests for elder's age by elder's dependency.
-#' sju.mwu(efc$e17age, efc$e42dep)
+#' sju.mwu(efc$e17age, efc$e42dep)}
 #' 
-#' @importFrom coin wilcox_test statistic pvalue
 #' @export
 sju.mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
+  # ------------------------
+  # check if suggested package is available
+  # ------------------------
+  if (!requireNamespace("coin", quietly = TRUE)) {
+    stop("Package 'coin' needed for this function to work. Please install it.", call. = FALSE)
+  }
   if (min(grp, na.rm=TRUE)==0) {
     grp <- grp+1
   }
