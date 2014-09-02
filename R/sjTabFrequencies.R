@@ -62,6 +62,8 @@
 #'          Default is lower case Greek gamma.
 #' @param kurtosisString A character string, which is used as header for the kurtosis column (see \code{showKurtosis})).
 #'          Default is lower case Greek omega.
+#' @param removeStringVectors If \code{TRUE} (default), character vectors / string variables will be removed from
+#'          \code{data} before frequency tables are computed.
 #' @param encoding The charset encoding used for variable and value labels. Default is \code{"UTF-8"}. Change
 #'          encoding if specific chars are not properly displayed (e.g.) German umlauts).
 #' @param CSS A \code{\link{list}} with user-defined style-sheet-definitions, according to the official CSS syntax (see
@@ -176,6 +178,7 @@ sjt.frq <- function (data,
                      showKurtosis=FALSE,
                      skewString="&gamma;",
                      kurtosisString="&omega;",
+                     removeStringVectors=TRUE,
                      encoding="UTF-8",
                      CSS=NULL,
                      useViewer=TRUE,
@@ -249,6 +252,24 @@ sjt.frq <- function (data,
   # start writing content
   toWrite <- paste(toWrite, page.style)
   toWrite <- paste(toWrite, "\n</head>\n<body>\n")
+  # -------------------------------------
+  # retrieve string vectors in data
+  # -------------------------------------
+  # check if we have data frame with several variables
+  if (is.data.frame(data) && removeStringVectors) {
+    # store column indices of string variables
+    stringcolumns <- c()
+    # if yes, iterate each variable
+    for (i in 1:ncol(data)) {
+      # check type
+      if (is.character(data[,i])) stringcolumns <- c(stringcolumns, i)
+    }
+    # check if any strings found
+    if (length(stringcolumns)>0) {
+      # remove string variables
+      data <- data[,-stringcolumns]
+    }
+  }
   # -------------------------------------
   # auto-retrieve variable labels
   # -------------------------------------
@@ -324,8 +345,15 @@ sjt.frq <- function (data,
     for (i in 1:nvar) {
       # retrieve variable
       dummy <- data[,i]
-      # check for auto-detection of labels
-      valueLabels <- c(valueLabels, list(autoSetValueLabels(dummy)))
+      # usually, value labels are NULL if we have string vector. if so
+      # set value labels according to values
+      if (is.character(dummy)) {
+        valueLabels <- c(valueLabels, list(unique(dummy)))
+      }
+      else {
+        # check for auto-detection of labels
+        valueLabels <- c(valueLabels, list(autoSetValueLabels(dummy)))
+      }
       # and add label range to value labels list
       if (is.null(valueLabels)) valueLabels <- c(valueLabels, list(min(dummy, na.rm=TRUE):max(dummy, na.rm=TRUE)))
     }
@@ -343,8 +371,15 @@ sjt.frq <- function (data,
     # prepare data: create frequencies and weight them,
     # if requested. put data into a data frame
     #---------------------------------------------------
-    # get variable
-    orivar <- var <- as.numeric(data[,cnt])
+    # check if we have a string-vector
+    if (is.character(data[,cnt])) {
+      # convert string to numeric
+      orivar <- var <- as.numeric(as.factor(data[,cnt]))
+    }
+    # here we have numeric or factor variables
+    else {
+      orivar <- var <- as.numeric(data[,cnt])
+    }
     # -----------------------------------------------
     # check for length of unique values and skip if too long
     # -----------------------------------------------

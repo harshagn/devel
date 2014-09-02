@@ -33,8 +33,8 @@ clustering). This must be one of \code{"euclidean"} (default), \code{"maximum"},
 \item{agglomeration}{The agglomeration method to be used when \code{"method"} is \code{"hclust"} (for hierarchical
 clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"},
 \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"} (see \code{\link{hclust}}).
-Note that since R version > 3.0.3, the \code{ward} option has been replaced by either \code{ward.D}
-or \code{ward.D2}. If such case, you may also use these values.}
+Note that since R version > 3.0.3, the \code{"ward"} option has been replaced by either \code{"ward.D"}
+or \code{"ward.D2"}. In such case, you may also use these values.}
 
 \item{iter.max}{the maximum number of iterations allowed. Only applies, if \code{method}
 is \code{"kmeans"}. See \code{\link{kmeans}} for details on this parameter.}

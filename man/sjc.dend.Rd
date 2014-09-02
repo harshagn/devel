@@ -25,8 +25,8 @@ Solutions for multiple cluster groups can be plotted, for instance with \code{"g
          \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"},
          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is
          \code{"ward"} (see \code{\link{hclust}}).
-         Note that since R version > 3.0.3, the \code{ward} option has been replaced by either \code{ward.D}
-         or \code{ward.D2}. If such case, you may also use these values.}
+         Note that since R version > 3.0.3, the \code{"ward"} option has been replaced by either \code{"ward.D"}
+         or \code{"ward.D2"}. In such case, you may also use these values.}
 }
 \description{
 Computes a hierarchical cluster analysis and plots a hierarchical
