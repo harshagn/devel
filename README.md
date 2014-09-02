@@ -26,6 +26,7 @@ install.packages("sjPlot")
 * Added parameter `axisLimits.y` to function `sjp.emm.int`
 * Added parameter `axisLimits.y` to function `sjp.lm.int`
 * `sjp.lm` now shows adjusted r-square in model summary.
+* `sjc.cluster`, `sjc.qclus` and `sjc.dend` now also accept agglomeration options `ward.D` and `ward.D2` if you are using an R version later than 3.0.3.
 
 #### General
 * Removed extracted single functions from other packages and added imports for those functions. sjPlot now also imports "psych" and "cluster" package.

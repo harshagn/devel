@@ -24,7 +24,9 @@ Solutions for multiple cluster groups can be plotted, for instance with \code{"g
 \item{agglomeration}{The agglomeration method to be used. This should be one of
          \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"},
          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is
-         \code{"ward"}. See \code{\link{hclust}}.}
+         \code{"ward"} (see \code{\link{hclust}}).
+         Note that since R version > 3.0.3, the \code{ward} option has been replaced by either \code{ward.D}
+         or \code{ward.D2}. If such case, you may also use these values.}
 }
 \description{
 Computes a hierarchical cluster analysis and plots a hierarchical

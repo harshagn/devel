@@ -45,7 +45,9 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'          By default, method is \code{"kmeans"} and this parameter will be ignored.
 #' @param agglomeration The agglomeration method to be used when \code{"method"} is \code{"hclust"} (for hierarchical
 #'          clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"}, 
-#'          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"}. See \code{\link{hclust}}.
+#'          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"} (see \code{\link{hclust}}).
+#'          Note that since R version > 3.0.3, the \code{ward} option has been replaced by either \code{ward.D}
+#'          or \code{ward.D2}. If such case, you may also use these values.
 #'          By default, method is \code{"kmeans"} and this parameter will be ignored.
 #' @param iter.max the maximum number of iterations allowed. Only applies, if \code{method}
 #'          is \code{"kmeans"}. See \code{\link{kmeans}} for details on this parameter.
@@ -304,6 +306,8 @@ sjc.qclus <- function(data,
   # run cluster analysis with claculated group count
   # ---------------------------------------------
   if (is.null(groups)) {
+    # check for parameter and R version
+    if (!getRversion() <= "3.0.3" && agglomeration=="ward") agglomeration <- "ward.D2"
     grp.class <- grp <- sjc.cluster(data.origin, groupcount, method, distance, agglomeration, iter.max, algorithm)
   }
   else {
@@ -601,7 +605,9 @@ sjc.qclus <- function(data,
 #'          \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link{dist}}.
 #' @param agglomeration The agglomeration method to be used when \code{"method"} is \code{"hclust"} (for hierarchical
 #'          clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"}, 
-#'          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"}. See \code{\link{hclust}}.
+#'          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"} (see \code{\link{hclust}}).
+#'          Note that since R version > 3.0.3, the \code{ward} option has been replaced by either \code{ward.D}
+#'          or \code{ward.D2}. If such case, you may also use these values.
 #' @param iter.max the maximum number of iterations allowed. Only applies, if \code{method}
 #'          is \code{"kmeans"}. See \code{\link{kmeans}} for details on this parameter.
 #' @param algorithm algorithm used for calculating kmeans cluster. Only applies, if \code{method}
@@ -662,6 +668,8 @@ sjc.cluster <- function(data,
   # Ward Hierarchical Clustering
   # --------------------------------------------------
   if (method=="h") {
+    # check for parameter and R version
+    if (!getRversion() <= "3.0.3" && agglomeration=="ward") agglomeration <- "ward.D2"
     # distance matrix
     d <- dist(data, method=distance)
     # hierarchical clustering, using ward
@@ -711,8 +719,10 @@ sjc.cluster <- function(data,
 #' @param agglomeration The agglomeration method to be used. This should be one of
 #'          \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"}, 
 #'          \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is 
-#'          \code{"ward"}. See \code{\link{hclust}}.
-#' 
+#'          \code{"ward"} (see \code{\link{hclust}}).
+#'          Note that since R version > 3.0.3, the \code{ward} option has been replaced by either \code{ward.D}
+#'          or \code{ward.D2}. If such case, you may also use these values.
+#'          
 #' @importFrom scales brewer_pal
 #' @examples
 #' # Plot dendrogram of hierarchical clustering of mtcars-dataset
@@ -733,6 +743,8 @@ sjc.dend <- function(data, groupcount, distance="euclidean", agglomeration="ward
   # --------------------------------------------------
   # distance matrix
   d <- dist(data, method=distance)
+  # check for parameter and R version
+  if (!getRversion() <= "3.0.3" && agglomeration=="ward") agglomeration <- "ward.D2"
   # hierarchical clustering, using ward
   hc <- hclust(d, method=agglomeration) 
   # display simple dendrogram
