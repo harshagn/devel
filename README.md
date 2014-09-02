@@ -25,6 +25,7 @@ install.packages("sjPlot")
 * Added `themr` option to `theme` paramater of all sjp-plotting function, so the sjPlot package can be used with the [ggthemr-package](https://github.com/cttobin/ggthemr)
 * Added parameter `axisLimits.y` to function `sjp.emm.int`
 * Added parameter `axisLimits.y` to function `sjp.lm.int`
+* `sjp.lm` now shows adjusted r-square in model summary.
 
 #### General
 * Removed extracted single functions from other packages and added imports for those functions. sjPlot now also imports "psych" and "cluster" package.

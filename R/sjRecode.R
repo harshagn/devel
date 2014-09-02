@@ -1120,27 +1120,3 @@ sju.cramer <- function(tab) {
   cramer <- sqrt(phi^2/min(dim(tab)-1))
   return (cramer)
 }
-
-
-sju.mediator <- function(x, m, y, controls=NULL) {
-  df.med <- data.frame(x=x, m=m, y=y)
-  if (!is.null(controls)) {
-    df.med <- cbind(df.med, controls)
-  }
-    df.med <- na.exclude(df.med)
-    model1 <- lm(y ~ x, data=df.med)
-    model2 <- lm(y ~ x + m, data=df.med)
-    model3 <- lm(m ~ x, data=df.med)
-    
-  mod1.out <- summary(model1)$coef
-  mod2.out <- summary(model2)$coef
-  mod3.out <- summary(model3)$coef
-  indir <- mod3.out[2, 1] * mod2.out[3, 1]
-  effvar <- (mod3.out[2, 1])^2 * (mod2.out[3, 2])^2 + (mod2.out[3,1])^2 * (mod3.out[2,2])^2
-  serr <- sqrt(effvar)
-  zvalue = indir/serr
-  out <- list(`Mod1: Y~X` = mod1.out, `Mod2: Y~X+M` = mod2.out, 
-              `Mod3: M~X` = mod3.out, Indirect.Effect = indir, SE = serr, 
-              z.value = zvalue, N = nrow(NEWDAT))
-  return(out)
-}

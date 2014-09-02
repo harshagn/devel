@@ -1,5 +1,11 @@
 # -------------------------------------
 # Help-functions
+# -------------------------------------
+
+
+# -------------------------------------
+# Calculate statistics of cross tabs
+# -------------------------------------
 crosstabsum <- function(ftab) {
   # calculate chi square value
   chsq <- chisq.test(ftab)
@@ -56,6 +62,12 @@ crosstabsum <- function(ftab) {
   }  
   return (modsum)
 }
+
+
+# -------------------------------------
+# automatically set labels of values,
+# if attributes are present
+# -------------------------------------
 autoSetValueLabels <- function(x) {
   # check if we have value label attribut
   vl <- attr(x, "value.labels")
@@ -71,6 +83,12 @@ autoSetValueLabels <- function(x) {
   }
   return(label)
 }
+
+
+# -------------------------------------
+# automatically set labels of variables,
+# if attributes are present
+# -------------------------------------
 autoSetVariableLabels <- function(x) {
   # check if we have variable label attribut
   vl <- as.vector(attr(x, "variable.label"))
@@ -81,6 +99,11 @@ autoSetVariableLabels <- function(x) {
   }
   return(label)
 }
+
+
+# -------------------------------------
+# compute pseudo r-square for glm
+# -------------------------------------
 PseudoR2 <- function(rr) { # rr must be the result of lm/glm
   n <- nrow(rr$model)
   COX <- (1-exp((rr$deviance-rr$null)/n))
@@ -88,9 +111,19 @@ PseudoR2 <- function(rr) { # rr must be the result of lm/glm
   RVAL <- c(N=n, CoxSnell=COX, Nagelkerke=NR)
   return(RVAL)
 }
+
+
+# -------------------------------------
+# compute chi-square for glm
+# -------------------------------------
 Chisquare.glm <- function(rr, digits=3) {
   return (with(rr, pchisq(null.deviance - deviance, df.null - df.residual, lower.tail = FALSE), digits=digits))
 }
+
+
+# -------------------------------------
+# compute model statistics for lm
+# -------------------------------------
 sju.modsum.lm <- function(fit) {
   # get F-statistics
   fstat <- summary(fit)$fstatistic
@@ -109,9 +142,10 @@ sju.modsum.lm <- function(fit) {
   }
   # create mathematical term
   modsum <- as.character(as.expression(
-    substitute(italic(b[0]) == a * "," ~~ R^2 == r2 * "," ~~ "F" == f*panval * "," ~~ "AIC" == aic,
+    substitute(italic(b[0]) == a * "," ~~ R^2 == r2 * "," ~~ "adj. " * R^2 == ar2 * "," ~~ "F" == f*panval * "," ~~ "AIC" == aic,
                list(a=format(coef(fit)[1], digits=3),
                     r2=format(summary(fit)$r.squared, digits=3),
+                    r2=format(summary(fit)$adj.r.squared, digits=3),
                     f=sprintf("%.2f", fstat[1]),
                     panval=pan,
                     aic=sprintf("%.2f", AIC(fit))))))
@@ -143,10 +177,12 @@ varimaxrota <- function(data, factors) {
   varib <- varimax(ladb)
   return (varib)
 }
+
+
 # --------------------------------------------------------
 # unlist labels
-# --------------------------------------------------------
 # Help function that unlists a list into a vector
+# --------------------------------------------------------
 unlistlabels <- function(lab) {
   dummy <- unlist(lab)
   labels <- c()

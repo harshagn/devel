@@ -416,7 +416,9 @@ sjp.lm <- function(fit,
     # set value labels to x-axis
     scale_x_discrete(labels=axisLabels.y, limits=c(1:nrow(betas))) +
     labs(title=title, x=NULL, y=axisTitle.x)
+  # --------------------------------------------------------
   # apply theme
+  # --------------------------------------------------------
   if (!is.null(ggtheme)) {
     betaplot <- betaplot +
       ggtheme +
@@ -924,9 +926,11 @@ sjp.lm.ma <- function(linreg, showOriginalModelOnly=TRUE, completeDiagnostic=FAL
 #'          \itemize{
 #'          \item Use \code{"bw"} for a white background with gray grids
 #'          \item \code{"classic"} for a classic theme (black border, no grids)
-#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids) or 
-#'          \item \code{"none"} for no borders, grids and ticks.
+#'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
+#'          \item \code{"none"} for no borders, grids and ticks or
+#'          \item \code{"themr"} if you are using the \code{ggthemr} package
 #'          }
+#'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param majorGridColor Specifies the color of the major grid lines of the diagram background.
 #' @param minorGridColor Specifies the color of the minor grid lines of the diagram background.
 #' @param hideGrid.x If \code{TRUE}, the x-axis-gridlines are hidden. Default if \code{FALSE}.
@@ -1065,6 +1069,9 @@ sjp.lm1 <- function(fit,
     ggtheme <- theme_gray()
     hideGridColor <- c("gray90")
   }
+  else if (theme=="themr") {
+    ggtheme <- NULL
+  }
   else if (theme=="bw") {
     ggtheme <- theme_bw()
   }
@@ -1095,7 +1102,7 @@ sjp.lm1 <- function(fit,
   # --------------------------------------------------------
   # Set up visibility of tick marks
   # --------------------------------------------------------
-  if (!showTickMarks) {
+  if (!showTickMarks && !is.null(ggtheme)) {
     ggtheme <- ggtheme + theme(axis.ticks = element_blank())
   }
   # -----------------------------------------------------------
@@ -1140,12 +1147,18 @@ sjp.lm1 <- function(fit,
   reglinplot <- reglinplot + 
     labs(title=title,
          x=axisLabel.x,
-         y=axisLabel.y) + 
-    ggtheme +
-    # set axes text and title
-    theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
-          axis.title = element_text(size=rel(axisTitleSize), colour=axisTitleColor), 
-          plot.title = element_text(size=rel(titleSize), colour=titleColor))
+         y=axisLabel.y)
+  # --------------------------------------------------------
+  # apply theme
+  # --------------------------------------------------------
+  if (!is.null(ggtheme)) {
+    reglinplot <- reglinplot + 
+      ggtheme +
+      # set axes text and title
+      theme(axis.text = element_text(size=rel(axisLabelSize), colour=axisLabelColor), 
+            axis.title = element_text(size=rel(axisTitleSize), colour=axisTitleColor), 
+            plot.title = element_text(size=rel(titleSize), colour=titleColor))
+  }
   # -----------------------------------------------------------
   # prepare border and grid colors
   # -----------------------------------------------------------
