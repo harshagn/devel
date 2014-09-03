@@ -24,9 +24,9 @@
 #'                of the data frame that belong to a certain factor (see return value of function \code{\link{sjt.pca}}
 #'                as example for retrieving factor groups for a scale and see examples for more details).
 #'
-#' @seealso \code{\link{sju.cronbach}} \cr
-#'          \code{\link{sju.reliability}} \cr
-#'          \code{\link{sju.mic}} \cr
+#' @seealso \code{\link{sjs.cronbach}} \cr
+#'          \code{\link{sjs.reliability}} \cr
+#'          \code{\link{sjs.mic}} \cr
 #'          \code{\link{sjp.pca}} \cr
 #'          \code{\link{sjt.pca}} \cr
 #'          \code{\link{sjt.df}}
@@ -41,7 +41,7 @@
 #'          Default is \code{"auto"}, which means that each table has a standard caption \emph{Component x}.
 #'          Use \code{NULL} to suppress table captions.
 #' @param scaleItems If \code{TRUE}, the data frame's vectors will be scaled when calculating the
-#'          Cronbach's Alpha value (see \code{\link{sju.reliability}}). Recommended, when 
+#'          Cronbach's Alpha value (see \code{\link{sjs.reliability}}). Recommended, when 
 #'          the variables have different measures / scales.
 #' @param alternateRowColors If \code{TRUE}, alternating rows are highlighted with a light gray
 #'          background color.
@@ -110,7 +110,7 @@
 #' @note \itemize{
 #'          \item The \emph{Shapiro-Wilk Normality Test} (see column \code{W(p)}) tests if an item has a distribution that is significantly different from normal.
 #'          \item \emph{Item difficulty} should range between 0.2 and 0.8. Ideal value is \code{p+(1-p)/2} (which mostly is between 0.5 and 0.8).
-#'          \item For \emph{item discrimination}, acceptable values are 0.20 or higher; the closer to 1.00 the better. See \code{\link{sju.reliability}} for more details.
+#'          \item For \emph{item discrimination}, acceptable values are 0.20 or higher; the closer to 1.00 the better. See \code{\link{sjs.reliability}} for more details.
 #'          \item In case the total \emph{Cronbach's Alpha} value is below the acceptable cut-off of 0.7 (mostly if an index has few items), the \emph{mean inter-item-correlation} is an alternative measure to indicate acceptability. Satisfactory range lies between 0.2 and 0.4.
 #'        }
 #' 
@@ -276,7 +276,7 @@ sjt.itemanalysis <- function(df,
     # get statistics
     # -----------------------------------
     dstat <- describe(df.sub)
-    reli <- sju.reliability(df.sub, scaleItems=scaleItems)
+    reli <- sjs.reliability(df.sub, scaleItems=scaleItems)
     # -----------------------------------
     # get index score value, by retrieving the row mean
     # -----------------------------------
@@ -333,12 +333,12 @@ sjt.itemanalysis <- function(df,
     df.ia[[length(df.ia)+1]] <- df.dummy
     diff.ideal.list[[length(diff.ideal.list)+1]] <- diff.ideal
     index.scores[[length(index.scores)+1]] <- item.score
-    cronbach.total[[length(cronbach.total)+1]] <- sju.cronbach(df.sub)
+    cronbach.total[[length(cronbach.total)+1]] <- sjs.cronbach(df.sub)
     df.comcor[[length(df.comcor)+1]] <- comcor
     # -----------------------------------
     # Mean-interitem-corelation
     # -----------------------------------
-    mic.total[[length(mic.total)+1]] <- sju.mic(df.sub)
+    mic.total[[length(mic.total)+1]] <- sjs.mic(df.sub)
   }
   # -----------------------------------
   # create data frame with index scores,

@@ -202,8 +202,8 @@ sjp.pca(efc[,c(start:end)])
 }
 \seealso{
 \code{\link{sjt.pca}} \cr
-         \code{\link{sju.reliability}} \cr
+         \code{\link{sjs.reliability}} \cr
          \code{\link{sjt.itemanalysis}} \cr
-         \code{\link{sju.cronbach}}
+         \code{\link{sjs.cronbach}}
 }
 

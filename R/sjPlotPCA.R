@@ -10,9 +10,9 @@
 #'                reliability test. The result is an alpha value for each factor dimension.
 #' 
 #' @seealso \code{\link{sjt.pca}} \cr
-#'          \code{\link{sju.reliability}} \cr
+#'          \code{\link{sjs.reliability}} \cr
 #'          \code{\link{sjt.itemanalysis}} \cr
-#'          \code{\link{sju.cronbach}}
+#'          \code{\link{sjs.cronbach}}
 #' 
 #' @param data A data frame with factors (each columns one variable) that should be used 
 #'          to compute a PCA, or a \code{\link{prcomp}} object.
@@ -352,7 +352,7 @@ sjp.pca <- function(data,
     for (n in 1:length(unique(itemloadings))) {
       # calculate cronbach's alpha for those cases that all have the
       # highest loading on the same factor
-      cbv <- as.data.frame(rbind(cbv, cbind(nr=n, sju.cronbach(na.omit(dataframe[,which(itemloadings==n)])))))
+      cbv <- as.data.frame(rbind(cbv, cbind(nr=n, sjs.cronbach(na.omit(dataframe[,which(itemloadings==n)])))))
     }
     # just for vertical position adjustment when we print the alpha values
     vpos <- rep(c(-0.25, -1), nrow(cbv))

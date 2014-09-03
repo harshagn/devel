@@ -202,6 +202,6 @@ sjp.lm(fit, showStandardBeta=FALSE)
          \code{\link{sjp.reglin}} \cr
          \code{\link{sjp.lm.int}} \cr
          \code{\link{sjp.scatter}} \cr
-         \code{\link{sju.betaCoef}}
+         \code{\link{sjs.betaCoef}}
 }
 

@@ -17,7 +17,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("vars", "Beta", "xv", "lo
 #'          \code{\link{sjp.reglin}} \cr
 #'          \code{\link{sjp.lm.int}} \cr
 #'          \code{\link{sjp.scatter}} \cr
-#'          \code{\link{sju.betaCoef}}
+#'          \code{\link{sjs.betaCoef}}
 #' 
 #' @note Based on an an idea from surefoss:
 #' \url{http://www.surefoss.org/dataanalysis/plotting-odds-ratios-aka-a-forrestplot-with-ggplot2/}
@@ -222,7 +222,7 @@ sjp.lm <- function(fit,
   # retrieve betas, leave out intercept ([-1])
   bv <- coef(fit)[-1]
   # retrieve standardized betas
-  stdbv <- sju.betaCoef(fit)
+  stdbv <- sjs.betaCoef(fit)
   # init data column for p-values
   ps <- sprintf("%.*f", labelDigits, bv)
   pstdbv <- sprintf("%.*f", labelDigits, stdbv)
@@ -279,7 +279,7 @@ sjp.lm <- function(fit,
   # case no values are drawn, we simply use an empty string.
   # finally, we need the p-values of the coefficients, because the value
   # labels may have different colours according to their significance level
-  betas <- cbind(tmp, c(ps), sju.betaCoef(fit), c(pstdbv), pv)
+  betas <- cbind(tmp, c(ps), sjs.betaCoef(fit), c(pstdbv), pv)
   # --------------------------------------------------------
   # check if user defined labels have been supplied
   # if not, use variable names from data frame

@@ -9,7 +9,7 @@
 crosstabsum <- function(ftab) {
   # calculate chi square value
   chsq <- chisq.test(ftab)
-  tab <- sju.table.values(ftab)
+  tab <- sjs.table.values(ftab)
   fish <- NULL
   # check whether variables are dichotome or if they have more
   # than two categories. if they have more, use Cramer's V to calculate
@@ -24,7 +24,7 @@ crosstabsum <- function(ftab) {
                    list(tn=summary(ftab)$n.cases,
                         c2=sprintf("%.2f", chsq$statistic),
                         dft=c(chsq$parameter),
-                        kook=sprintf("%.2f", sju.cramer(ftab)),
+                        kook=sprintf("%.2f", sjs.cramer(ftab)),
                         pva=sprintf("%.3f", chsq$p.value)))))
     }
     else {
@@ -32,7 +32,7 @@ crosstabsum <- function(ftab) {
         substitute("N" == tn * "," ~~ "df" == dft * "," ~~ phi[c] == kook * "," ~~ "Fisher's p" == pva,
                    list(tn=summary(ftab)$n.cases,
                         dft=c(chsq$parameter),
-                        kook=sprintf("%.2f", sju.cramer(ftab)),
+                        kook=sprintf("%.2f", sjs.cramer(ftab)),
                         pva=sprintf("%.3f", fish$p.value)))))
     }
   }
@@ -48,7 +48,7 @@ crosstabsum <- function(ftab) {
                    list(tn=summary(ftab)$n.cases,
                         c2=sprintf("%.2f", chsq$statistic),
                         dft=c(chsq$parameter),
-                        kook=sprintf("%.2f", sju.phi(ftab)),
+                        kook=sprintf("%.2f", sjs.phi(ftab)),
                         pva=sprintf("%.3f", chsq$p.value)))))
     }
     else {
@@ -56,7 +56,7 @@ crosstabsum <- function(ftab) {
         substitute("N" == tn * "," ~~ "df" == dft * "," ~~ phi == kook * "," ~~ "Fisher's p" == pva,
                    list(tn=summary(ftab)$n.cases,
                         dft=c(chsq$parameter),
-                        kook=sprintf("%.2f", sju.phi(ftab)),
+                        kook=sprintf("%.2f", sjs.phi(ftab)),
                         pva=sprintf("%.3f", fish$p.value)))))
     }
   }  

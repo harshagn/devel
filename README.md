@@ -21,7 +21,11 @@ install.packages("sjPlot")
 
 ### Changelog of current development build
 
+#### New functions:
+* `sju.groupString` to recode similar (close distance) elements of a character vector into a new, single string value.
+
 #### Changes to functions
+* Prefixes of statistical test functions have been renamed from `sju` to `sjs`.
 * Added `themr` option to `theme` paramater of all sjp-plotting function, so the sjPlot package can be used with the [ggthemr-package](https://github.com/cttobin/ggthemr)
 * Added parameter `axisLimits.y` to function `sjp.emm.int`
 * Added parameter `axisLimits.y` to function `sjp.lm.int`
@@ -30,11 +34,11 @@ install.packages("sjPlot")
 * `sjt.frq` can now handle character vectors (string variables), see parameter `removeStringVectors`.
 
 #### General
-* Removed extracted single functions from other packages and added imports for those functions. sjPlot now also imports "psych" and "cluster" package.
+* Removed extracted single functions from other packages and added imports for those functions. sjPlot now imports `psych` and suggests `cluster` package.
 * Removed packages `cluster`, `coin`, `lsmeans` and `lmtest` from required imports and moved them to suggested packages.
 
 #### Bug fixes
-* Parameter "theme" was ignored in "sjp.scatter" - fixed.
+* Parameter `theme` was ignored in `sjp.scatter` - fixed.
 
 
 ### References and documentation

@@ -10,8 +10,9 @@ sjt.frq(data, file = NULL, weightBy = NULL, variableLabels = NULL,
   stringMissingValue = "missings", highlightMedian = FALSE,
   highlightQuartiles = FALSE, skipZeroRows = FALSE, showSummary = TRUE,
   showSkew = FALSE, showKurtosis = FALSE, skewString = "&gamma;",
-  kurtosisString = "&omega;", encoding = "UTF-8", CSS = NULL,
-  useViewer = TRUE, no.output = FALSE)
+  kurtosisString = "&omega;", removeStringVectors = TRUE,
+  autoGroupStrings = TRUE, maxStringDist = 3, encoding = "UTF-8",
+  CSS = NULL, useViewer = TRUE, no.output = FALSE)
 }
 \arguments{
 \item{data}{The variables which frequencies should be printed as table. Either use a single variable
@@ -85,6 +86,9 @@ Default is lower case Greek gamma.}
 
 \item{kurtosisString}{A character string, which is used as header for the kurtosis column (see \code{showKurtosis})).
 Default is lower case Greek omega.}
+
+\item{removeStringVectors}{If \code{TRUE} (default), character vectors / string variables will be removed from
+\code{data} before frequency tables are computed.}
 
 \item{encoding}{The charset encoding used for variable and value labels. Default is \code{"UTF-8"}. Change
 encoding if specific chars are not properly displayed (e.g.) German umlauts).}

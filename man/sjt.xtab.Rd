@@ -217,6 +217,6 @@ sjt.xtab(efc$e16sex, efc$e42dep,
 }
 \seealso{
 \code{\link{sjp.xtab}} \cr
-         \code{\link{sju.table.values}}
+         \code{\link{sjs.table.values}}
 }
 

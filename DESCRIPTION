@@ -22,6 +22,7 @@ Suggests:
     cluster,
     coin,
     lsmeans,
-    lmtest
+    lmtest,
+    stringdist
 URL: https://github.com/sjPlot/devel
 BugReports: https://github.com/sjPlot/devel/issues

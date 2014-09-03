@@ -50,7 +50,8 @@ sjPlot - data visualization for statistics in social science
     \item \code{sji} - data import functions
     \item \code{sjp} - plotting functions
     \item \code{sjt} - (HTML) table output functions
-    \item \code{sju} - statistical utility, tests and recode functions
+    \item \code{sjs} - statistical tests and recode functions
+    \item \code{sju} - utility functions
   }
 }
 \details{
