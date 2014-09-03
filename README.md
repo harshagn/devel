@@ -23,6 +23,7 @@ install.packages("sjPlot")
 
 #### New functions
 * `sju.groupString` to recode similar (close distance) elements of a character vector into a new, single string value.
+* `sju.strpos` to find partial matching and close distance elements in strings.
 
 #### Changes to functions
 * `sjt.frq` can now handle character vectors (string variables), see parameter `removeStringVectors`.

@@ -822,3 +822,57 @@ sju.groupString <- function(strings, maxdist = 3, method = "lv", strict = FALSE,
   # -------------------------------------
   return (strings.new)
 }
+
+
+#' @title Find partial matching and close distance elements in strings
+#' @name sju.strpos
+#' @description This function finds the element indices of partial matching or similar strings 
+#'                in a character vector. Can be used to find exact or slightly mistyped elements
+#'                in a string vector.
+#'
+#' @param searchString a character vector with string elements
+#' @param findTerm the string that should be matched against the elements of \code{searchString}.
+#' @param maxdist the maximum distance between two string elements, which is allowed to treat them
+#'          as similar or equal.
+#' 
+#' @return A numeric vector with index position of elements in \code{searchString} that 
+#'           partially match or are similar to \code{findTerm}. Returns \code{-1} if no
+#'           match was found.
+#' 
+#' @examples
+#' \dontrun{
+#' string <- c("Hello", "Helo", "Hole", "Apple", "Ape", "New", "Old", "System", "Systemic")
+#' sju.strpos(string, "hel")   # partial match
+#' sju.strpos(string, "stem")  # partial match
+#' sju.strpos(string, "R")     # no match
+#' sju.strpos(string, "saste") # similarity to "System"}
+#' 
+#' @export
+sju.strpos <- function(searchString, findTerm, maxdist = 3) {
+  # -------------------------------------
+  # init return value
+  # -------------------------------------
+  indices <- c()
+  # -------------------------------------
+  # find element indices from partial matching of string and find term
+  # -------------------------------------
+  pos <- as.numeric(grep(findTerm, searchString, ignore.case = T))
+  if (length(pos)>0) indices <- c(indices, pos)
+  # -------------------------------------
+  # check if required package is available
+  # -------------------------------------
+  if (!requireNamespace("stringdist", quietly = TRUE)) {
+    cat("Package 'stringdist' needed for this function to fully work. Please install it. Only partial matching indices are returned.")
+    return (indices)
+  }
+  # -------------------------------------
+  # find element indices from similar strings
+  # -------------------------------------
+  pos <- which(stringdist(tolower(findTerm), tolower(searchString)) < maxdist)
+  if (length(pos)>0) indices <- c(indices, pos)
+  # return result
+  if (length(indices) > 0) {
+    return (sort(unique(indices)))
+  }
+  return (-1)
+}
