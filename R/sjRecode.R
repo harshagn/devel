@@ -626,7 +626,14 @@ sju.weight <- function(var, weights) {
 #' @param strings a character vector with string elements
 #' @param maxdist the maximum distance between two string elements, which is allowed to treat two
 #'          elements as similar or equal.
-#'
+#' @param method Method for distance calculation. The default is \code{"lv"}. See \code{stringdist} package for details.
+#' @param trim.whitespace if \code{TRUE} (default), leading and trailing white spaces will
+#'          be removed from string values.
+#' @param remove.empty if \code{TRUE} (default), empty string values will be removed from the
+#'          character vector \code{strings}.
+#' @param showProgressBar If \code{TRUE}, the progress bar is displayed when computing the distance matrix.
+#'          Default in \code{FALSE}, hence the bar is hidden.
+#' 
 #' @return A character vector where similar string elements (values) are recoded into a new, single value.
 #' 
 #' @examples
@@ -637,7 +644,7 @@ sju.weight <- function(var, weights) {
 #' table(newstring)
 #' 
 #' @export
-sju.groupString <- function(strings, maxdist) {
+sju.groupString <- function(strings, maxdist = 3, method = "lv", trim.whitespace = TRUE, remove.empty = TRUE, showProgressBar = FALSE) {
   # -------------------------------------
   # check if required package is available
   # -------------------------------------
@@ -645,20 +652,39 @@ sju.groupString <- function(strings, maxdist) {
     stop("Package 'stringdist' needed for this function to work. Please install it.", call. = FALSE)
   }
   # -------------------------------------
-  # create matrix from string values of variable
+  # coerce to character, if necessary
   # -------------------------------------
-  m <- matrix(nrow = length(strings), ncol = length(strings))
-  colnames(m) <- strings
-  rownames(m) <- strings
+  if (!is.character(strings)) strings <- as.character(strings)
   # -------------------------------------
-  # create string distance for each value pair
-  # of string vector
+  # helper function to trim white spaces
   # -------------------------------------
-  for (i in 1:nrow(m)) {
-    for (j in 1:ncol(m)) {
-      m[i,j] <- stringdist::stringdist(tolower(rownames(m)[i]), tolower(colnames(m)[j]), method = "lv")
+  trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+  # -------------------------------------
+  # trim white spaces
+  # -------------------------------------
+  if (trim.whitespace) {
+    for (i in 1:length(strings)) {
+      strings[i] <- trim(strings[i])
     }
   }
+  # -------------------------------------
+  # remove empty values
+  # -------------------------------------
+  if (remove.empty) {
+    removers <- c()
+    for (i in 1:length(strings)) {
+      if (0==nchar(strings[i])) {
+        removers <- c(removers, i)
+      }
+    }
+    if (length(removers)>0) strings <- strings[-removers]
+  }
+  # -------------------------------------
+  # create matrix from string values of variable
+  # -------------------------------------
+  m <- stringdist::stringdistmatrix(strings, strings, method = method)
+  colnames(m) <- strings
+  rownames(m) <- strings
   # -------------------------------------
   # init variable that contains "close" pairs
   # -------------------------------------
@@ -678,9 +704,15 @@ sju.groupString <- function(strings, maxdist) {
     return (elfound)
   }
   # -------------------------------------
+  # create progress bar
+  # -------------------------------------
+  if (showProgressBar) pb <- txtProgressBar(min=0, max=ncol(m), style=3)
+  # -------------------------------------
   # iterate matrix
   # -------------------------------------
   for (i in 1:nrow(m)) {
+    # update progress bar
+    if (showProgressBar) setTxtProgressBar(pb, i)
     # -------------------------------------
     # check if current element is already grouped
     # -------------------------------------
@@ -704,7 +736,7 @@ sju.groupString <- function(strings, maxdist) {
           # will also be found
           # -------------------------------------
           for (cnt in 1:nrow(m)) {
-            if (m[cnt,j] <= maxdist) {
+            if (m[cnt,j] <= maxdist && m[i,cnt] <= maxdist) {
               # -------------------------------------
               # remember string value
               # -------------------------------------
@@ -767,6 +799,7 @@ sju.groupString <- function(strings, maxdist) {
     }
     strings.new[indices] <- newvalue
   }
+  if (showProgressBar) close(pb)
   # -------------------------------------
   # return new vector, where all single "close"
   # values are replaced by the group of closed values.
