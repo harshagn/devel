@@ -21,17 +21,18 @@ install.packages("sjPlot")
 
 ### Changelog of current development build
 
-#### New functions:
+#### New functions
 * `sju.groupString` to recode similar (close distance) elements of a character vector into a new, single string value.
 
 #### Changes to functions
+* `sjt.frq` can now handle character vectors (string variables), see parameter `removeStringVectors`.
+* `sjt.frq` can automatically group string values in character vectors according to their distance metrics (similarity). This will merge different but similar values into a new, single value.
 * Prefixes of statistical test functions have been renamed from `sju` to `sjs`.
 * Added `themr` option to `theme` paramater of all sjp-plotting function, so the sjPlot package can be used with the [ggthemr-package](https://github.com/cttobin/ggthemr)
 * Added parameter `axisLimits.y` to function `sjp.emm.int`
 * Added parameter `axisLimits.y` to function `sjp.lm.int`
 * `sjp.lm` now shows adjusted r-square in model summary.
 * `sjc.cluster`, `sjc.qclus` and `sjc.dend` now also accept agglomeration options `ward.D` and `ward.D2` if you are using an R version later than 3.0.3.
-* `sjt.frq` can now handle character vectors (string variables), see parameter `removeStringVectors`.
 
 #### General
 * Removed extracted single functions from other packages and added imports for those functions. sjPlot now imports `psych` and suggests `cluster` package.

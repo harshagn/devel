@@ -90,6 +90,14 @@ Default is lower case Greek omega.}
 \item{removeStringVectors}{If \code{TRUE} (default), character vectors / string variables will be removed from
 \code{data} before frequency tables are computed.}
 
+\item{autoGroupStrings}{if \code{TRUE} (default), string values in character vectors (string variables) are automatically
+grouped based on their similarity. The similarity is estimated with the \code{stringdist} package.
+You can specify a distance-measure via \code{maxStringDist} parameter. This parameter only
+applies if \code{removeStringVectors} is \code{FALSE}.}
+
+\item{maxStringDist}{the allowed distance of string values in a character vector, which indicates
+when two string values are merged because they are considered as close enough.}
+
 \item{encoding}{The charset encoding used for variable and value labels. Default is \code{"UTF-8"}. Change
 encoding if specific chars are not properly displayed (e.g.) German umlauts).}
 
@@ -138,6 +146,7 @@ The HTML tables can either be saved as file and manually opened (specify paramet
         default behaviour (i.e. \code{file=NULL}).
 }
 \examples{
+\dontrun{
 # load sample data
 data(efc)
 
@@ -147,48 +156,43 @@ values <- sji.getValueLabels(efc)
 
 # show frequencies of "e42dep" in RStudio Viewer Pane
 # or default web browser
-\dontrun{
-sjt.frq(efc$e42dep)}
+sjt.frq(efc$e42dep)
 
 # plot and show frequency table of "e42dep" with labels
-\dontrun{
 sjt.frq(efc$e42dep,
         variableLabels=variables['e42dep'],
-        valueLabels=values[['e42dep']])}
+        valueLabels=values[['e42dep']])
 
 # plot frequencies of e42dep, e16sex and c172code in one HTML file
 # and show table in RStudio Viewer Pane or default web browser
-\dontrun{
 sjt.frq(as.data.frame(cbind(efc$e42dep, efc$e16sex, efc$c172code)),
         variableLabels=list(variables['e42dep'], variables['e16sex'], variables['c172code']),
-        valueLabels=list(values[['e42dep']], values[['e16sex']], values[['c172code']]))}
+        valueLabels=list(values[['e42dep']], values[['e16sex']], values[['c172code']]))
 
 # plot larger scale including zero-counts
 # indicating median and quartiles
-\dontrun{
 sjt.frq(efc$neg_c_7,
         variableLabels=variables['neg_c_7'],
         valueLabels=values[['neg_c_7']],
         highlightMedian=TRUE,
-        highlightQuartiles=TRUE)}
+        highlightQuartiles=TRUE)
 
 # -------------------------------
 # auto-detection of labels
 # -------------------------------
 efc <- sji.setVariableLabels(efc, variables)
-\dontrun{
-sjt.frq(data.frame(efc$e42dep, efc$e16sex, efc$c172code))}
+sjt.frq(data.frame(efc$e42dep, efc$e16sex, efc$c172code))
 
 # --------------------------------
 # User defined style sheet
 # --------------------------------
-\dontrun{
 sjt.frq(efc$e42dep,
         variableLabels=variables['e42dep'],
         valueLabels=values[['e42dep']],
         CSS=list(css.table="border: 2px solid;",
                  css.tdata="border: 1px solid;",
-                 css.firsttablecol="color:#003399; font-weight:bold;"))}
+                 css.firsttablecol="color:#003399; font-weight:bold;"))
+}
 }
 \references{
 \itemize{

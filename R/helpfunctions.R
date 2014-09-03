@@ -81,6 +81,10 @@ autoSetValueLabels <- function(x) {
   else if (!is.null(lv)) {
     label <- lv
   }
+  # if we have string values, copy them as labels
+  else if (is.character(x)) {
+    label <- unique(x)
+  }
   return(label)
 }
 
