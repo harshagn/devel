@@ -627,6 +627,7 @@ sju.weight <- function(var, weights) {
 #' @param maxdist the maximum distance between two string elements, which is allowed to treat two
 #'          elements as similar or equal.
 #' @param method Method for distance calculation. The default is \code{"lv"}. See \code{stringdist} package for details.
+#' @param strict if \code{TRUE}, value matching is more strictly. See examples for details.
 #' @param trim.whitespace if \code{TRUE} (default), leading and trailing white spaces will
 #'          be removed from string values.
 #' @param remove.empty if \code{TRUE} (default), empty string values will be removed from the
@@ -637,14 +638,16 @@ sju.weight <- function(var, weights) {
 #' @return A character vector where similar string elements (values) are recoded into a new, single value.
 #' 
 #' @examples
+#' \dontrun{
 #' oldstring <- c("Hello", "Helo", "Hole", "Apple", "Ape", "New", "Old", "System", "Systemic")
-#' table(oldstring)
-#' newstring <- sju.groupString(oldstring, 3)
-#' newstring
-#' table(newstring)
+#' newstring <- sju.groupString(oldstring)
+#' sjt.frq(data.frame(oldstring, newstring), removeStringVectors = FALSE, autoGroupStrings = FALSE)
+#' 
+#' newstring <- sju.groupString(oldstring, strict = TRUE)
+#' sjt.frq(data.frame(oldstring, newstring), removeStringVectors = FALSE, autoGroupStrings = FALSE)}
 #' 
 #' @export
-sju.groupString <- function(strings, maxdist = 3, method = "lv", trim.whitespace = TRUE, remove.empty = TRUE, showProgressBar = FALSE) {
+sju.groupString <- function(strings, maxdist = 3, method = "lv", strict = FALSE, trim.whitespace = TRUE, remove.empty = TRUE, showProgressBar = FALSE) {
   # -------------------------------------
   # check if required package is available
   # -------------------------------------
@@ -731,27 +734,38 @@ sju.groupString <- function(strings, maxdist = 3, method = "lv", trim.whitespace
         if (m[i,j] <= maxdist) {
           # -------------------------------------
           # go through all rows of this column and 
-          # find all "close" values to the current one.
-          # since we have a matrix, the initial row-value
-          # will also be found
+          # check if there's a better match for the
+          # currently compared token
           # -------------------------------------
+          foundBetterToken <- !strict
           for (cnt in 1:nrow(m)) {
-            if (m[cnt,j] <= maxdist && m[i,cnt] <= maxdist) {
+            if (strict) {
+              if (m[cnt,j] > 0 && m[cnt,j] < m[i,j]) foundBetterToken <- TRUE
+            }
+            else {
+              if (m[cnt,j] <= maxdist && m[i,cnt] <= maxdist) foundBetterToken <- FALSE
+            }
+          }
+          # -------------------------------------
+          # in the current column, there's no better
+          # matching of strings, so we pick this values
+          # and add it to our results
+          # -------------------------------------
+          if (!foundBetterToken) {
+            # -------------------------------------
+            # remember string value
+            # -------------------------------------
+            token <- colnames(m)[j]
+            # -------------------------------------
+            # check if we already found a string value
+            # within this column
+            # -------------------------------------
+            if (!any(pairvector==token) && !findInPairs(token)) {
               # -------------------------------------
-              # remember string value
+              # if not, add string values to "close" pairs
+              # of this column
               # -------------------------------------
-              token <- rownames(m)[cnt]
-              # -------------------------------------
-              # check if we already found a string value
-              # within this column
-              # -------------------------------------
-              if (!any(pairvector==token) && !findInPairs(token)) {
-                # -------------------------------------
-                # if not, add string values to "close" pairs
-                # of this column
-                # -------------------------------------
-                pairvector <- c(pairvector, token)
-              }
+              pairvector <- c(pairvector, token)
             }
           }
         }
