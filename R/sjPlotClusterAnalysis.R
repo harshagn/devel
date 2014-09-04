@@ -114,7 +114,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xpos", "value", "Var2", 
 #'          \item \code{"classic"} for a classic theme (black border, no grids)
 #'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
 #'          \item \code{"none"} for no borders, grids and ticks or
-#'          \item \code{"themr"} if you are using the \code{ggthemr} package
+#'          \item \code{"themr"} if you are using the \code{ggthemr} package (in such cases, you may use the \code{ggthemr::swatch} function to retrieve theme-colors for the \code{barColor} parameter)
 #'          }
 #'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param borderColor User defined color of whole diagram border (panel border).
@@ -463,15 +463,10 @@ sjc.qclus <- function(data,
     gp <- ggplot(df, aes(x=x, y=y, fill=group))
   }
   gp <- gp +
-      geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha) +
-      scale_x_discrete(breaks=c(1:colnr), limits=c(1:colnr), labels=axisLabels.x) +
-      labs(title=title, x=axisTitle.x, y=axisTitle.y, fill=legendTitle)
-  # --------------------------------------------------------
-  # set colour palette for filling bars
-  # --------------------------------------------------------
-  if (!is.null(scalecolors)) {
-    gp <- gp + scalecolors
-  }
+    geom_bar(stat="identity", position=position_dodge(barWidth+barSpace), colour=barOutlineColor, size=barOutlineSize, width=barWidth, alpha=barAlpha) +
+    scale_x_discrete(breaks=c(1:colnr), limits=c(1:colnr), labels=axisLabels.x) +
+    scalecolors +
+    labs(title=title, x=axisTitle.x, y=axisTitle.y, fill=legendTitle)
   # --------------------------------------------------------
   # hide y-axis labels
   # --------------------------------------------------------

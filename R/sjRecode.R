@@ -868,11 +868,60 @@ sju.strpos <- function(searchString, findTerm, maxdist = 3) {
   # -------------------------------------
   # find element indices from similar strings
   # -------------------------------------
-  pos <- which(stringdist(tolower(findTerm), tolower(searchString)) < maxdist)
+  pos <- which(stringdist::stringdist(tolower(findTerm), tolower(searchString)) < maxdist)
   if (length(pos)>0) indices <- c(indices, pos)
   # return result
   if (length(indices) > 0) {
     return (sort(unique(indices)))
   }
   return (-1)
+}
+
+
+#' @title Compute row means with min amount of valid values
+#' @name sju.mean.n
+#' @description This function is similar to the SPSS \code{MEAN.n} function and computes
+#'                row means from a \link{data.frame} or \link{matrix} if at least \code{n}
+#'                values of a row a valid (and not \link{NA}).
+#'
+#' @param df a \link{data.frame} with at least two columns, where row means are applied.
+#' @param n the amount of valid values per row to calculate the row mean. If a row's valid
+#'          values is smaller than \code{n}, \link{NA} will be returned as row mean value.
+#' 
+#' @return A vector with row mean values of \code{df} for those rows with at least \code{n}
+#'           valid values. Else, \link{NA} is returned.
+#' 
+#' @references \itemize{
+#'              \item \url{http://candrea.ch/blog/compute-spss-like-mean-index-variables/}
+#'              \item \url{http://r4stats.com/2014/09/03/adding-the-spss-mean-n-function-to-r/}
+#'              }
+#' 
+#' @examples
+#' df <- data.frame(a=c(1,2,NA,4), b=c(NA,2,NA,5), c=c(NA,4,NA,NA), d=c(2,3,7,8))
+#' sju.mean.n(df, 4) # 1 valid return value
+#' sju.mean.n(df, 3) # 2 valid return values
+#' sju.mean.n(df, 2)
+#' sju.mean.n(df, 1) # all means are shown
+#' 
+#' @export
+sju.mean.n <- function(df, n) {
+  # ---------------------------------------
+  # coerce matrix to data frame
+  # ---------------------------------------
+  if (is.matrix(df)) df <- as.data.frame(df)
+  # ---------------------------------------
+  # check if we have a data framme with at least two columns
+  # ---------------------------------------
+  if (!is.data.frame(df) || ncol(df) < 2) {
+    warning("'df' must be a data.frame with at least two columns.")
+    return (NA)
+  }
+  # ---------------------------------------
+  # n may not be larger as df's amount of columns
+  # ---------------------------------------
+  if (ncol(df) < n) {
+    warning("'n' must be smaller or equal to data.frame's amount of columns.")
+    return (NA)
+  }
+  apply(df, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm=TRUE), NA))
 }

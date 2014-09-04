@@ -67,16 +67,16 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #' @param axisLabelAngle.y Angle for y-axis-labels, passed as numeric value.
 #' @param errorBarColor The color of the error bars that indicate the confidence intervalls
 #'          of the group means. Default is \code{NULL}, which means that if \code{type} is \code{"dots"},
-#'          the \code{pointColors} value will be used as error bar color. In case \code{type} is \code{"bars"},
+#'          the \code{pointColor} value will be used as error bar color. In case \code{type} is \code{"bars"},
 #'          \code{"black"} will be used as error bar color.
 #' @param errorBarWidth The width of the error bar ends. Default is 0.
 #' @param errorBarSize The size of the error bar. Default is 0.8.
 #' @param errorBarLineType The linetype of error bars. Default is \code{1} (solid line).
-#' @param pointColors The colours of the points that indicate the mean-value. \code{pointColors} is a 
+#' @param pointColor The colours of the points that indicate the mean-value. \code{pointColor} is a 
 #'          vector with two values: the first indicating groups with positive means and the second 
 #'          indicating negative means. Default is \code{c("#3366a0", "#aa6633")}.
 #' @param pointSize The size of the points that indicate the mean-value. Default is 3.
-#' @param barColors The colors of the bars in bar charts. Only applies if parameter \code{type} is \code{"bars"}. \code{barColors} is a 
+#' @param barColor The colors of the bars in bar charts. Only applies if parameter \code{type} is \code{"bars"}. \code{barColor} is a 
 #'          vector with two values: the first indicating groups with positive means and the second 
 #'          indicating negative means. Default is \code{c("#3366a0", "#aa6633")}.
 #' @param barWidth The width of the bars in bar charts. Only applies if parameter \code{type} is \code{"bars"}. Default is 0.5
@@ -101,7 +101,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #'          \item \code{"classic"} for a classic theme (black border, no grids)
 #'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
 #'          \item \code{"none"} for no borders, grids and ticks or
-#'          \item \code{"themr"} if you are using the \code{ggthemr} package
+#'          \item \code{"themr"} if you are using the \code{ggthemr} package (in such cases, you may use the \code{ggthemr::swatch} function to retrieve theme-colors for the \code{barColor} parameter)
 #'          }
 #'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param majorGridColor Specifies the color of the major grid lines of the diagram background.
@@ -189,9 +189,9 @@ sjp.aov1 <- function(depVar,
                     errorBarWidth=0,
                     errorBarSize=0.8,
                     errorBarLineType=1,
-                    pointColors=c("#3366a0", "#aa3333"),
+                    pointColor=c("#3366a0", "#aa3333"),
                     pointSize=3,
-                    barColors=c("#3366a0", "#aa3333"),
+                    barColor=c("#3366a0", "#aa3333"),
                     barWidth=0.5,
                     barAlpha=1,
                     barOutline=FALSE,
@@ -261,10 +261,10 @@ sjp.aov1 <- function(depVar,
   # set geom colors
   # --------------------------------------------------------
   if (type=="dots") {
-    geomcols <- pointColors
+    geomcols <- pointColor
   }
   else {
-    geomcols <- barColors
+    geomcols <- barColor
   }
   # --------------------------------------------------------
   # check whether we colors for error bars. if not, use point color

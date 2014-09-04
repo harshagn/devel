@@ -24,6 +24,7 @@ install.packages("sjPlot")
 #### New functions
 * `sju.groupString` to recode similar (close distance) elements of a character vector into a new, single string value.
 * `sju.strpos` to find partial matching and close distance elements in strings.
+* `sju.mean.n` to compute means for rows with at least n valid values (like SPSS MEAN.n function).
 
 #### Changes to functions
 * `sjt.frq` can now handle character vectors (string variables), see parameter `removeStringVectors`.
@@ -34,6 +35,7 @@ install.packages("sjPlot")
 * Added parameter `axisLimits.y` to function `sjp.lm.int`
 * `sjp.lm` now shows adjusted r-square in model summary.
 * `sjc.cluster`, `sjc.qclus` and `sjc.dend` now also accept agglomeration options `ward.D` and `ward.D2` if you are using an R version later than 3.0.3.
+* `sjt.itemanalysis` now calulates index scores based on `sju.mean.n` function (see parameter `minValidRowMeanValue`).
 
 #### General
 * Removed extracted single functions from other packages and added imports for those functions. sjPlot now imports `psych` and suggests `cluster` package.

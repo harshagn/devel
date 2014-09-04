@@ -29,7 +29,8 @@
 #'          \code{\link{sjs.mic}} \cr
 #'          \code{\link{sjp.pca}} \cr
 #'          \code{\link{sjt.pca}} \cr
-#'          \code{\link{sjt.df}}
+#'          \code{\link{sjt.df}} \cr
+#'          \code{\link{sju.mean.n}}
 #'          
 #' @param df A data frame with items (from a scale)
 #' @param factor.groups If not \code{NULL}, the data frame \code{df} will be splitted into sub-groups,
@@ -43,6 +44,10 @@
 #' @param scaleItems If \code{TRUE}, the data frame's vectors will be scaled when calculating the
 #'          Cronbach's Alpha value (see \code{\link{sjs.reliability}}). Recommended, when 
 #'          the variables have different measures / scales.
+#' @param minValidRowMeanValue the minimum amount of valid values to compute row means for index scores.
+#'          Default is 2, i.e. the return values \code{index.scores} and \code{df.index.scores} are
+#'          computed for those items that have at least \code{minValidRowMeanValue} per case (observation, or
+#'          technically, row). See \link{sju.mean.n} for details.
 #' @param alternateRowColors If \code{TRUE}, alternating rows are highlighted with a light gray
 #'          background color.
 #' @param orderColumn Indicates a column, either by column name or by column index number,
@@ -163,6 +168,7 @@ sjt.itemanalysis <- function(df,
                              factor.groups=NULL,
                              factor.groups.titles="auto",
                              scaleItems=FALSE,
+                             minValidRowMeanValue=2,
                              alternateRowColors=TRUE,
                              orderColumn=NULL,
                              orderAscending=TRUE,
@@ -280,7 +286,7 @@ sjt.itemanalysis <- function(df,
     # -----------------------------------
     # get index score value, by retrieving the row mean
     # -----------------------------------
-    item.score <- apply(df.sub, 1, mean)
+    item.score <- sju.mean.n(df.sub, minValidRowMeanValue)
     # -----------------------------------
     # store scaled values of each item's total score
     # to compute correlation coefficients between identified components

@@ -36,7 +36,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #'          Default value is \code{"#3366cc"} (blue-like)
 #' @param upperBoundColor the color of the line indicating the upper bound of the interaction term (moderator value).
 #'          Default value is \code{"#cc3300"} (red-like)
-#' @param colorPalette If the grouping variable has mor than two levels, more than two colors are
+#' @param colorPalette If the grouping variable has more than two levels, more than two colors are
 #'          needed for plotting the lines. In this case, specify a color palette from the \url{http://colorbrewer2.org} here. 
 #'          All color brewer palettes supported by ggplot are accepted here. Alternatively, you can provide
 #'          a vector of colors, i.e. \code{c("blue", "red", "gren")}.
@@ -85,7 +85,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xn", "vld"))
 #'          \item \code{"classic"} for a classic theme (black border, no grids)
 #'          \item \code{"minimal"} for a minimalistic theme (no border,gray grids)
 #'          \item \code{"none"} for no borders, grids and ticks or
-#'          \item \code{"themr"} if you are using the \code{ggthemr} package
+#'          \item \code{"themr"} if you are using the \code{ggthemr} package (in such cases, you may use the \code{ggthemr::swatch} function to retrieve theme-colors for the \code{lowerBoundColor} parameter)
 #'          }
 #'          See \url{http://rpubs.com/sjPlot/custplot} for details and examples.
 #' @param showTickMarks Whether tick marks of axes should be shown or not
