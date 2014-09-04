@@ -3,7 +3,7 @@
 \alias{sju.strpos}
 \title{Find partial matching and close distance elements in strings}
 \usage{
-sju.strpos(searchString, findTerm, maxdist = 3)
+sju.strpos(searchString, findTerm, maxdist = 3, part.dist.match = FALSE)
 }
 \arguments{
 \item{searchString}{a character vector with string elements}
@@ -11,7 +11,10 @@ sju.strpos(searchString, findTerm, maxdist = 3)
 \item{findTerm}{the string that should be matched against the elements of \code{searchString}.}
 
 \item{maxdist}{the maximum distance between two string elements, which is allowed to treat them
-         as similar or equal.}
+as similar or equal.}
+
+\item{part.dist.match}{if \code{TRUE}, similar matching (close distance strings) will also be
+         found for parts (substrings) of the \code{searchString}.}
 }
 \value{
 A numeric vector with index position of elements in \code{searchString} that
@@ -29,6 +32,9 @@ string <- c("Hello", "Helo", "Hole", "Apple", "Ape", "New", "Old", "System", "Sy
 sju.strpos(string, "hel")   # partial match
 sju.strpos(string, "stem")  # partial match
 sju.strpos(string, "R")     # no match
-sju.strpos(string, "saste") # similarity to "System"}
+sju.strpos(string, "saste") # similarity to "System"
+
+sju.strpos("We are Sex Pistols!", "postils") # finds nothing
+sju.strpos("We are Sex Pistols!", "postils", part.dist.match = TRUE) # finds partial matching of similarity}
 }
 

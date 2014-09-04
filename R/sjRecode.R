@@ -834,6 +834,8 @@ sju.groupString <- function(strings, maxdist = 3, method = "lv", strict = FALSE,
 #' @param findTerm the string that should be matched against the elements of \code{searchString}.
 #' @param maxdist the maximum distance between two string elements, which is allowed to treat them
 #'          as similar or equal.
+#' @param part.dist.match if \code{TRUE}, similar matching (close distance strings) will also be
+#'          found for parts (substrings) of the \code{searchString}.
 #' 
 #' @return A numeric vector with index position of elements in \code{searchString} that 
 #'           partially match or are similar to \code{findTerm}. Returns \code{-1} if no
@@ -845,10 +847,13 @@ sju.groupString <- function(strings, maxdist = 3, method = "lv", strict = FALSE,
 #' sju.strpos(string, "hel")   # partial match
 #' sju.strpos(string, "stem")  # partial match
 #' sju.strpos(string, "R")     # no match
-#' sju.strpos(string, "saste") # similarity to "System"}
+#' sju.strpos(string, "saste") # similarity to "System"
+#' 
+#' sju.strpos("We are Sex Pistols!", "postils") # finds nothing
+#' sju.strpos("We are Sex Pistols!", "postils", part.dist.match = TRUE) # finds partial matching of similarity}
 #' 
 #' @export
-sju.strpos <- function(searchString, findTerm, maxdist = 3) {
+sju.strpos <- function(searchString, findTerm, maxdist = 3, part.dist.match = FALSE) {
   # -------------------------------------
   # init return value
   # -------------------------------------
@@ -870,7 +875,67 @@ sju.strpos <- function(searchString, findTerm, maxdist = 3) {
   # -------------------------------------
   pos <- which(stringdist::stringdist(tolower(findTerm), tolower(searchString)) < maxdist)
   if (length(pos)>0) indices <- c(indices, pos)
+  # -------------------------------------
+  # find element indices from partial similar (distance) 
+  # string matching
+  # -------------------------------------
+  if (part.dist.match) {
+    # -------------------------------------
+    # helper function to trim white spaces
+    # -------------------------------------
+    trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+    ftlength <- nchar(findTerm)
+    # -------------------------------------
+    # iterate search string vector
+    # -------------------------------------
+    for (ssl in 1:length(searchString)) {
+      # -------------------------------------
+      # retrieve each element of search string vector
+      # we do this step by step instead of vectorizing
+      # due to the substring approach
+      # -------------------------------------
+      sst <- searchString[ssl]
+      # -------------------------------------
+      # we extract substrings of same length as findTerm
+      # starting from first char of searchString until end
+      # and try to find similar matches
+      # -------------------------------------
+      steps <- nchar(sst) - ftlength + 1
+      for (pi in 1:steps) {
+        # -------------------------------------
+        # retrieve substring
+        # -------------------------------------
+        sust <- trim(substr(sst, pi, pi+ftlength-1))
+        # -------------------------------------
+        # find element indices from similar substrings
+        # -------------------------------------
+        pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) < maxdist)
+        if (length(pos)>0) indices <- c(indices, pos)
+      }
+      # -------------------------------------
+      # 2nd loop picks longer substrings, because similarity
+      # may also be present if length of strings differ
+      # (e.g. "app" and "apple")
+      # -------------------------------------
+      steps <- nchar(sst) - ftlength
+      if (steps>1) {
+        for (pi in 2:steps) {
+          # -------------------------------------
+          # retrieve substring
+          # -------------------------------------
+          sust <- trim(substr(sst, pi-1, pi+ftlength))
+          # -------------------------------------
+          # find element indices from similar substrings
+          # -------------------------------------
+          pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) < maxdist)
+          if (length(pos)>0) indices <- c(indices, pos)
+        }
+      }
+    }
+  }
+  # -------------------------------------
   # return result
+  # -------------------------------------
   if (length(indices) > 0) {
     return (sort(unique(indices)))
   }
