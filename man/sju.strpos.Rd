@@ -3,7 +3,8 @@
 \alias{sju.strpos}
 \title{Find partial matching and close distance elements in strings}
 \usage{
-sju.strpos(searchString, findTerm, maxdist = 3, part.dist.match = FALSE)
+sju.strpos(searchString, findTerm, maxdist = 3, part.dist.match = FALSE,
+  showProgressBar = FALSE)
 }
 \arguments{
 \item{searchString}{a character vector with string elements}
@@ -14,7 +15,10 @@ sju.strpos(searchString, findTerm, maxdist = 3, part.dist.match = FALSE)
 as similar or equal.}
 
 \item{part.dist.match}{if \code{TRUE}, similar matching (close distance strings) will also be
-         found for parts (substrings) of the \code{searchString}.}
+found for parts (substrings) of the \code{searchString}.}
+
+\item{showProgressBar}{If \code{TRUE}, the progress bar is displayed when computing the distance matrix.
+         Default in \code{FALSE}, hence the bar is hidden.}
 }
 \value{
 A numeric vector with index position of elements in \code{searchString} that
@@ -26,6 +30,13 @@ This function finds the element indices of partial matching or similar strings
                in a character vector. Can be used to find exact or slightly mistyped elements
                in a string vector.
 }
+\note{
+this function does \emph{not} return the position of a matching string \emph{inside}
+        another string, but the element's index of the \code{searchString} vector, where
+        a (partial) match with \code{findTerm} was found. Thus, searching for "abc" in
+        a string "this is abc" will not return 9 (the start position of the substring),
+        but 1 (the element index, which is always 1 if \code{searchString} only has one element).
+}
 \examples{
 \dontrun{
 string <- c("Hello", "Helo", "Hole", "Apple", "Ape", "New", "Old", "System", "Systemic")
@@ -34,7 +45,9 @@ sju.strpos(string, "stem")  # partial match
 sju.strpos(string, "R")     # no match
 sju.strpos(string, "saste") # similarity to "System"
 
-sju.strpos("We are Sex Pistols!", "postils") # finds nothing
-sju.strpos("We are Sex Pistols!", "postils", part.dist.match = TRUE) # finds partial matching of similarity}
+# finds nothing
+sju.strpos("We are Sex Pistols!", "postils")
+# finds partial matching of similarity
+sju.strpos("We are Sex Pistols!", "postils", part.dist.match = TRUE)}
 }
 

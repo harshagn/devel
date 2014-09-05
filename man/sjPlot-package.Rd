@@ -59,7 +59,7 @@ sjPlot - data visualization for statistics in social science
 Package: \tab sjPlot\cr
 Type: \tab Package\cr
 Version: \tab 1.5\cr
-Date: \tab 2014-09-03\cr
+Date: \tab 2014-09-05\cr
 License: \tab GPL-3\cr
 }
 }

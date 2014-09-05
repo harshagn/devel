@@ -836,10 +836,18 @@ sju.groupString <- function(strings, maxdist = 3, method = "lv", strict = FALSE,
 #'          as similar or equal.
 #' @param part.dist.match if \code{TRUE}, similar matching (close distance strings) will also be
 #'          found for parts (substrings) of the \code{searchString}.
-#' 
+#' @param showProgressBar If \code{TRUE}, the progress bar is displayed when computing the distance matrix.
+#'          Default in \code{FALSE}, hence the bar is hidden.
+#'          
 #' @return A numeric vector with index position of elements in \code{searchString} that 
 #'           partially match or are similar to \code{findTerm}. Returns \code{-1} if no
 #'           match was found.
+#' 
+#' @note this function does \emph{not} return the position of a matching string \emph{inside}
+#'         another string, but the element's index of the \code{searchString} vector, where
+#'         a (partial) match with \code{findTerm} was found. Thus, searching for "abc" in
+#'         a string "this is abc" will not return 9 (the start position of the substring),
+#'         but 1 (the element index, which is always 1 if \code{searchString} only has one element).
 #' 
 #' @examples
 #' \dontrun{
@@ -849,11 +857,13 @@ sju.groupString <- function(strings, maxdist = 3, method = "lv", strict = FALSE,
 #' sju.strpos(string, "R")     # no match
 #' sju.strpos(string, "saste") # similarity to "System"
 #' 
-#' sju.strpos("We are Sex Pistols!", "postils") # finds nothing
-#' sju.strpos("We are Sex Pistols!", "postils", part.dist.match = TRUE) # finds partial matching of similarity}
+#' # finds nothing
+#' sju.strpos("We are Sex Pistols!", "postils")
+#' # finds partial matching of similarity
+#' sju.strpos("We are Sex Pistols!", "postils", part.dist.match = TRUE)}
 #' 
 #' @export
-sju.strpos <- function(searchString, findTerm, maxdist = 3, part.dist.match = FALSE) {
+sju.strpos <- function(searchString, findTerm, maxdist = 3, part.dist.match = FALSE, showProgressBar = FALSE) {
   # -------------------------------------
   # init return value
   # -------------------------------------
@@ -873,7 +883,7 @@ sju.strpos <- function(searchString, findTerm, maxdist = 3, part.dist.match = FA
   # -------------------------------------
   # find element indices from similar strings
   # -------------------------------------
-  pos <- which(stringdist::stringdist(tolower(findTerm), tolower(searchString)) < maxdist)
+  pos <- which(stringdist::stringdist(tolower(findTerm), tolower(searchString)) <= maxdist)
   if (length(pos)>0) indices <- c(indices, pos)
   # -------------------------------------
   # find element indices from partial similar (distance) 
@@ -901,6 +911,10 @@ sju.strpos <- function(searchString, findTerm, maxdist = 3, part.dist.match = FA
       # and try to find similar matches
       # -------------------------------------
       steps <- nchar(sst) - ftlength + 1
+      # -------------------------------------
+      # create progress bar
+      # -------------------------------------
+      if (showProgressBar) pb <- txtProgressBar(min=0, max=steps, style=3)
       for (pi in 1:steps) {
         # -------------------------------------
         # retrieve substring
@@ -909,8 +923,10 @@ sju.strpos <- function(searchString, findTerm, maxdist = 3, part.dist.match = FA
         # -------------------------------------
         # find element indices from similar substrings
         # -------------------------------------
-        pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) < maxdist)
+        pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) <= maxdist)
         if (length(pos)>0) indices <- c(indices, pos)
+        # update progress bar
+        if (showProgressBar) setTxtProgressBar(pb, pi)
       }
       # -------------------------------------
       # 2nd loop picks longer substrings, because similarity
@@ -921,18 +937,25 @@ sju.strpos <- function(searchString, findTerm, maxdist = 3, part.dist.match = FA
       if (steps>1) {
         for (pi in 2:steps) {
           # -------------------------------------
+          # create progress bar
+          # -------------------------------------
+          if (showProgressBar) pb <- txtProgressBar(min=0, max=steps, style=3)
+          # -------------------------------------
           # retrieve substring
           # -------------------------------------
           sust <- trim(substr(sst, pi-1, pi+ftlength))
           # -------------------------------------
           # find element indices from similar substrings
           # -------------------------------------
-          pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) < maxdist)
+          pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) <= maxdist)
           if (length(pos)>0) indices <- c(indices, pos)
+          # update progress bar
+          if (showProgressBar) setTxtProgressBar(pb, pi)
         }
       }
     }
   }
+  if (showProgressBar) close(pb)
   # -------------------------------------
   # return result
   # -------------------------------------
