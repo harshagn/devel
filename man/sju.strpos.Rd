@@ -3,7 +3,7 @@
 \alias{sju.strpos}
 \title{Find partial matching and close distance elements in strings}
 \usage{
-sju.strpos(searchString, findTerm, maxdist = 3, part.dist.match = FALSE,
+sju.strpos(searchString, findTerm, maxdist = 3, part.dist.match = 0,
   showProgressBar = FALSE)
 }
 \arguments{
@@ -14,8 +14,14 @@ sju.strpos(searchString, findTerm, maxdist = 3, part.dist.match = FALSE,
 \item{maxdist}{the maximum distance between two string elements, which is allowed to treat them
 as similar or equal.}
 
-\item{part.dist.match}{if \code{TRUE}, similar matching (close distance strings) will also be
-found for parts (substrings) of the \code{searchString}.}
+\item{part.dist.match}{activates similar matching (close distance strings) for parts (substrings)
+of the \code{searchString}. Following values are accepted:
+\itemize{
+  \item 0 for no partial distance matching
+  \item 1 for one-step matching, which means, only substrings of same length as \code{findTerm} are extracted from \code{searchString} matching
+  \item 2 for two-step matching, which means, substrings of same length as \code{findTerm} as well as strings with a slightly wider range are extracted from \code{searchString} matching
+}
+Default value is 0.}
 
 \item{showProgressBar}{If \code{TRUE}, the progress bar is displayed when computing the distance matrix.
          Default in \code{FALSE}, hence the bar is hidden.}
