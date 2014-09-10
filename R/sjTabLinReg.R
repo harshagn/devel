@@ -545,7 +545,7 @@ sjt.lm <- function (...,
   }
   page.content <- paste0(page.content, sprintf("\n  <tr>\n    <td class=\"tdata summary leftalign firstsumrow\">%s</td>\n", stringObservations))
   for (i in 1:length(input_list)) {
-    page.content <- paste(page.content, sprintf("   %s%i</td>\n", colspanstringfirstrow, summary(input_list[[i]])$df[2]))
+    page.content <- paste(page.content, sprintf("   %s%i</td>\n", colspanstringfirstrow, nobs(input_list[[i]])))
   }
   page.content <- paste0(page.content, "  </tr>\n")
   # -------------------------------------

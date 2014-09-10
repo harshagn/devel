@@ -21,6 +21,12 @@ install.packages("sjPlot")
 
 ### Changelog of current development build
 
+### General
+* Replaced _b_ with beta-sign in model-summary for `sjp.lm` and `sjp.lm1`.
+
+#### Bug fixes
+* Number of observations in `sjt.lm` was not correctly shown in table - fixed.
+
 ### Changelog of latest stable build (1.5)
 
 #### New functions

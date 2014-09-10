@@ -146,7 +146,7 @@ sju.modsum.lm <- function(fit) {
   }
   # create mathematical term
   modsum <- as.character(as.expression(
-    substitute(italic(b[0]) == a * "," ~~ R^2 == r2 * "," ~~ "adj. " * R^2 == ar2 * "," ~~ "F" == f*panval * "," ~~ "AIC" == aic,
+    substitute(beta[0] == a * "," ~~ R^2 == r2 * "," ~~ "adj. " * R^2 == ar2 * "," ~~ "F" == f*panval * "," ~~ "AIC" == aic,
                list(a=format(coef(fit)[1], digits=3),
                     r2=format(summary(fit)$r.squared, digits=3),
                     ar2=format(summary(fit)$adj.r.squared, digits=3),
