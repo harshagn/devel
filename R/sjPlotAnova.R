@@ -72,7 +72,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("xv", "lower", "upper", "
 #' @param errorBarWidth The width of the error bar ends. Default is 0.
 #' @param errorBarSize The size of the error bar. Default is 0.8.
 #' @param errorBarLineType The linetype of error bars. Default is \code{1} (solid line).
-#' @param pointColor The colours of the points that indicate the mean-value. \code{pointColor} is a 
+#' @param pointColor The colors of the points that indicate the mean-value. \code{pointColor} is a 
 #'          vector with two values: the first indicating groups with positive means and the second 
 #'          indicating negative means. Default is \code{c("#3366a0", "#aa6633")}.
 #' @param pointSize The size of the points that indicate the mean-value. Default is 3.

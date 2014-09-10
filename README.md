@@ -21,6 +21,8 @@ install.packages("sjPlot")
 
 ### Changelog of current development build
 
+### Changelog of latest stable build (1.5)
+
 #### New functions
 * `sju.groupString` to recode similar (close distance) elements of a character vector into a new, single string value.
 * `sju.strpos` to find partial matching and close distance elements in strings.
@@ -30,7 +32,7 @@ install.packages("sjPlot")
 * `sjt.frq` can now handle character vectors (string variables), see parameter `removeStringVectors`.
 * `sjt.frq` can automatically group string values in character vectors according to their distance metrics (similarity). This will merge different but similar values into a new, single value.
 * Prefixes of statistical test functions have been renamed from `sju` to `sjs`.
-* Added `themr` option to `theme` parameter of all sjp-plotting function, so the sjPlot package can be used with the [ggthemr-package](https://github.com/cttobin/ggthemr)
+* Added `themr` option to `theme` parameter of all sjp-plotting function, so the sjPlot package can be used with the [ggthemr-package](https://github.com/cttobin/ggthemr). You may use the `ggthemr::swatch` function to retrieve theme-colors as bar/point/line-colors.
 * Added parameter `axisLimits.y` to function `sjp.emm.int`
 * Added parameter `axisLimits.y` to function `sjp.lm.int`
 * `sjp.lm` now shows adjusted r-square in model summary.
